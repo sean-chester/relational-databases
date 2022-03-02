@@ -1,0 +1,185 @@
+{
+	"case01": {
+		"inputs": ["a,b,c", "a/b,c", "B", "a,b,c"],
+		"output": "True",
+		"stdin": "",
+		"mark": 1.0,
+		"timeout": 300,
+		"Description": "Single-attribute key",
+		"tags": ["BCNF"]
+	},
+	"case02": {
+		"inputs": ["a,b,c", "a/b", "B", "a,b,c"],
+		"output": "False",
+		"stdin": "",
+		"mark": 1.0,
+		"timeout": 300,
+		"Description": "Not a key",
+		"tags": ["BCNF"]
+	},
+	"case03": {
+		"inputs": ["a,b,c", "a/b;a/c", "B", "a,b,c"],
+		"output": "True",
+		"stdin": "",
+		"mark": 1.0,
+		"timeout": 300,
+		"Description": "Uses combining rule to make key",
+		"tags": ["BCNF"]
+	},
+	"case04": {
+		"inputs": ["a,b,c", "a/b;b/c", "B", "a,b,c"],
+		"output": "False",
+		"stdin": "",
+		"mark": 1.0,
+		"timeout": 300,
+		"Description": "Misses violation on second FD",
+		"tags": ["BCNF"]
+	},
+	"case05": {
+		"inputs": ["a,b,c,d", "a/b;b/c;c/d;d/a", "B", "a,b,c,d"],
+		"output": "True",
+		"stdin": "",
+		"mark": 1.0,
+		"timeout": 300,
+		"Description": "Cycle. Everything's a key.",
+		"tags": ["BCNF"]
+	},
+	"case06": {
+		"inputs": ["a,b;a,c,d", "a/b", "B", "a,b;a,c,d"],
+		"output": "True",
+		"stdin": "",
+		"mark": 1.0,
+		"timeout": 300,
+		"Description": "BCNF decomposition has already been done",
+		"tags": ["BCNF"]
+	},
+	"case07": {
+		"inputs": ["a,b,c", "a/b,c;b/a", "3", "a,b,c"],
+		"output": "True",
+		"stdin": "",
+		"mark": 1.0,
+		"timeout": 300,
+		"Description": "Simple example of a prime",
+		"tags": ["3NF"]
+	},
+	"case08": {
+		"inputs": ["a,b,c,d", "a,b/c,d;c/d;d/b", "3", "a,b,c,d"],
+		"output": "True",
+		"stdin": "",
+		"mark": 1.0,
+		"timeout": 300,
+		"Description": "Question 1 from worksheet",
+		"tags": ["3NF"]
+	},
+
+    "case09": {
+		"inputs": ["a,b,c,d,e", "a,b/c;b,d/c", "B", "a,b,c;a,b,d,e"],
+		"output": "True",
+		"stdin": "",
+		"mark": 1.0,
+		"timeout": 300,
+		"Description": "Easy BCNF",
+		"tags": ["simple", "BCNF"]
+	},
+	"case10": {
+		"inputs": ["a,b,c,d,e", "a/b,c,d;d/e", "B", "a,b,c,d;a,d,e"],
+		"output": "False",
+		"stdin": "",
+		"mark": 1.0,
+		"timeout": 300,
+		"Description": "Does not calculate closure of A",
+		"tags": ["simple", "BCNF"]
+	},
+	"case11": {
+		"inputs": ["a,b,c,d", "a,b/c;d/c", "3", "a,b,c;c,d"],
+		"output": "False",
+		"stdin": "",
+		"mark": 1.0,
+		"timeout": 300,
+		"Description": "No superkey",
+		"tags": ["simple", "3NF"]
+	},
+	"case12": {
+		"inputs": ["a,b,c,d", "a,b/c;d/a", "3", "a,b,c;a,d;b,d"],
+		"output": "True",
+		"stdin": "",
+		"mark": 1.0,
+		"timeout": 300,
+		"Description": "Same as above but adds key",
+		"tags": ["simple", "3NF"]
+	},
+    "case13": {
+        "inputs": ["a,b,c,d", "a/b,c;b/a", "3", "a,b,c;a,b"],
+        "output": "False",
+		"stdin": "",
+        "mark": 1.0,
+		"timeout": 300,
+        "Description": "3NF -- missing attributes",
+        "tags": ["simple", "3NF"]
+    },
+
+    "case14": {
+		"inputs": ["a,b,c,d,e,f", "a,b/e;c,d/e;e/f", "B", "e,f;a,b,e;a,b,c,d"],
+		"output": "True",
+		"stdin": "",
+		"mark": 1.0,
+		"timeout": 300,
+		"description": "simple recursive one but sets up non-deterministic question later (probable/easy side). observe that first decomposition loses an fd which leads to non-determinism",
+		"tags": ["recursive", "BCNF"]
+	},
+	"case15": {
+		"inputs": ["a,b,c,d,e,f", "a,b/e;e/f;f/c", "B", "a,b,d;c,e,f;a,b,e"],
+		"output": "False",
+		"stdin": "",
+		"mark": 1.0,
+		"timeout": 300,
+		"description": "similar to above, but forgot a step and non-determinism removed",
+		"tags": ["recursive", "BCNF"]
+	},
+	"case16": {
+		"inputs": ["c,d,e,f,g;a,b,c,d", "a,b/e;c,d/e;e/f;f/g", "B", "e,f;c,d,e;a,b,c,d"],
+		"output": "False",
+		"stdin": "",
+		"mark": 1.0,
+		"timeout": 300,
+		"description": "similar to non-deterministic case, but completes up to the second-from-last step after random choice",
+		"tags": ["recursive", "BCNF"]
+	},
+	"case17": {
+		"inputs": ["a,b,c,d,e", "a/b;b/c;c/a;d/e", "B", "a,b;b,c;a,c;d,e"],
+		"output": "False",
+		"stdin": "",
+		"mark": 1.0,
+		"timeout": 300,
+		"Description": "Recursed too far, basically applied 3NF algorithm",
+		"tags": ["recursive", "BCNF"]
+	},
+
+    "case18": {
+		"inputs": ["a,b,c,d,e", "a/b,c;b,c/d;c/b", "B", "b,c,d;a,c;a,e"],
+		"output": "True",
+		"stdin": "",
+		"mark": 1.0,
+		"timeout": 300,
+		"Description": "Question 5 from the BCNF worksheet",
+		"tags": ["tough", "BCNF"]
+	},
+	"case19": {
+		"inputs": ["a,b,c,d,e,f", "a,b/e;c,d/e;e/f", "B", "e,f;c,d,e;a,b,c,d"],
+		"output": "True",
+		"stdin": "",
+		"mark": 1.0,
+		"timeout": 300,
+		"Description": "Non-deterministic -- side where second FD is chosen first (less likely)",
+		"tags": ["tough", "BCNF"]
+	},
+	"case20": {
+		"inputs": ["t,h,c,g", "t/g;t,c/h,g;h/c", "3", "t,g;t,h,c"],
+		"output": "True",
+		"stdin": "",
+		"mark": 1.0,
+		"timeout": 300,
+		"Description": "Question 2 of the 3NF worksheet",
+		"tags": ["tough", "3NF", "minimal-basis"]
+	}
+}
