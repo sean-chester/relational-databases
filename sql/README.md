@@ -63,7 +63,7 @@ You are given instructions to create (optionally) a MySQL database. Moreover, yo
 -- Replace this comment line with the actual query
 ```
 
-Alongside the `.sql` file will be a `.xml` file showing the expected result, which you can use for testing.
+Alongside the `.sql` file will be a `.tsv` file showing the expected result, which you can use for testing.
 
 
 ## Submission
@@ -72,7 +72,7 @@ You should submit all of the `.sql` files without renaming them, but after repla
 
 ## Evaluation
 
-Your grade on the assignment will be the sum of your scores on each query, which could be in excess of 20 (the number of tests), particularly if you minimise your queries more effectively than the teaching team has. However, to receive any marks on a particular query, you *must* produce the correct result. We will ascertain this by performing a `diff` between the corresponding `.xml` file and your query results on an up-to-date MySQL instance prior to counting operators.
+Your grade on the assignment will be the sum of your scores on each query, which could be in excess of 20 (the number of tests), particularly if you minimise your queries more effectively than the teaching team has. However, to receive any marks on a particular query, you *must* produce the correct result. We will ascertain this by performing a `diff` between the corresponding `.tsv` file and your query results on an up-to-date MySQL instance prior to counting operators.
 
 Above, the first query would score 1.0 marks and the second query would score 0.8 marks. If you can answer the query with fewer operator instances than the first query, you would score 1.1 marks. The following query would obtain 0.0 marks, even though the number of operators is small, because it does not produce the same result (namely, it doesn't filter by department):
 
