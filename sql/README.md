@@ -50,6 +50,7 @@ Both queries retrieve the same result, but the second query is unnecessarily com
 This gives us a metric by which to claim the first query is better: it only uses 4 instances of the above set of operators (SELECT, FROM, JOIN, and WHERE), whereas the second query uses 6 instances (2×SELECT, 2×FROM, 2×WHERE). This is the metric that you should aim to minimise with the SQL queries that you submit. You would receive more marks for the first query than the second one.
 
 It is important to remember that this is an exercise in code simplification and creative thinking, not in performance optimisation. Although you are trying to minimise the number of operator references, SQL is a _declarative language_ and there is no specific reason to assume that the first example query will run faster than the second one. However, simple and idiomatic code is easier for compilers to optimise, so there could be tangential performance benefits to striving for simpler—or at least shorter—queries.
+_The real intent here is to leverage an assumed correlation between this "golf score" metric and the quality of a SQL query to encourage you to write better SQL_.
 
 You are given instructions to create (optionally) a MySQL database. Moreover, you are given twenty `.sql` files that are unfortunately empty except for a comment indicating their intended query and their mapping between "SQL Golf" scores (i.e., total instances of the aforementioned operators/tokens) and grade. For example, the above problem would be represented by the following `example.sql` file:
 
@@ -65,10 +66,6 @@ You are given instructions to create (optionally) a MySQL database. Moreover, yo
 Alongside the `.sql` file will be a `.csv` file showing the expected result, which you can use for testing.
 
 
-## Dataset
-
-
-
 ## Submission
 
 You should submit all of the `.sql` files without renaming them, but after replacing the final comment line with an actual SQL query that achieves the stated objective. Ordinarily, you should submit twenty `.sql` files, though it is okay to submit fewer files if you do not have a solution for all twenty tests.
@@ -82,6 +79,146 @@ Above, the first query would score 1.0 marks and the second query would score 0.
 ```sql
 SELECT `employee_name`
 FROM `Employee`;
+```
+
+
+
+## Dataset
+
+For this assignment, we will use [the data dump from one of the Stack Exchanges](https://archive.org/download/stackexchange): fittingly, the one for _Code Golf_. If you want to run the queries before submitting them, you should follow the instrutions below to create a local database.
+
+First, download and extract the entire data dump from here: https://archive.org/download/stackexchange/codegolf.stackexchange.com.7z. 
+
+To [load the XML data into a MySQL database](https://dev.mysql.com/doc/refman/8.0/en/load-xml.html), you first need to create a database with the same structure. Open an instance of MySQL and execute the following DDL queries:
+
+```sql
+-- Create and switch to a new database for this project
+DROP DATABASE IF EXISTS `code_golf`;
+CREATE DATABASE `code_golf`;
+USE `code_golf`;
+
+-- Construct tables into which the data will be imported
+-- You may want to keep the order of these tables because of FK references
+CREATE TABLE `User`( `Id` INT
+                   , `Reputation` INT
+                   , `CreationDate` DATETIME
+                   , `DisplayName` VARCHAR(60)
+                   , `LastAccessDate` DATETIME
+                   , `WebsiteUrl` VARCHAR(255)
+                   , `Location` VARCHAR(120)
+                   , `AboutMe` TEXT
+                   , `Views` INT
+                   , `Upvotes` INT
+                   , `Downvotes` INT
+                   , `AccountId` INT
+                   , PRIMARY KEY( `Id` ) );
+
+CREATE TABLE `Badge`( `Id` INT
+                     , `UserId` INT
+                     , `Name` VARCHAR(30)
+                     , `Date` DATETIME
+                     , `Class` SMALLINT
+                     , `TagBased` ENUM('True', 'False')
+                     , PRIMARY KEY( `Id` )
+                     , FOREIGN KEY( `UserId` ) REFERENCES `User`( `Id` ) );
+
+CREATE TABLE `Tag`( `Id` INT
+                  , `TagName` VARCHAR(30)
+                  , `Count` INT
+                  , `ExcerptPostId` INT
+                  , `WikiPostId` INT
+                  , PRIMARY KEY( `Id` ) );
+
+CREATE TABLE `Post`( `Id` INT
+                   , `PostTypeId` INT
+                   , `ParentId` INT
+                   , `CreationDate` DATETIME
+                   , `Score` INT
+                   , `Body` LONGTEXT
+                   , `OwnerUserId` INT
+                   , `LastEditorUserId` INT
+                   , `LastEditDate` DATETIME
+                   , `LastActivityDate` DATETIME
+                   , `CommentCount` INT
+                   , `ContentLicense` VARCHAR(30)
+                   , PRIMARY KEY( `Id` )
+                   , FOREIGN KEY( `ParentId` ) REFERENCES `Post`( `Id` )
+                   , FOREIGN KEY( `OwnerUserId` ) REFERENCES `User`( `Id` )
+                   , FOREIGN KEY( `LastEditorUserId` ) REFERENCES `User`( `Id` ) );
+
+CREATE TABLE `Link`( `Id` INT
+                   , `PostId` INT
+                   , `RelatedPostId` INT
+                   , `CreationDate` DATETIME
+                   , `LinkTypeId` INT
+                   , PRIMARY KEY( `Id` )
+--                   , FOREIGN KEY( `PostId` ) REFERENCES `Post`( `Id` )         -- violated by actual data
+--                   , FOREIGN KEY( `RelatedPostId` ) REFERENCES `Post`( `Id` )  -- violated by actual data
+                   );
+
+CREATE TABLE `Vote`( `Id` INT
+                   , `PostId` INT
+                   , `VoteTypeId` INT
+                   , `CreationDate` DATETIME
+                   , PRIMARY KEY( `Id` )
+--                   , FOREIGN KEY( `PostId` ) REFERENCES `Post`( `Id` ) -- violated by actual data
+                   ); 
+
+CREATE TABLE `Comment`( `Id` INT
+                      , `PostId` INT
+                      , `Score` INT
+                      , `Text` TEXT
+                      , `CreationDate` DATETIME
+                      , `UserId` INT
+                      , `ContentLicense` VARCHAR(30)
+                      , PRIMARY KEY( `Id` )
+                      , FOREIGN KEY( `PostId` ) REFERENCES `Post`( `Id` )
+                      , FOREIGN KEY( `UserId` ) REFERENCES `User`( `Id` ) );
+
+```
+
+Finally, you can load all the XML files directly into the database by executing the following statements:
+
+```sql
+USE `code_golf`;
+
+-- You will likely find it easiest to move the files to the following directory
+-- and change '/var/lib/mysql-files/' in the paths below to the result of this
+-- SHOW VARIABLES query.
+-- https://stackoverflow.com/q/32737478/2769271
+SHOW VARIABLES LIKE "secure_file_priv";
+
+-- Finally, load data into each of the tables
+-- Again, ensure that you maintain this order
+-- for the sake of referential integrity
+LOAD XML INFILE '/var/lib/mysql-files/Users.xml'
+INTO TABLE `User`
+ROWS IDENTIFIED BY '<row>';
+
+LOAD XML INFILE '/var/lib/mysql-files/Badges.xml'
+INTO TABLE `Badge`
+ROWS IDENTIFIED BY '<row>';
+
+LOAD XML INFILE '/var/lib/mysql-files/Tags.xml'
+INTO TABLE `Tag`
+ROWS IDENTIFIED BY '<row>';
+
+LOAD XML INFILE '/var/lib/mysql-files/Posts.xml'
+INTO TABLE `Post`
+ROWS IDENTIFIED BY '<row>';
+
+LOAD XML INFILE '/var/lib/mysql-files/Votes.xml'
+INTO TABLE `Vote`
+ROWS IDENTIFIED BY '<row>';
+
+LOAD XML INFILE '/var/lib/mysql-files/Comments.xml'
+INTO TABLE `Comment`
+ROWS IDENTIFIED BY '<row>';
+
+LOAD XML INFILE '/var/lib/mysql-files/PostLinks.xml'
+INTO TABLE `Link`
+ROWS IDENTIFIED BY '<row>';
+
 ```
 
 ## Sources
