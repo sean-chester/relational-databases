@@ -250,3 +250,7 @@ You are encouraged to submit your preliminary progress one week and again three 
 ## Summary
 
 I hope that this assignment is a fun way to learn and/or practice the SQL query language. Good luck!
+
+## Change Log
+
+[05 Mar 12:45] Fixed error in query02 in which sample solution was not sorted correctly.
