@@ -72,7 +72,7 @@ You should submit all of the `.sql` files without renaming them, but after repla
 
 ## Evaluation
 
-Your grade on the assignment will be the sum of your scores on each query, which could be in excess of 20 (the number of tests), particularly if you minimise your queries more effectively than the teaching team has. However, to receive any marks on a particular query, you *must* produce the correct result. We will ascertain this by performing a `diff` between the corresponding `.tsv` file and your query results on an up-to-date MySQL instance prior to counting operators.
+Your grade on the assignment will be the sum of your scores on each query, scaled up by a factor of 20/14. This could be in excess of 20 (i.e., full marks), particularly if you minimise your queries more effectively than the teaching team has. However, to receive any marks on a particular query, you *must* produce the correct result, including attribute names. We will ascertain this by performing a `diff` between the corresponding `.tsv` file and your query results on an up-to-date MySQL instance prior to counting operators.
 
 Above, the first query would score 1.0 marks and the second query would score 0.8 marks. If you can answer the query with fewer operator instances than the first query, you would score 1.1 marks. The following query would obtain 0.0 marks, even though the number of operators is small, because it does not produce the same result (namely, it doesn't filter by department):
 
@@ -81,7 +81,7 @@ SELECT `employee_name`
 FROM `Employee`;
 ```
 
-_Note that we will change the dataset before testing_.
+_Note that we have manipulated our testing dataset to avoid hard-coded solutions. You should not make assumptions (e.g., of uniqueness or non-nulls) that are not supported by the data model in the CREATE TABLE statements above_.
 
 ## Dataset
 
@@ -223,12 +223,12 @@ ROWS IDENTIFIED BY '<row>';
 
 ## Queries
 
-The queries are available in two locations (though currently still in draft status and not all available):
+The queries are available in two locations:
 
   * You can access them on [the public-facing GitHub repo](https://github.com/sean-chester/relational-databases) for this course's assignments. The advantages to this source are that it is the freshest (first place updates are pushed) and that you can directly check out the code with `git`, which might be an easier toolchain
   * You can access them by downloading the compressed tarball (that will soon be) attached to this assignment description and unpack it locally.
 
-Remember to edit and upload the `.sql` files and to use the `.xml` files to check the correctness of your solutions.
+Remember to edit and upload the `.sql` files and to use the `.tsv` files to check the correctness of your solutions.
 
 
 ## Sources
@@ -239,7 +239,9 @@ You should, however, work through the assignment on your own. You are welcome to
 
 ## Illness Policy
 
-The end date for the assignment is three days later than the due date. This is expected to provide sufficient contingency for most minor illnesses and you should submit by the due date rather than the end date if you are not constrained by illness.
+The end date for the assignment is three days later than the due date. This is expected to provide sufficient contingency for most minor illnesses and you should submit by the due date rather than the end date if you are not constrained by illness. Submissions will not be accepted even a couple minutes after the end of the illness buffer period (visible as the _end date_ of the assignment in Brightspace).
+
+Support for the assignment _will not be provided_ during the illness buffer. You are encouraged to ask questions early.
 
 In the event that three days contingency is insufficient, you could contact the instructor in advance of the due date with a brief explanation. If you have submitted all previous, graded assignments, then your quiz for this module will be used as the assessment for these learning outcomes. If, on the other hand, you have a missing assignment due to, for example, prior illness this semester, then a well-justified second absence longer than three days we be accommodated with a make-up assessment in the form of an individual, closed, recorded oral exam over Zoom conducted by the instructor. The use of make-up assessments will help to ensure that there are sufficiently many assessment activities (at least 80% of the grade) for each student to accurately reflect their achievement in this course.
 
