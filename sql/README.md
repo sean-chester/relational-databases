@@ -100,77 +100,77 @@ USE `code_golf`;
 -- Construct tables into which the data will be imported
 -- You may want to keep the order of these tables because of FK references
 CREATE TABLE `User`( `Id` INT
-                   , `Reputation` INT
-                   , `CreationDate` DATETIME
-                   , `DisplayName` VARCHAR(60)
-                   , `LastAccessDate` DATETIME
-                   , `WebsiteUrl` VARCHAR(255)
+                   , `Reputation` INT NOT NULL DEFAULT 100
+                   , `CreationDate` DATETIME NOT NULL
+                   , `DisplayName` VARCHAR(60) NOT NULL DEFAULT 'Foo'
+                   , `LastAccessDate` DATETIME NOT NULL
+                   , `WebsiteUrl` VARCHAR(255) 
                    , `Location` VARCHAR(120)
                    , `AboutMe` TEXT
-                   , `Views` INT
-                   , `Upvotes` INT
+                   , `Views` INT NOT NULL DEFAULT 0
+                   , `Upvotes` INT 
                    , `Downvotes` INT
                    , `AccountId` INT
                    , PRIMARY KEY( `Id` ) );
 
 CREATE TABLE `Badge`( `Id` INT
-                     , `UserId` INT
-                     , `Name` VARCHAR(30)
-                     , `Date` DATETIME
-                     , `Class` SMALLINT
-                     , `TagBased` ENUM('True', 'False')
+                     , `UserId` INT NOT NULL
+                     , `Name` VARCHAR(30) NOT NULL
+                     , `Date` DATETIME NOT NULL
+                     , `Class` SMALLINT NOT NULL
+                     , `TagBased` ENUM('True', 'False') NOT NULL
                      , PRIMARY KEY( `Id` )
                      , FOREIGN KEY( `UserId` ) REFERENCES `User`( `Id` ) );
 
 CREATE TABLE `Tag`( `Id` INT
-                  , `TagName` VARCHAR(30)
-                  , `Count` INT
-                  , `ExcerptPostId` INT
-                  , `WikiPostId` INT
+                  , `TagName` VARCHAR(30) NOT NULL
+                  , `Count` INT NOT NULL
+                  , `ExcerptPostId` INT NOT NULL
+                  , `WikiPostId` INT NOT NULL
                   , PRIMARY KEY( `Id` ) );
 
 CREATE TABLE `Post`( `Id` INT
-                   , `PostTypeId` INT
+                   , `PostTypeId` INT NOT NULL
                    , `ParentId` INT
-                   , `CreationDate` DATETIME
-                   , `Score` INT
+                   , `CreationDate` DATETIME NOT NULL
+                   , `Score` INT NOT NULL DEFAULT 0
                    , `Body` LONGTEXT
-                   , `OwnerUserId` INT
+                   , `OwnerUserId` INT 
                    , `LastEditorUserId` INT
                    , `LastEditDate` DATETIME
-                   , `LastActivityDate` DATETIME
-                   , `CommentCount` INT
-                   , `ContentLicense` VARCHAR(30)
+                   , `LastActivityDate` DATETIME NOT NULL
+                   , `CommentCount` INT NOT NULL DEFAULT 0
+                   , `ContentLicense` VARCHAR(30) NOT NULL DEFAULT 'CC BY-SA 2.5'
                    , PRIMARY KEY( `Id` )
                    , FOREIGN KEY( `ParentId` ) REFERENCES `Post`( `Id` )
                    , FOREIGN KEY( `OwnerUserId` ) REFERENCES `User`( `Id` )
                    , FOREIGN KEY( `LastEditorUserId` ) REFERENCES `User`( `Id` ) );
 
 CREATE TABLE `Link`( `Id` INT
-                   , `PostId` INT
-                   , `RelatedPostId` INT
-                   , `CreationDate` DATETIME
-                   , `LinkTypeId` INT
+                   , `PostId` INT NOT NULL
+                   , `RelatedPostId` INT NOT NULL
+                   , `CreationDate` DATETIME NOT NULL
+                   , `LinkTypeId` INT NOT NULL
                    , PRIMARY KEY( `Id` )
 --                   , FOREIGN KEY( `PostId` ) REFERENCES `Post`( `Id` )         -- violated by actual data
 --                   , FOREIGN KEY( `RelatedPostId` ) REFERENCES `Post`( `Id` )  -- violated by actual data
                    );
 
 CREATE TABLE `Vote`( `Id` INT
-                   , `PostId` INT
-                   , `VoteTypeId` INT
-                   , `CreationDate` DATETIME
+                   , `PostId` INT NOT NULL
+                   , `VoteTypeId` INT NOT NULL
+                   , `CreationDate` DATETIME NOT NULL
                    , PRIMARY KEY( `Id` )
 --                   , FOREIGN KEY( `PostId` ) REFERENCES `Post`( `Id` ) -- violated by actual data
                    ); 
 
 CREATE TABLE `Comment`( `Id` INT
-                      , `PostId` INT
-                      , `Score` INT
-                      , `Text` TEXT
-                      , `CreationDate` DATETIME
-                      , `UserId` INT
-                      , `ContentLicense` VARCHAR(30)
+                      , `PostId` INT NOT NULL
+                      , `Score` INT NOT NULL DEFAULT 0
+                      , `Text` TEXT NOT NULL
+                      , `CreationDate` DATETIME NOT NULL
+                      , `UserId` INT 
+                      , `ContentLicense` VARCHAR(30) NOT NULL DEFAULT 'CC BY-SA 2.5'
                       , PRIMARY KEY( `Id` )
                       , FOREIGN KEY( `PostId` ) REFERENCES `Post`( `Id` )
                       , FOREIGN KEY( `UserId` ) REFERENCES `User`( `Id` ) );
