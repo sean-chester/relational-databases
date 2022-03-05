@@ -81,7 +81,7 @@ SELECT `employee_name`
 FROM `Employee`;
 ```
 
-
+_Note that we will change the dataset before testing_.
 
 ## Dataset
 
