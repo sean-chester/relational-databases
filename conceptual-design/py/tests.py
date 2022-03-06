@@ -471,10 +471,45 @@ class TestCaseB1(unittest.TestCase):
             EntitySet('Desk', ['desk_id'], ['desk_id'], [], [], ['PlacedIn']), \
             EntitySet('Class', ['crn'], ['crn'], [('HeldIn', Multiplicity.MANY)], [], [])])
 
-        # Not provided
-        dbB1 = Database([])
+        dbB1a = Database([ \
+            Table('Building', set(['building_id','building_name']), set(['building_id',]), set()), \
+            Table('Room', set(['building_id','room_id', 'max_capacity']), set(['building_id','room_id']), \
+                set([(('building_id',), 'Building', ('building_id',))])), \
+            Table('Desk', set(['building_id','room_id', 'desk_id']), set(['building_id','room_id','desk_id']), \
+                set([(('building_id', 'room_id'), 'Room', ('building_id', 'room_id'))])), \
+            Table('Class', set(['crn','building_id','room_id']), set(['crn',]), \
+                set([(('building_id','room_id'), 'Room', ('building_id','room_id'))]))])
 
-        self.assertEqual( dbB1, wrap_student_call(convert_to_table, erdB1 ) )
+        dbB1b = Database([ \
+            Table('Building', set(['building_id','building_name']), set(['building_id',]), set()), \
+            Table('Room', set(['building_id','room_id', 'max_capacity']), set(['building_id','room_id']), \
+                set([(('building_id',), 'Building', ('building_id',))])), \
+            Table('Desk', set(['building_id','room_id', 'desk_id']), set(['building_id','room_id','desk_id']), \
+                set([(('building_id', 'room_id'), 'Room', ('building_id', 'room_id'))])), \
+            Table('Class', set(['crn','building_id','room_id']), set(['crn',]), \
+                set([(('room_id','building_id'), 'Room', ('room_id','building_id'))]))])
+
+        dbB1c = Database([ \
+            Table('Building', set(['building_id','building_name']), set(['building_id',]), set()), \
+            Table('Room', set(['building_id','room_id', 'max_capacity']), set(['building_id','room_id']), \
+                set([(('building_id',), 'Building', ('building_id',))])), \
+            Table('Desk', set(['building_id','room_id', 'desk_id']), set(['building_id','room_id','desk_id']), \
+                set([(('room_id', 'building_id'), 'Room', ('room_id', 'building_id'))])), \
+            Table('Class', set(['crn','building_id','room_id']), set(['crn',]), \
+                set([(('building_id','room_id'), 'Room', ('building_id','room_id'))]))])
+
+        dbB1d = Database([ \
+            Table('Building', set(['building_id','building_name']), set(['building_id',]), set()), \
+            Table('Room', set(['building_id','room_id', 'max_capacity']), set(['building_id','room_id']), \
+                set([(('building_id',), 'Building', ('building_id',))])), \
+            Table('Desk', set(['building_id','room_id', 'desk_id']), set(['building_id','room_id','desk_id']), \
+                set([(('room_id', 'building_id'), 'Room', ('room_id', 'building_id'))])), \
+            Table('Class', set(['crn','building_id','room_id']), set(['crn',]), \
+                set([(('room_id','building_id'), 'Room', ('room_id','building_id'))]))])
+
+        actual_result = wrap_student_call(convert_to_table, erdB1 )
+        self.assertTrue( dbB1a == actual_result or dbB1b == actual_result or dbB1c == actual_result or dbB1d == actual_result, \
+        "actual result matches one of four possible correct orderings" )
 
 
 # ERD-to-DB worksheet question 3 (simplified)
@@ -495,9 +530,6 @@ class TestCaseB2(unittest.TestCase):
                 set([(('a1',), 'R', ('a1',)), (('b2',), 'S', ('b2',)), (('c1',), 'T', ('c1',))]))])
 
         self.assertEqual( dbB2, wrap_student_call(convert_to_table, erdB2 ) )
-
-
-
 
 
 
