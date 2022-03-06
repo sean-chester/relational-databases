@@ -382,8 +382,8 @@ class TestCase20(unittest.TestCase):
             Relationship('VirtualIsALab',[],[])], \
             [EntitySet('Course', ['course_code', 'semester'], ['course_code','semester'], \
                 [('LabIsACourse', Multiplicity.ONE)], [], []), \
-            EntitySet('Lab', ['TA'], [], [('VirtualIsALab', Multiplicity.ONE)], ['LabIsACourse'], []), \
-            EntitySet('Virtual', ['zoom_link'], [], [], ['VirtualIsALab'], [])])
+            EntitySet('Lab', ['TA'], [], [('VirtualIsALab', Multiplicity.ONE)], ['Course'], []), \
+            EntitySet('Virtual', ['zoom_link'], [], [], ['Lab'], [])])
 
         db20a = Database([ \
             Table('Course', set(['course_code','semester']), set(['course_code','semester']), set()), \
