@@ -227,25 +227,25 @@ class TestCase12(unittest.TestCase):
         db12a = Database([ \
             Table('A', set(['a1','a2']), set(['a1','a2']), set()), \
             Table('B', set(['b1','b2']), set(['b1', 'b2']), set()), \
-            Table('R', set(['a1', 'b1', 'b2']), set(['a1', 'b1', 'b2']), \
+            Table('R', set(['a1', 'a2', 'b1', 'b2']), set(['a1', 'a2', 'b1', 'b2']), \
                 set([(('a1','a2'), 'A', ('a1','a2')), (('b1','b2'), 'B', ('b1','b2'))]))])
 
         db12b = Database([ \
             Table('A', set(['a1','a2']), set(['a1','a2']), set()), \
             Table('B', set(['b1','b2']), set(['b1', 'b2']), set()), \
-            Table('R', set(['a1', 'b1', 'b2']), set(['a1', 'b1', 'b2']), \
+            Table('R', set(['a1', 'a2', 'b1', 'b2']), set(['a1', 'a2', 'b1', 'b2']), \
                 set([(('a1','a2'), 'A', ('a1','a2')), (('b2','b1'), 'B', ('b2','b1'))]))])
 
         db12c = Database([ \
             Table('A', set(['a1','a2']), set(['a1','a2']), set()), \
             Table('B', set(['b1','b2']), set(['b1', 'b2']), set()), \
-            Table('R', set(['a1', 'b1', 'b2']), set(['a1', 'b1', 'b2']), \
+            Table('R', set(['a1', 'a2', 'b1', 'b2']), set(['a1', 'a2', 'b1', 'b2']), \
                 set([(('a2', 'a1'), 'A', ('a2', 'a1')), (('b1','b2'), 'B', ('b1','b2'))]))])
 
         db12d = Database([ \
             Table('A', set(['a1','a2']), set(['a1','a2']), set()), \
             Table('B', set(['b1','b2']), set(['b1', 'b2']), set()), \
-            Table('R', set(['a1', 'b1', 'b2']), set(['a1', 'b1', 'b2']), \
+            Table('R', set(['a1', 'a2', 'b1', 'b2']), set(['a1', 'a2', 'b1', 'b2']), \
                 set([(('a2','a1'), 'A', ('a2','a1')), (('b2','b1'), 'B', ('b2','b1'))]))])
 
         actual_result = wrap_student_call(convert_to_table, erd12 )
