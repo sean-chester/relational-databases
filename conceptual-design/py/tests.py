@@ -181,30 +181,67 @@ class TestCase10(unittest.TestCase):
         self.assertEqual( db10, wrap_student_call(convert_to_table, erd10 ) )
 
 
-# Not provided
+# Two entity sets, each with two attributes, both of which are PK attributes for one E.S.
+# Also a many-many relationship between them with no attributes
 class TestCase11(unittest.TestCase):
     def test_converter(self):
         erd11 = ERD( \
-            [], \
-            [])
+            [Relationship('R',[],[])], \
+            [EntitySet('A', ['a1', 'a2'], ['a1',], [('R', Multiplicity.MANY)], [], []), \
+            EntitySet('B', ['b1', 'b2'], ['b1', 'b2'], [('R', Multiplicity.MANY)], [], [])])
 
-        # Not provided
-        db11 = Database([])
+        db11a = Database([ \
+            Table('A', set(['a1','a2']), set(['a1',]), set()), \
+            Table('B', set(['b1','b2']), set(['b1', 'b2']), set()), \
+            Table('R', set(['a1', 'b1', 'b2']), set(['a1', 'b1', 'b2']), \
+                set([(('a1',), 'A', ('a1',)), (('b1','b2'), 'B', ('b1','b2'))]))])
 
-        self.assertEqual( db11, wrap_student_call(convert_to_table, erd11 ) )
+        db11b = Database([ \
+            Table('A', set(['a1','a2']), set(['a1',]), set()), \
+            Table('B', set(['b1','b2']), set(['b1', 'b2']), set()), \
+            Table('R', set(['a1', 'b1', 'b2']), set(['a1', 'b1', 'b2']), \
+                set([(('a1',), 'A', ('a1',)), (('b2','b1'), 'B', ('b2','b1'))]))])
+
+        actual_result = wrap_student_call(convert_to_table, erd11 )
+        self.assertTrue( ( db11a == actual_result ) or ( db11b == actual_result ), "Matches one of two valid orderings")
 
 
-# Not provided
+# Two entity sets, each with two attributes, both of which are PK attributes for both E.S.
+# Also a many-many relationship between them with no attributes
 class TestCase12(unittest.TestCase):
     def test_converter(self):
         erd12 = ERD( \
-            [], \
-            [])
+            [Relationship('R',[],[])], \
+            [EntitySet('A', ['a1', 'a2'], ['a1','a2'], [('R', Multiplicity.MANY)], [], []), \
+            EntitySet('B', ['b1', 'b2'], ['b1', 'b2'], [('R', Multiplicity.MANY)], [], [])])
 
-        # Not provided
-        db12 = Database([])
+        db12a = Database([ \
+            Table('A', set(['a1','a2']), set(['a1','a2']), set()), \
+            Table('B', set(['b1','b2']), set(['b1', 'b2']), set()), \
+            Table('R', set(['a1', 'b1', 'b2']), set(['a1', 'b1', 'b2']), \
+                set([(('a1','a2'), 'A', ('a1','a2')), (('b1','b2'), 'B', ('b1','b2'))]))])
 
-        self.assertEqual( db12, wrap_student_call(convert_to_table, erd12 ) )
+        db12b = Database([ \
+            Table('A', set(['a1','a2']), set(['a1','a2']), set()), \
+            Table('B', set(['b1','b2']), set(['b1', 'b2']), set()), \
+            Table('R', set(['a1', 'b1', 'b2']), set(['a1', 'b1', 'b2']), \
+                set([(('a1','a2'), 'A', ('a1','a2')), (('b2','b1'), 'B', ('b2','b1'))]))])
+
+        db12c = Database([ \
+            Table('A', set(['a1','a2']), set(['a1','a2']), set()), \
+            Table('B', set(['b1','b2']), set(['b1', 'b2']), set()), \
+            Table('R', set(['a1', 'b1', 'b2']), set(['a1', 'b1', 'b2']), \
+                set([(('a2', 'a1'), 'A', ('a2', 'a1')), (('b1','b2'), 'B', ('b1','b2'))]))])
+
+        db12d = Database([ \
+            Table('A', set(['a1','a2']), set(['a1','a2']), set()), \
+            Table('B', set(['b1','b2']), set(['b1', 'b2']), set()), \
+            Table('R', set(['a1', 'b1', 'b2']), set(['a1', 'b1', 'b2']), \
+                set([(('a2','a1'), 'A', ('a2','a1')), (('b2','b1'), 'B', ('b2','b1'))]))])
+
+        actual_result = wrap_student_call(convert_to_table, erd12 )
+        self.assertTrue( ( db12a == actual_result ) or ( db12b == actual_result ) \
+            or ( db12c == actual_result ) or ( db12d == actual_result ), "Matches one of four valid orderings")
 
 
 # Not provided
@@ -285,30 +322,65 @@ class TestCase18(unittest.TestCase):
         self.assertEqual( db18, wrap_student_call( convert_to_table, erd18 ) )
 
 
-# Not provided
+
+# An entity set inherits from a subclass
 class TestCase19(unittest.TestCase):
     def test_converter(self):
         erd19 = ERD( \
-            [], \
-            [])
+            [Relationship('LabIsACourse',[],[]), \
+            Relationship('VirtualIsALab',[],[])], \
+            [EntitySet('Course', ['crn', 'section'], ['crn',], [('LabIsACourse', Multiplicity.ONE)], [], []), \
+            EntitySet('Lab', [], [], [('VirtualIsALab', Multiplicity.ONE)], ['LabIsACourse'], []), \
+            EntitySet('Virtual', [], [], [], ['VirtualIsALab'], [])])
 
-        # Not provided
-        db19 = Database([])
+        db19 = Database([ \
+            Table('Course', set(['crn','section']), set(['crn',]), set()), \
+            Table('Lab', set(['crn',]), set(['crn',]), set([(('crn',), 'Course', ('crn',))])), \
+            Table('Virtual', set(['crn',]), set(['crn',]), set([(('crn',), 'Lab', ('crn',))]))])
 
-        self.assertEqual( db19, wrap_student_call(convert_to_table, erd19 ) )
 
-
-# Not provided
+# An entity set inherits from a subclass with a two-attribute PK
 class TestCase20(unittest.TestCase):
     def test_converter(self):
         erd20 = ERD( \
-            [], \
-            [])
+            [Relationship('LabIsACourse',[],[]), \
+            Relationship('VirtualIsALab',[],[])], \
+            [EntitySet('Course', ['course_code', 'semester'], ['course_code','semester'], \
+                [('LabIsACourse', Multiplicity.ONE)], [], []), \
+            EntitySet('Lab', ['TA'], [], [('VirtualIsALab', Multiplicity.ONE)], ['LabIsACourse'], []), \
+            EntitySet('Virtual', ['zoom_link'], [], [], ['VirtualIsALab'], [])])
 
-        # Not provided
-        db20 = Database([])
+        db20a = Database([ \
+            Table('Course', set(['course_code','semester']), set(['course_code','semester']), set()), \
+            Table('Lab', set(['course_code','semester','TA']), set(['course_code','semester']), \
+                set([(('course_code','semester'), 'Course', ('course_code','semester'))])), \
+            Table('Virtual', set(['course_code','semester','zoom_link']), set(['course_code','semester']), \
+                set([(('course_code','semester'), 'Lab', ('course_code','semester'))]))])
 
-        self.assertEqual( db20, wrap_student_call(convert_to_table, erd20 ) )
+        db20b = Database([ \
+            Table('Course', set(['course_code','semester']), set(['course_code','semester']), set()), \
+            Table('Lab', set(['course_code','semester','TA']), set(['course_code','semester']), \
+                set([(('course_code','semester'), 'Course', ('course_code','semester'))])), \
+            Table('Virtual', set(['course_code','semester','zoom_link']), set(['course_code','semester']), \
+                set([(('semester','course_code'), 'Lab', ('semester','course_code'))]))])
+
+        db20c = Database([ \
+            Table('Course', set(['course_code','semester']), set(['course_code','semester']), set()), \
+            Table('Lab', set(['course_code','semester','TA']), set(['course_code','semester']), \
+                set([(('semester','course_code'), 'Course', ('semester','course_code'))])), \
+            Table('Virtual', set(['course_code','semester','zoom_link']), set(['course_code','semester']), \
+                set([(('course_code','semester'), 'Lab', ('course_code','semester'))]))])
+
+        db20d = Database([ \
+            Table('Course', set(['course_code','semester']), set(['course_code','semester']), set()), \
+            Table('Lab', set(['course_code','semester','TA']), set(['course_code','semester']), \
+                set([(('semester','course_code'), 'Course', ('semester','course_code'))])), \
+            Table('Virtual', set(['course_code','semester','zoom_link']), set(['course_code','semester']), \
+                set([(('semester','course_code'), 'Lab', ('semester','course_code'))]))])
+
+        actual_result = wrap_student_call(convert_to_table, erd20 )
+        self.assertTrue( db20a == actual_result or db20b == actual_result or db20c == actual_result or db20d == actual_result, \
+        "actual result matches one of four possible correct orderings" )
 
 
 # A weak entity set is supported by a weak entity set,
