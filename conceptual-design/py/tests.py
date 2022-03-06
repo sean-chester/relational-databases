@@ -337,17 +337,24 @@ class TestCase17(unittest.TestCase):
         self.assertEqual( db17, wrap_student_call( convert_to_table, erd17 ) )
 
 
-# Not provided
+# A ternary relationship is provided.
+# Multiplicity of many-one-one
 class TestCase18(unittest.TestCase):
     def test_converter(self):
         erd18 = ERD( \
-            [], \
-            [])
+            [Relationship('Rel',[],[])], \
+            [EntitySet('R', ['a1', 'a2'], ['a1',], [('Rel', Multiplicity.MANY)], [], []), \
+            EntitySet('S', ['b1', 'b2'], ['b2',], [('Rel', Multiplicity.ONE)], [], []), \
+            EntitySet('T', ['c1', 'c2'], ['c1',], [('Rel', Multiplicity.ONE)], [], [])])
 
         # Not provided
-        db18 = Database([])
+        db18 = Database([ \
+            Table('R', set(['a1','a2','b2','c1']), set(['a1',]), \
+                set([(('b2',), 'S', ('b2',)), (('c1',), 'T', ('c1',))])), \
+            Table('S', set(['b1','b2']), set(['b2',]), set()), \
+            Table('T', set(['c1','c2']), set(['c1',]), set())])
 
-        self.assertEqual( db18, wrap_student_call( convert_to_table, erd18 ) )
+        self.assertEqual( db18, wrap_student_call(convert_to_table, erd18 ) )
 
 
 
@@ -430,18 +437,23 @@ class TestCaseB1(unittest.TestCase):
         self.assertEqual( dbB1, wrap_student_call(convert_to_table, erdB1 ) )
 
 
-# A ternary relationship is provided.
-# [Multiplicity not released.]. ERD below is just an example, and may or may not correspond to the actual test case.
+# ERD-to-DB worksheet question 3 (simplified)
+# Multiplicity of many-many-one.
 class TestCaseB2(unittest.TestCase):
     def test_converter(self):
         erdB2 = ERD( \
-            [Relationship('R',[],[])], \
-            [EntitySet('A', ['a1', 'a2'], ['a1', 'a2'], [('R', Multiplicity.MANY)], [], []), \
-            EntitySet('B', ['b1', 'b2'], ['b1'], [('R', Multiplicity.MANY)], [], []), \
-            EntitySet('C', ['c1', 'c2'], ['c1'], [('R', Multiplicity.ONE)], [], [])])
+            [Relationship('Rel',[],[])], \
+            [EntitySet('R', ['a1', 'a2'], ['a1',], [('Rel', Multiplicity.MANY)], [], []), \
+            EntitySet('S', ['b1', 'b2'], ['b2',], [('Rel', Multiplicity.MANY)], [], []), \
+            EntitySet('T', ['c1', 'c2'], ['c1',], [('Rel', Multiplicity.ONE)], [], [])])
 
         # Not provided
-        dbB2 = Database([])
+        dbB2 = Database([ \
+            Table('R', set(['a1','a2']), set(['a1',]), set()), \
+            Table('S', set(['b1','b2']), set(['b2',]), set()), \
+            Table('T', set(['c1','c2']), set(['c1',]), set()), \
+            Table('Rel', set(['a1','b2','c1']), set(['a1','b2']), \
+                set([(('a1',), 'R', ('a1',)), (('b2',), 'S', ('b2',)), (('c1',), 'T', ('c1',))]))])
 
         self.assertEqual( dbB2, wrap_student_call(convert_to_table, erdB2 ) )
 
