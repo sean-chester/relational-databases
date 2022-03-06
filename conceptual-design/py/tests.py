@@ -298,43 +298,73 @@ class TestCase14(unittest.TestCase):
         self.assertTrue( ( db14a == actual_result ) or ( db14b == actual_result ), "Matches one of two valid orderings")
 
 
-# Not provided
+# ERD-to-DB worksheet, question 6
+# Two many-one relationships chained together
 class TestCase15(unittest.TestCase):
     def test_converter(self):
         erd15 = ERD( \
-            [], \
-            [])
+            [Relationship('PaintedBy',['date_painted',],[]), \
+            Relationship('BornIn', ['date',], []) ], \
+            [EntitySet('Painting', ['painting_name',], ['painting_name',], [('PaintedBy', Multiplicity.MANY)], [], []), \
+            EntitySet('Artist', ['artist_name',], ['artist_name',], [('PaintedBy', Multiplicity.ONE), ('BornIn', Multiplicity.MANY)], [], []), \
+            EntitySet('City', ['city_name',], ['city_name',], [('BornIn', Multiplicity.ONE)], [], [])])
 
-        # Not provided
-        db15 = Database([])
+        db15 = Database([ \
+            Table('City', set(['city_name',]), set(['city_name',]), set()), \
+            Table('Artist', set(['artist_name','city_name', 'birthdate']), set(['artist_name',]), \
+                set([(('city_name',),'City',('city_name',))])), \
+            Table('Painting', set(['painting_name', 'artist_name', 'date_painted']), set(['painting_name',]), \
+                set([(('artist_name',), 'Artist', ('artist_name',))]))])
+
 
         self.assertEqual( db15, wrap_student_call(convert_to_table, erd15 ) )
 
 
-# Not provided
+# Surprise easy case
+# Two many-many relationships "chained" together
 class TestCase16(unittest.TestCase):
     def test_converter(self):
         erd16 = ERD( \
-            [], \
-            [])
+            [Relationship('PaintedBy',['date_painted',],[]), \
+            Relationship('ResidentOf', [], []) ], \
+            [EntitySet('Painting', ['painting_name',], ['painting_name',], [('PaintedBy', Multiplicity.MANY)], [], []), \
+            EntitySet('Artist', ['artist_name',], ['artist_name',], [('PaintedBy', Multiplicity.MANY), ('ResidentOf', Multiplicity.MANY)], [], []), \
+            EntitySet('City', ['city_name',], ['city_name',], [('ResidentOf', Multiplicity.MANY)], [], [])])
 
-        # Not provided
-        db16 = Database([])
+        db16 = Database([ \
+            Table('City', set(['city_name',]), set(['city_name',]), set()), \
+            Table('Artist', set(['artist_name']), set(['artist_name',]), set()), \
+            Table('Painting', set(['painting_name',]), set(['painting_name',]), set()), \
+            Table('PaintedBy', set(['painting_name','artist_name','date_painted']), set(['painting_name','artist_name']), \
+                set([(('artist_name',), 'Artist', ('artist_name',)), (('painting_name',),'Painting', ('painting_name',))])), \
+            Table('ResidentOf', set(['city_name','artist_name']), set(['city_name','artist_name']), \
+                set([(('artist_name',), 'Artist', ('artist_name',)), (('city_name',),'City', ('city_name',))]))])
 
         self.assertEqual( db16, wrap_student_call( convert_to_table, erd16 ) )
 
 
-# Not provided
+# Two entity sets, one of which is designated as a parent of the other
+# PK with two attributes
 class TestCase17(unittest.TestCase):
     def test_converter(self):
         erd17 = ERD( \
-            [], \
-            [])
+            [Relationship('ManagerIsAnEmployee',['dept'],[])], \
+            [EntitySet('Employee', ['start_date', 'employee_name'], ['start_date', 'employee_id'], \
+                [('ManagerIsAnEmployee', Multiplicity.ONE)], [], []), \
+            EntitySet('Manager', [], [], [], ['Employee'], [])])
 
-        # Not provided
-        db17 = Database([])
+        db17a = Database([ \
+            Table('Employee', set(['start_date','employee_name']), set(['start_date', 'employee_id']), set()), \
+            Table('Manager', set(['start_date', 'employee_name', 'dept']), set(['start_date', 'employee_name']), \
+                set([(('start_date', 'employee_name',), 'Employee', ('start_date', 'employee_name',))]))])
 
-        self.assertEqual( db17, wrap_student_call( convert_to_table, erd17 ) )
+        db17b = Database([ \
+            Table('Employee', set(['start_date','employee_name']), set(['start_date', 'employee_id']), set()), \
+            Table('Manager', set(['start_date', 'employee_name', 'dept']), set(['start_date', 'employee_name']), \
+                set([(('employee_name', 'start_date',), 'Employee', ('employee_name', 'start_date',))]))])
+
+        actual_result = wrap_student_call(convert_to_table, erd17 )
+        self.assertTrue( ( db17a == actual_result ) or ( db17b == actual_result ), "Matches one of two valid orderings")
 
 
 # A ternary relationship is provided.
