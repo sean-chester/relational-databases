@@ -244,30 +244,58 @@ class TestCase12(unittest.TestCase):
             or ( db12c == actual_result ) or ( db12d == actual_result ), "Matches one of four valid orderings")
 
 
-# Not provided
+# ERD-to-DB worksheet, Q1
+# many-one relationship with compound foreign key
 class TestCase13(unittest.TestCase):
     def test_converter(self):
         erd13 = ERD( \
-            [], \
-            [])
+            [Relationship('Contains',[],[])], \
+            [EntitySet('Room', ['room_name', 'floor'], ['room_name',], [('Contains', Multiplicity.MANY)], [], []), \
+            EntitySet('Building', ['latitude', 'longitude', 'building_name'], ['latitude', 'longitude'], \
+                [('Contains', Multiplicity.ONE)], [], [])])
 
-        # Not provided
-        db13 = Database([])
+        db13a = Database([ \
+            Table('Building', set(['latitude','longitude','building_name']), set(['latitude','longitude']), set()), \
+            Table('Room', set(['room_name', 'floor', 'latitude', 'longitude']), set(['room_name',]), \
+                set([(('latitude','longitude'), 'Building', ('latitude','longitude'))]))])
 
-        self.assertEqual( db13, wrap_student_call( convert_to_table, erd13 ) )
+        db13b = Database([ \
+            Table('Building', set(['latitude','longitude','building_name']), set(['latitude','longitude']), set()), \
+            Table('Room', set(['room_name', 'floor', 'latitude', 'longitude']), set(['room_name',]), \
+                set([(('longitude','latitude'), 'Building', ('longitude','latitude'))]))])
+
+        actual_result = wrap_student_call(convert_to_table, erd13 )
+        self.assertTrue( ( db13a == actual_result ) or ( db13b == actual_result ), "Matches one of two valid orderings")
 
 
-# Not provided
+# ERD-to-DB worksheet, question 2
+# many-many relationship with PK and one multi-attribute FK
 class TestCase14(unittest.TestCase):
     def test_converter(self):
         erd14 = ERD( \
-            [], \
-            [])
+            [Relationship('PlaysFor',['start_date','end_date'],['start_date',])], \
+            [EntitySet('Player', ['player_id', 'player_name'], ['player_id',], [('PlaysFor', Multiplicity.MANY)], [], []), \
+            EntitySet('Team', ['team_name', 'city', 'league'], ['team_name', 'city'], \
+                [('PlaysFor', Multiplicity.MANY)], [], [])])
 
-        # Not provided
-        db14 = Database([])
+        db14a = Database([ \
+            Table('Player', set(['player_id','player_name']), set(['player_id',]), set()), \
+            Table('Team', set(['city','team_name']), set(['city','team_name']), set()), \
+            Table('PlaysFor', set(['start_date', 'end_date', 'player_id', 'city', 'team_name']), \
+                set(['player_id','city','team_name','start_date']), \
+                set([(('player_id',), 'Player', ('player_id',)),\
+                    (('city','team_name'), 'Team', ('city','team_name'))]))])
 
-        self.assertEqual( db14, wrap_student_call(convert_to_table, erd14 ) )
+        db14b = Database([ \
+            Table('Player', set(['player_id','player_name']), set(['player_id',]), set()), \
+            Table('Team', set(['city','team_name']), set(['city','team_name']), set()), \
+            Table('PlaysFor', set(['start_date', 'end_date', 'player_id', 'city', 'team_name']), \
+                set(['player_id','city','team_name','start_date']), \
+                set([(('player_id',), 'Player', ('player_id',)),\
+                    (('team_name','city'), 'Team', ('team_name','city'))]))])
+
+        actual_result = wrap_student_call(convert_to_table, erd14 )
+        self.assertTrue( ( db14a == actual_result ) or ( db14b == actual_result ), "Matches one of two valid orderings")
 
 
 # Not provided
