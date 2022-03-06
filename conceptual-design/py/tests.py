@@ -62,8 +62,7 @@ class TestCase3(unittest.TestCase):
             [], \
             [EntitySet('A', ['a1', 'a2'], ['a1'], [], [], [])])
 
-		# Not provided
-		db3 = Database([])
+		db3 = Database([Table('A', set(['a1', 'a2']), set(['a1',]), set())])
 
 		self.assertEqual( db3, wrap_student_call( convert_to_table, erd3 ) )
 
@@ -113,8 +112,11 @@ class TestCase6(unittest.TestCase):
             [EntitySet('Customer', ['customer_id', 'customer_name'], ['customer_id'], [('ShopsAt', Multiplicity.MANY)], [], []), \
             EntitySet('Store', ['store_id', 'store_name'], ['store_id'], [('ShopsAt', Multiplicity.MANY)], [], [])])
 
-        # Not provided
-        db6 = Database([])
+        db6 = Database([ \
+            Table('Customer', set(['customer_id','customer_name']), set(['customer_id']), set()), \
+            Table('Store', set(['store_id','store_name']), set(['store_id']), set()), \
+            Table('ShopsAt', set(['customer_id','store_id', 'date', 'purchase_amount']), set(['customer_id','store_id', 'date']), \
+                set([(('customer_id',), 'Customer', ('customer_id',)), (('store_id',), 'Store', ('store_id',))]))])
 
         self.assertEqual( db6, wrap_student_call(convert_to_table, erd6 ) )
 
@@ -128,8 +130,10 @@ class TestCase7(unittest.TestCase):
             [EntitySet('Customer', ['customer_id', 'customer_name'], ['customer_id'], [('Prefers', Multiplicity.MANY)], [], []), \
             EntitySet('Store', ['store_id', 'store_name'], ['store_id'], [('Prefers', Multiplicity.ONE)], [], [])])
 
-        # Not provided
-        db7 = Database([])
+        db7 = Database([ \
+            Table('Customer', set(['customer_id','customer_name','store_id']), set(['customer_id']), \
+                set([(('store_id',), 'Store', ('store_id',))])), \
+            Table('Store', set(['store_id','store_name']), set(['store_id']), set())])
 
         self.assertEqual( db7, wrap_student_call( convert_to_table, erd7 ) )
 
@@ -143,8 +147,11 @@ class TestCase8(unittest.TestCase):
             [EntitySet('Customer', ['customer_id', 'customer_name'], ['customer_id'], [('Prefers', Multiplicity.MANY)], [], []), \
             EntitySet('Store', ['store_id', 'store_name'], ['store_id'], [('Prefers', Multiplicity.ONE)], [], [])])
 
-        # Not provided
-        db8 = Database([])
+        db8 = Database([ \
+            Table('Customer', set(['customer_id','customer_name']), set(['customer_id']), set()), \
+            Table('Store', set(['store_id','store_name']), set(['store_id']), set()), \
+            Table('Prefers', set(['customer_id','store_id', 'since']), set(['customer_id','since']), \
+                set([(('customer_id',), 'Customer', ('customer_id',)), (('store_id',), 'Store', ('store_id',))]))])
 
         self.assertEqual( db8, wrap_student_call( convert_to_table, erd8 ) )
 
@@ -175,8 +182,10 @@ class TestCase10(unittest.TestCase):
             [EntitySet('Building', ['building_id', 'building_name'], ['building_id'], [('FoundIn', Multiplicity.ONE)], [], []), \
             EntitySet('Room', ['room_number', 'max_capacity'], ['room_number'], [], [], ['FoundIn'])])
 
-        # Not provided
-        db10 = Database([])
+        db10 = Database([ \
+            Table('Building', set(['building_id','building_name']), set(['building_id']), set()), \
+            Table('Room', set(['building_id','room_number','max_capacity']), set(['building_id','room_number']), \
+                set([(('building_id',), 'Building', ('building_id',))]))])
 
         self.assertEqual( db10, wrap_student_call(convert_to_table, erd10 ) )
 
@@ -377,7 +386,6 @@ class TestCase18(unittest.TestCase):
             EntitySet('S', ['b1', 'b2'], ['b2',], [('Rel', Multiplicity.ONE)], [], []), \
             EntitySet('T', ['c1', 'c2'], ['c1',], [('Rel', Multiplicity.ONE)], [], [])])
 
-        # Not provided
         db18 = Database([ \
             Table('R', set(['a1','a2','b2','c1']), set(['a1',]), \
                 set([(('b2',), 'S', ('b2',)), (('c1',), 'T', ('c1',))])), \
@@ -402,6 +410,8 @@ class TestCase19(unittest.TestCase):
             Table('Course', set(['crn','section']), set(['crn',]), set()), \
             Table('Lab', set(['crn',]), set(['crn',]), set([(('crn',), 'Course', ('crn',))])), \
             Table('Virtual', set(['crn',]), set(['crn',]), set([(('crn',), 'Lab', ('crn',))]))])
+
+        self.assertEqual( db19, wrap_student_call(convert_to_table, erd19 ) )
 
 
 # An entity set inherits from a subclass with a two-attribute PK
@@ -477,7 +487,6 @@ class TestCaseB2(unittest.TestCase):
             EntitySet('S', ['b1', 'b2'], ['b2',], [('Rel', Multiplicity.MANY)], [], []), \
             EntitySet('T', ['c1', 'c2'], ['c1',], [('Rel', Multiplicity.ONE)], [], [])])
 
-        # Not provided
         dbB2 = Database([ \
             Table('R', set(['a1','a2']), set(['a1',]), set()), \
             Table('S', set(['b1','b2']), set(['b2',]), set()), \
