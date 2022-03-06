@@ -4,6 +4,19 @@ from erd_converter import convert_to_table
 
 import unittest
 
+def wrap_student_call( func, input ) :
+    actual_result = func( input )
+
+    Table.__eq__ = lambda self,other : self.name == other.name and \
+        self.attributes == other.attributes and \
+        self.primary_key == other.primary_key and \
+        self.foreign_keys== other.foreign_keys
+    Database.__eq__ = lambda self,other : set( self.tables ) == set( other.tables )
+
+    return actual_result
+
+
+
 # Check that the `__eq__` function works correctly on the sample table
 # Not included in assignment test cases
 class TestEquality(unittest.TestCase):
@@ -26,7 +39,7 @@ class TestCase1(unittest.TestCase):
 		db1 = Database([ \
 			Table('A', set(['a1']), set(['a1']), set())])
 
-		self.assertEqual( db1, convert_to_table( erd1 ) )
+		self.assertEqual( db1, wrap_student_call( convert_to_table, erd1 ) )
 
 
 # Single entity set with two attributes, which are both part of the PK
@@ -39,7 +52,7 @@ class TestCase2(unittest.TestCase):
         db2 = Database([ \
             Table('A', set(['a1', 'a2']), set(['a1', 'a2']), set())])
 
-        self.assertEqual( db2, convert_to_table( erd2 ) )
+        self.assertEqual( db2, wrap_student_call( convert_to_table, erd2 ) )
 
 
 # Single entity set with two attributes, in which only one is part of the PK
@@ -52,7 +65,7 @@ class TestCase3(unittest.TestCase):
 		# Not provided
 		db3 = Database([])
 
-		self.assertEqual( db3, convert_to_table( erd3 ) )
+		self.assertEqual( db3, wrap_student_call( convert_to_table, erd3 ) )
 
 
 # Two entity sets, each with two attributes, one of which is the PK attribute.
@@ -70,7 +83,7 @@ class TestCase4(unittest.TestCase):
 			Table('ShopsAt', set(['customer_id','store_id']), set(['customer_id','store_id']), \
                 set([(('customer_id',), 'Customer', ('customer_id',)), (('store_id',), 'Store', ('store_id',))]))])
 
-		self.assertEqual( db4, convert_to_table( erd4 ) )
+		self.assertEqual( db4, wrap_student_call( convert_to_table, erd4 ) )
 
 
 # Two entity sets, each with two attributes, one of which is the PK attribute.
@@ -88,7 +101,7 @@ class TestCase5(unittest.TestCase):
             Table('ShopsAt', set(['customer_id','store_id', 'date']), set(['customer_id','store_id', 'date']), \
                 set([(('customer_id',), 'Customer', ('customer_id',)), (('store_id',), 'Store', ('store_id',))]))])
 
-        self.assertEqual( db5, convert_to_table( erd5 ) )
+        self.assertEqual( db5, wrap_student_call(convert_to_table, erd5 ) )
 
 
 # Two entity sets, each with two attributes, one of which is the PK attribute.
@@ -103,7 +116,7 @@ class TestCase6(unittest.TestCase):
         # Not provided
         db6 = Database([])
 
-        self.assertEqual( db6, convert_to_table( erd6 ) )
+        self.assertEqual( db6, wrap_student_call(convert_to_table, erd6 ) )
 
 
 # Two entity sets, each with two attributes, one of which is the PK attribute.
@@ -118,7 +131,7 @@ class TestCase7(unittest.TestCase):
         # Not provided
         db7 = Database([])
 
-        self.assertEqual( db7, convert_to_table( erd7 ) )
+        self.assertEqual( db7, wrap_student_call( convert_to_table, erd7 ) )
 
 
 # Two entity sets, each with two attributes, one of which is the PK attribute.
@@ -133,7 +146,7 @@ class TestCase8(unittest.TestCase):
         # Not provided
         db8 = Database([])
 
-        self.assertEqual( db8, convert_to_table( erd8 ) )
+        self.assertEqual( db8, wrap_student_call( convert_to_table, erd8 ) )
 
 
 # Two entity sets, one of which is designated as a parent of the other.
@@ -149,7 +162,7 @@ class TestCase9(unittest.TestCase):
             Table('Manager', set(['employee_id']), set(['employee_id']), \
                 set([(('employee_id',), 'Employee', ('employee_id',))]))])
 
-        self.assertEqual( db9, convert_to_table( erd9 ) )
+        self.assertEqual( db9, wrap_student_call(convert_to_table, erd9 ) )
 
 
 # Two entity sets, each with two attributes, one of which is the PK attribute.
@@ -165,7 +178,7 @@ class TestCase10(unittest.TestCase):
         # Not provided
         db10 = Database([])
 
-        self.assertEqual( db10, convert_to_table( erd10 ) )
+        self.assertEqual( db10, wrap_student_call(convert_to_table, erd10 ) )
 
 
 # Not provided
@@ -178,7 +191,7 @@ class TestCase11(unittest.TestCase):
         # Not provided
         db11 = Database([])
 
-        self.assertEqual( db11, convert_to_table( erd11 ) )
+        self.assertEqual( db11, wrap_student_call(convert_to_table, erd11 ) )
 
 
 # Not provided
@@ -191,7 +204,7 @@ class TestCase12(unittest.TestCase):
         # Not provided
         db12 = Database([])
 
-        self.assertEqual( db12, convert_to_table( erd12 ) )
+        self.assertEqual( db12, wrap_student_call(convert_to_table, erd12 ) )
 
 
 # Not provided
@@ -204,7 +217,7 @@ class TestCase13(unittest.TestCase):
         # Not provided
         db13 = Database([])
 
-        self.assertEqual( db13, convert_to_table( erd13 ) )
+        self.assertEqual( db13, wrap_student_call( convert_to_table, erd13 ) )
 
 
 # Not provided
@@ -217,7 +230,7 @@ class TestCase14(unittest.TestCase):
         # Not provided
         db14 = Database([])
 
-        self.assertEqual( db14, convert_to_table( erd14 ) )
+        self.assertEqual( db14, wrap_student_call(convert_to_table, erd14 ) )
 
 
 # Not provided
@@ -230,7 +243,7 @@ class TestCase15(unittest.TestCase):
         # Not provided
         db15 = Database([])
 
-        self.assertEqual( db15, convert_to_table( erd15 ) )
+        self.assertEqual( db15, wrap_student_call(convert_to_table, erd15 ) )
 
 
 # Not provided
@@ -243,7 +256,7 @@ class TestCase16(unittest.TestCase):
         # Not provided
         db16 = Database([])
 
-        self.assertEqual( db16, convert_to_table( erd16 ) )
+        self.assertEqual( db16, wrap_student_call( convert_to_table, erd16 ) )
 
 
 # Not provided
@@ -256,7 +269,7 @@ class TestCase17(unittest.TestCase):
         # Not provided
         db17 = Database([])
 
-        self.assertEqual( db17, convert_to_table( erd17 ) )
+        self.assertEqual( db17, wrap_student_call( convert_to_table, erd17 ) )
 
 
 # Not provided
@@ -269,7 +282,7 @@ class TestCase18(unittest.TestCase):
         # Not provided
         db18 = Database([])
 
-        self.assertEqual( db18, convert_to_table( erd18 ) )
+        self.assertEqual( db18, wrap_student_call( convert_to_table, erd18 ) )
 
 
 # Not provided
@@ -282,7 +295,7 @@ class TestCase19(unittest.TestCase):
         # Not provided
         db19 = Database([])
 
-        self.assertEqual( db19, convert_to_table( erd19 ) )
+        self.assertEqual( db19, wrap_student_call(convert_to_table, erd19 ) )
 
 
 # Not provided
@@ -295,7 +308,7 @@ class TestCase20(unittest.TestCase):
         # Not provided
         db20 = Database([])
 
-        self.assertEqual( db20, convert_to_table( erd20 ) )
+        self.assertEqual( db20, wrap_student_call(convert_to_table, erd20 ) )
 
 
 # A weak entity set is supported by a weak entity set,
@@ -314,7 +327,7 @@ class TestCaseB1(unittest.TestCase):
         # Not provided
         dbB1 = Database([])
 
-        self.assertEqual( dbB1, convert_to_table( erdB1 ) )
+        self.assertEqual( dbB1, wrap_student_call(convert_to_table, erdB1 ) )
 
 
 # A ternary relationship is provided.
@@ -330,7 +343,7 @@ class TestCaseB2(unittest.TestCase):
         # Not provided
         dbB2 = Database([])
 
-        self.assertEqual( dbB2, convert_to_table( erdB2 ) )
+        self.assertEqual( dbB2, wrap_student_call(convert_to_table, erdB2 ) )
 
 
 
