@@ -289,7 +289,7 @@ class TestCase14(unittest.TestCase):
 
         db14a = Database([ \
             Table('Player', set(['player_id','player_name']), set(['player_id',]), set()), \
-            Table('Team', set(['city','team_name']), set(['city','team_name']), set()), \
+            Table('Team', set(['city','team_name', 'league']), set(['city','team_name']), set()), \
             Table('PlaysFor', set(['start_date', 'end_date', 'player_id', 'city', 'team_name']), \
                 set(['player_id','city','team_name','start_date']), \
                 set([(('player_id',), 'Player', ('player_id',)),\
@@ -313,7 +313,7 @@ class TestCase15(unittest.TestCase):
     def test_converter(self):
         erd15 = ERD( \
             [Relationship('PaintedBy',['date_painted',],[]), \
-            Relationship('BornIn', ['date',], []) ], \
+            Relationship('BornIn', ['birthdate',], []) ], \
             [EntitySet('Painting', ['painting_name',], ['painting_name',], [('PaintedBy', Multiplicity.MANY)], [], []), \
             EntitySet('Artist', ['artist_name',], ['artist_name',], [('PaintedBy', Multiplicity.ONE), ('BornIn', Multiplicity.MANY)], [], []), \
             EntitySet('City', ['city_name',], ['city_name',], [('BornIn', Multiplicity.ONE)], [], [])])
@@ -358,17 +358,17 @@ class TestCase17(unittest.TestCase):
     def test_converter(self):
         erd17 = ERD( \
             [Relationship('ManagerIsAnEmployee',['dept'],[])], \
-            [EntitySet('Employee', ['start_date', 'employee_name'], ['start_date', 'employee_id'], \
+            [EntitySet('Employee', ['start_date', 'employee_name'], ['start_date', 'employee_name'], \
                 [('ManagerIsAnEmployee', Multiplicity.ONE)], [], []), \
             EntitySet('Manager', [], [], [], ['Employee'], [])])
 
         db17a = Database([ \
-            Table('Employee', set(['start_date','employee_name']), set(['start_date', 'employee_id']), set()), \
+            Table('Employee', set(['start_date','employee_name']), set(['start_date', 'employee_name']), set()), \
             Table('Manager', set(['start_date', 'employee_name', 'dept']), set(['start_date', 'employee_name']), \
                 set([(('start_date', 'employee_name',), 'Employee', ('start_date', 'employee_name',))]))])
 
         db17b = Database([ \
-            Table('Employee', set(['start_date','employee_name']), set(['start_date', 'employee_id']), set()), \
+            Table('Employee', set(['start_date','employee_name']), set(['start_date', 'employee_name']), set()), \
             Table('Manager', set(['start_date', 'employee_name', 'dept']), set(['start_date', 'employee_name']), \
                 set([(('employee_name', 'start_date',), 'Employee', ('employee_name', 'start_date',))]))])
 
@@ -403,8 +403,8 @@ class TestCase19(unittest.TestCase):
             [Relationship('LabIsACourse',[],[]), \
             Relationship('VirtualIsALab',[],[])], \
             [EntitySet('Course', ['crn', 'section'], ['crn',], [('LabIsACourse', Multiplicity.ONE)], [], []), \
-            EntitySet('Lab', [], [], [('VirtualIsALab', Multiplicity.ONE)], ['LabIsACourse'], []), \
-            EntitySet('Virtual', [], [], [], ['VirtualIsALab'], [])])
+            EntitySet('Lab', [], [], [('VirtualIsALab', Multiplicity.ONE)], ['Course'], []), \
+            EntitySet('Virtual', [], [], [], ['Lab'], [])])
 
         db19 = Database([ \
             Table('Course', set(['crn','section']), set(['crn',]), set()), \
