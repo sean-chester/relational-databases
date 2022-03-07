@@ -297,7 +297,7 @@ class TestCase14(unittest.TestCase):
 
         db14b = Database([ \
             Table('Player', set(['player_id','player_name']), set(['player_id',]), set()), \
-            Table('Team', set(['city','team_name']), set(['city','team_name']), set()), \
+            Table('Team', set(['city','team_name','league']), set(['city','team_name']), set()), \
             Table('PlaysFor', set(['start_date', 'end_date', 'player_id', 'city', 'team_name']), \
                 set(['player_id','city','team_name','start_date']), \
                 set([(('player_id',), 'Player', ('player_id',)),\
