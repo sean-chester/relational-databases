@@ -680,35 +680,185 @@ class ImplementMeTest {
     }
 
     @Test
-    @DisplayName("Not pre-released")
+    @DisplayName("A many-many relationship using a 2-attribute FK")
     @Timeout(value = 10, unit = TimeUnit.SECONDS)
     void case11() {
         ImplementMe myImplementation = new ImplementMe();
 
         // Input ERD object
-        // Not provided
         ERD input_erd = new ERD();
 
+        input_erd.relationships = new RelationshipList(List.of(
+                new Relationship(
+                        "R",
+                        new AttributeSet(),
+                        new Key()
+        )));
+        input_erd.entitySets = new EntitySetList(List.of(
+                new EntitySet(
+                        "A", // name
+                        new AttributeSet(List.of( // attributes
+                                new Attribute("a1"),
+                                new Attribute("a2"))),
+                        new Key(new AttributeSet(List.of(
+                                new Attribute("a1")))), // primary key
+                        new ConnectionList(List.of(
+                                new Connection(input_erd.relationships.get(0), Multiplicity.MANY))), // connections
+                        new ParentList(), // parents = empty
+                        new SupportingRelationshipList() 
+                ),
+                new EntitySet(
+                        "B", // name
+                        new AttributeSet(List.of( // attributes
+                                new Attribute("b1"),
+                                new Attribute("b2"))),
+                        new Key(new AttributeSet(List.of(
+                                new Attribute("b1"),
+                                new Attribute("b2")))), // primary key
+                        new ConnectionList(List.of(
+                                new Connection(input_erd.relationships.get(0), Multiplicity.MANY))), // connections
+                        new ParentList(), // parents
+                        new SupportingRelationshipList()
+                )));
+
         // Actual DB object
-        // Not provided
         Database db = new Database();
+        db.add( new Table( "A",
+                            new AttributeSet(List.of(
+                                new Attribute("a1"),
+                                new Attribute("a2"))),
+                            new Key(new AttributeSet(List.of(
+                                new Attribute("a1")))),
+                            new ForeignKeySet()
+        ));
+        db.add( new Table( "B",
+                            new AttributeSet(List.of(
+                                new Attribute("b1"),
+                                new Attribute("b2"))),
+                            new Key(new AttributeSet(List.of(
+                                new Attribute("b1"),
+                                new Attribute("b2")))),
+                            new ForeignKeySet()
+        ));
+        db.add( new Table( "R",
+                            new AttributeSet(List.of(
+                                new Attribute("a1"),
+                                new Attribute("b1"),
+                                new Attribute("b2"))),
+                            new Key(new AttributeSet(List.of(
+                                new Attribute("a1"),
+                                new Attribute("b1"),
+                                new Attribute("b2")))),
+                            new ForeignKeySet(List.of(
+                                new ForeignKey(
+                                        new AttributeSet(List.of(new Attribute("a1"))),
+                                        db.get(0),
+                                        new AttributeSet(List.of(new Attribute("a1")))),
+                                new ForeignKey(
+                                        new AttributeSet(List.of(
+                                                new Attribute("b1"),
+                                                new Attribute("b2"))),
+                                        db.get(1),
+                                        new AttributeSet(List.of(
+                                                new Attribute("b1"),
+                                                new Attribute("b2"))))))
+        ));
 
         assertEquals(db, myImplementation.convertToDatabase(input_erd));
     }
 
     @Test
-    @DisplayName("Not pre-released")
+    @DisplayName("A many-many relationship using two 2-attribute FK's")
     @Timeout(value = 10, unit = TimeUnit.SECONDS)
     void case12() {
         ImplementMe myImplementation = new ImplementMe();
 
         // Input ERD object
-        // Not provided
         ERD input_erd = new ERD();
 
+        input_erd.relationships = new RelationshipList(List.of(
+                new Relationship(
+                        "R",
+                        new AttributeSet(),
+                        new Key()
+        )));
+        input_erd.entitySets = new EntitySetList(List.of(
+                new EntitySet(
+                        "A", // name
+                        new AttributeSet(List.of( // attributes
+                                new Attribute("a1"),
+                                new Attribute("a2"))),
+                        new Key(new AttributeSet(List.of(
+                                new Attribute("a1"),
+                                new Attribute("a2")))), // primary key
+                        new ConnectionList(List.of(
+                                new Connection(input_erd.relationships.get(0), Multiplicity.MANY))), // connections
+                        new ParentList(), // parents = empty
+                        new SupportingRelationshipList() 
+                ),
+                new EntitySet(
+                        "B", // name
+                        new AttributeSet(List.of( // attributes
+                                new Attribute("b1"),
+                                new Attribute("b2"))),
+                        new Key(new AttributeSet(List.of(
+                                new Attribute("b1"),
+                                new Attribute("b2")))), // primary key
+                        new ConnectionList(List.of(
+                                new Connection(input_erd.relationships.get(0), Multiplicity.MANY))), // connections
+                        new ParentList(), // parents
+                        new SupportingRelationshipList()
+                )));
+
         // Actual DB object
-        // Not provided
         Database db = new Database();
+        db.add( new Table( "A",
+                            new AttributeSet(List.of(
+                                new Attribute("a1"),
+                                new Attribute("a2"))),
+                            new Key(new AttributeSet(List.of(
+                                new Attribute("a1"),
+                                new Attribute("a2")))),
+                            new ForeignKeySet()
+        ));
+        db.add( new Table( "B",
+                            new AttributeSet(List.of(
+                                new Attribute("b1"),
+                                new Attribute("b2"))),
+                            new Key(new AttributeSet(List.of(
+                                new Attribute("b1"),
+                                new Attribute("b2")))),
+                            new ForeignKeySet()
+        ));
+        db.add( new Table( "R",
+                            new AttributeSet(List.of(
+                                new Attribute("a1"),
+                                new Attribute("a2"),
+                                new Attribute("b1"),
+                                new Attribute("b2"))),
+                            new Key(new AttributeSet(List.of(
+                                new Attribute("a1"),
+                                new Attribute("a2"),
+                                new Attribute("b1"),
+                                new Attribute("b2")))),
+                            new ForeignKeySet(List.of(
+                                new ForeignKey(
+                                        new AttributeSet(List.of(
+                                                new Attribute("a1"),
+                                                new Attribute("a2"))),
+                                        db.get(0),
+                                        new AttributeSet(List.of(
+                                                new Attribute("a1"),
+                                                new Attribute("a2")))),
+                                new ForeignKey(
+                                        new AttributeSet(List.of(
+                                                new Attribute("b1"),
+                                                new Attribute("b2"))),
+                                        db.get(1),
+                                        new AttributeSet(List.of(
+                                                new Attribute("b1"),
+                                                new Attribute("b2"))))))
+        ));
 
         assertEquals(db, myImplementation.convertToDatabase(input_erd));
     }
