@@ -120,8 +120,19 @@ class ImplementMeTest {
                 )));
 
         // Actual DB object
-        // Not provided
+        Table firstTable = new Table();
+        firstTable.name = "A";
+        firstTable.attributes = new AttributeSet(List.of(
+                new Attribute("a1"),
+                new Attribute("a2")
+        ));
+        firstTable.primaryKey = new Key(new AttributeSet(List.of(
+                new Attribute("a1")
+        )));
+        firstTable.foreignKeys = new ForeignKeySet(); // empty fk set
+
         Database db = new Database();
+        db.add(firstTable);
 
         assertEquals(db, myImplementation.convertToDatabase(input_erd));
     }
@@ -339,8 +350,45 @@ class ImplementMeTest {
                 )));
 
         // Actual DB object
-        // Not provided
         Database db = new Database();
+        db.add( new Table( "Customer",
+                            new AttributeSet(List.of(
+                                new Attribute("customer_id"),
+                                new Attribute("customer_name"))),
+                            new Key(new AttributeSet(List.of(
+                                new Attribute("customer_id")))),
+                            new ForeignKeySet()
+        ));
+        db.add( new Table( "Store",
+                            new AttributeSet(List.of(
+                                new Attribute("store_id"),
+                                new Attribute("store_name"))),
+                            new Key(new AttributeSet(List.of(
+                                new Attribute("store_id")))),
+                            new ForeignKeySet()
+        ));
+        db.add( new Table( "ShopsAt",
+                            new AttributeSet(List.of(
+                                new Attribute("store_id"),
+                                new Attribute("customer_id"),
+                                new Attribute("purchase_amount"),
+                                new Attribute("date"))),
+                            new Key(new AttributeSet(List.of(
+                                new Attribute("store_id"),
+                                new Attribute("customer_id"),
+                                new Attribute("date")))),
+                            new ForeignKeySet(List.of(
+                                new ForeignKey(
+                                        new AttributeSet(List.of(new Attribute("store_id"))),
+                                        db.get(1),
+                                        new AttributeSet(List.of(new Attribute("store_id")))
+                                ),
+                                new ForeignKey(
+                                        new AttributeSet(List.of(new Attribute("customer_id"))),
+                                        db.get(0),
+                                        new AttributeSet(List.of(new Attribute("customer_id")))
+                                )))
+        ));
 
         assertEquals(db, myImplementation.convertToDatabase(input_erd));
     }
@@ -387,8 +435,29 @@ class ImplementMeTest {
                 )));
 
         // Actual DB object
-        // Not provided
         Database db = new Database();
+        db.add( new Table( "Store",
+                            new AttributeSet(List.of(
+                                new Attribute("store_id"),
+                                new Attribute("store_name"))),
+                            new Key(new AttributeSet(List.of(
+                                new Attribute("store_id")))),
+                            new ForeignKeySet()
+        ));
+        db.add( new Table( "Customer",
+                            new AttributeSet(List.of(
+                                new Attribute("store_id"),
+                                new Attribute("customer_id"),
+                                new Attribute("customer_name"))),
+                            new Key(new AttributeSet(List.of(
+                                new Attribute("customer_id")))),
+                            new ForeignKeySet(List.of(
+                                new ForeignKey(
+                                        new AttributeSet(List.of(new Attribute("store_id"))),
+                                        db.get(0),
+                                        new AttributeSet(List.of(new Attribute("store_id")))
+                                )))
+        ));
 
         assertEquals(db, myImplementation.convertToDatabase(input_erd));
     }
@@ -437,8 +506,43 @@ class ImplementMeTest {
                 )));
 
         // Actual DB object
-        // Not provided
         Database db = new Database();
+        db.add( new Table( "Customer",
+                            new AttributeSet(List.of(
+                                new Attribute("customer_id"),
+                                new Attribute("customer_name"))),
+                            new Key(new AttributeSet(List.of(
+                                new Attribute("customer_id")))),
+                            new ForeignKeySet()
+        ));
+        db.add( new Table( "Store",
+                            new AttributeSet(List.of(
+                                new Attribute("store_id"),
+                                new Attribute("store_name"))),
+                            new Key(new AttributeSet(List.of(
+                                new Attribute("store_id")))),
+                            new ForeignKeySet()
+        ));
+        db.add( new Table( "Prefers",
+                            new AttributeSet(List.of(
+                                new Attribute("store_id"),
+                                new Attribute("customer_id"),
+                                new Attribute("since"))),
+                            new Key(new AttributeSet(List.of(
+                                new Attribute("store_id"),
+                                new Attribute("since")))),
+                            new ForeignKeySet(List.of(
+                                new ForeignKey(
+                                        new AttributeSet(List.of(new Attribute("store_id"))),
+                                        db.get(1),
+                                        new AttributeSet(List.of(new Attribute("store_id")))
+                                ),
+                                new ForeignKey(
+                                        new AttributeSet(List.of(new Attribute("customer_id"))),
+                                        db.get(0),
+                                        new AttributeSet(List.of(new Attribute("customer_id")))
+                                )))
+        ));
 
         assertEquals(db, myImplementation.convertToDatabase(input_erd));
     }
@@ -547,8 +651,30 @@ class ImplementMeTest {
                 )));
 
         // Actual DB object
-        // Not provided
         Database db = new Database();
+        db.add( new Table( "Building",
+                            new AttributeSet(List.of(
+                                new Attribute("building_id"),
+                                new Attribute("building_name"))),
+                            new Key(new AttributeSet(List.of(
+                                new Attribute("building_id")))),
+                            new ForeignKeySet()
+        ));
+        db.add( new Table( "Room",
+                            new AttributeSet(List.of(
+                                new Attribute("building_id"),
+                                new Attribute("room_number"),
+                                new Attribute("max_capacity"))),
+                            new Key(new AttributeSet(List.of(
+                                new Attribute("building_id"),
+                                new Attribute("room_number")))),
+                            new ForeignKeySet(List.of(
+                                new ForeignKey(
+                                        new AttributeSet(List.of(new Attribute("building_id"))),
+                                        db.get(0),
+                                        new AttributeSet(List.of(new Attribute("building_id")))
+                                )))
+        ));
 
         assertEquals(db, myImplementation.convertToDatabase(input_erd));
     }
