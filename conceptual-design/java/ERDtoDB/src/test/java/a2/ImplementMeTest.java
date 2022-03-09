@@ -864,24 +864,84 @@ class ImplementMeTest {
     }
 
     @Test
-    @DisplayName("Not pre-released")
+    @DisplayName("A many-one relationship with a two-attribute foreign key")
     @Timeout(value = 10, unit = TimeUnit.SECONDS)
     void case13() {
         ImplementMe myImplementation = new ImplementMe();
 
         // Input ERD object
-        // Not provided
         ERD input_erd = new ERD();
 
+        input_erd.relationships = new RelationshipList(List.of(
+                new Relationship(
+                        "Contains",
+                        new AttributeSet(),
+                        new Key()
+        )));
+        input_erd.entitySets = new EntitySetList(List.of(
+                new EntitySet(
+                        "Room", // name
+                        new AttributeSet(List.of( // attributes
+                                new Attribute("room_name"),
+                                new Attribute("floor"))),
+                        new Key(new AttributeSet(List.of(
+                                new Attribute("room_name")))), // primary key
+                        new ConnectionList(List.of(
+                                new Connection(input_erd.relationships.get(0), Multiplicity.MANY))), // connections
+                        new ParentList(), // parents = empty
+                        new SupportingRelationshipList() 
+                ),
+                new EntitySet(
+                        "Building", // name
+                        new AttributeSet(List.of( // attributes
+                                new Attribute("latitude"),
+                                new Attribute("longitude"),
+                                new Attribute("building_name"))),
+                        new Key(new AttributeSet(List.of(
+                                new Attribute("latitude"),
+                                new Attribute("longitude")))), // primary key
+                        new ConnectionList(List.of(
+                                new Connection(input_erd.relationships.get(0), Multiplicity.ONE))), // connections
+                        new ParentList(), // parents
+                        new SupportingRelationshipList()
+                )));
+
         // Actual DB object
-        // Not provided
         Database db = new Database();
+        db.add( new Table( "Building",
+                            new AttributeSet(List.of(
+                                new Attribute("latitude"),
+                                new Attribute("longitude"),
+                                new Attribute("building_name"))),
+                            new Key(new AttributeSet(List.of(
+                                new Attribute("latitude"),
+                                new Attribute("longitude")))),
+                            new ForeignKeySet()
+        ));
+        db.add( new Table( "Room",
+                            new AttributeSet(List.of(
+                                new Attribute("room_name"),
+                                new Attribute("floor"),
+                                new Attribute("latitude"),
+                                new Attribute("longitude"))),
+                            new Key(new AttributeSet(List.of(
+                                new Attribute("room_name")))),
+                            new ForeignKeySet(List.of(
+                                new ForeignKey(
+                                        new AttributeSet(List.of(
+                                                new Attribute("latitude"),
+                                                new Attribute("longitude"))),
+                                        db.get(0),
+                                        new AttributeSet(List.of(
+                                                new Attribute("latitude"),
+                                                new Attribute("longitude"))))))
+        ));
 
         assertEquals(db, myImplementation.convertToDatabase(input_erd));
     }
 
     @Test
-    @DisplayName("Not pre-released")
+    @DisplayName("A many-many relationship with a PK and one two-attribute FK")
     @Timeout(value = 10, unit = TimeUnit.SECONDS)
     void case14() {
         ImplementMe myImplementation = new ImplementMe();
@@ -890,15 +950,97 @@ class ImplementMeTest {
         // Not provided
         ERD input_erd = new ERD();
 
+        input_erd.relationships = new RelationshipList(List.of(
+                new Relationship(
+                        "PlaysFor",
+                        new AttributeSet(List.of(
+                                new Attribute("start_date"),
+                                new Attribute("end_date"))),
+                        new Key(new AttributeSet(List.of(
+                                new Attribute("start_date")))) // primary key
+        )));
+        input_erd.entitySets = new EntitySetList(List.of(
+                new EntitySet(
+                        "Player", // name
+                        new AttributeSet(List.of( // attributes
+                                new Attribute("player_id"),
+                                new Attribute("player_name"))),
+                        new Key(new AttributeSet(List.of(
+                                new Attribute("player_id")))), // primary key
+                        new ConnectionList(List.of(
+                                new Connection(input_erd.relationships.get(0), Multiplicity.MANY))), // connections
+                        new ParentList(), // parents = empty
+                        new SupportingRelationshipList() 
+                ),
+                new EntitySet(
+                        "Team", // name
+                        new AttributeSet(List.of( // attributes
+                                new Attribute("team_name"),
+                                new Attribute("city"),
+                                new Attribute("league"))),
+                        new Key(new AttributeSet(List.of(
+                                new Attribute("team_name"),
+                                new Attribute("city")))), // primary key
+                        new ConnectionList(List.of(
+                                new Connection(input_erd.relationships.get(0), Multiplicity.MANY))), // connections
+                        new ParentList(), // parents
+                        new SupportingRelationshipList()
+                )));
+
         // Actual DB object
-        // Not provided
         Database db = new Database();
+        db.add( new Table( "Player",
+                            new AttributeSet(List.of(
+                                new Attribute("player_id"),
+                                new Attribute("player_name"))),
+                            new Key(new AttributeSet(List.of(
+                                new Attribute("player_id")))),
+                            new ForeignKeySet()
+        ));
+        db.add( new Table( "Team",
+                            new AttributeSet(List.of(
+                                new Attribute("team_name"),
+                                new Attribute("city"),
+                                new Attribute("league"))),
+                            new Key(new AttributeSet(List.of(
+                                new Attribute("team_name"),
+                                new Attribute("city")))),
+                            new ForeignKeySet()
+        ));
+        db.add( new Table( "PlaysFor",
+                            new AttributeSet(List.of(
+                                new Attribute("player_id"),
+                                new Attribute("city"),
+                                new Attribute("team_name"),
+                                new Attribute("start_date"),
+                                new Attribute("end_date"))),
+                            new Key(new AttributeSet(List.of(
+                                new Attribute("player_id"),
+                                new Attribute("city"),
+                                new Attribute("team_name"),
+                                new Attribute("start_date")))),
+                            new ForeignKeySet(List.of(
+                                new ForeignKey(
+                                        new AttributeSet(List.of(
+                                                new Attribute("player_id"))),
+                                        db.get(0),
+                                        new AttributeSet(List.of(
+                                                new Attribute("player_id")))),
+                                new ForeignKey(
+                                        new AttributeSet(List.of(
+                                                new Attribute("city"),
+                                                new Attribute("team_name"))),
+                                        db.get(1),
+                                        new AttributeSet(List.of(
+                                                new Attribute("city"),
+                                                new Attribute("team_name"))))))
+        ));
 
         assertEquals(db, myImplementation.convertToDatabase(input_erd));
     }
 
     @Test
-    @DisplayName("Not pre-released")
+    @DisplayName("ERD-to-DB worksheet, question 6")
     @Timeout(value = 10, unit = TimeUnit.SECONDS)
     void case15() {
         ImplementMe myImplementation = new ImplementMe();
