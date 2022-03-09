@@ -37,7 +37,7 @@ Both queries retrieve the same result, but the second query is unnecessarily com
 
   * SELECT (i.e., projection operator)
   * FROM (i.e., the table- or index-scan operator)
-  * , (i.e., the cross product operator)
+  * , (i.e., the cross product operator, _including other appearances such as in a SELECT clause_)
   * JOIN (i.e., a theta-, natural, or outer join or per MySQL an intersection)
   * UNION (i.e., the bag union operator)
   * DISTINCT (i.e., the duplicate elimination operator)
@@ -256,3 +256,4 @@ I hope that this assignment is a fun way to learn and/or practice the SQL query 
 [05 Mar 12:45] Fixed error in query02 in which sample solution was not sorted correctly.
 [06 Mar 18:40] Fixed error in query02 again: query was not passed to database correctly so constraints were not applied
 [08 Mar 13:40] Fixed error in query10: provided query result was not correct 
+[08 Mar 18:25] Clarify that all commas are counted as operators, even in the SELECT clause 
