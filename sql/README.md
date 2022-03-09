@@ -256,4 +256,5 @@ I hope that this assignment is a fun way to learn and/or practice the SQL query 
 [05 Mar 12:45] Fixed error in query02 in which sample solution was not sorted correctly.
 [06 Mar 18:40] Fixed error in query02 again: query was not passed to database correctly so constraints were not applied
 [08 Mar 13:40] Fixed error in query10: provided query result was not correct 
-[08 Mar 18:25] Clarify that all commas are counted as operators, even in the SELECT clause 
+[08 Mar 18:25] Clarify that all commas are counted as operators, even in the SELECT clause
+[08 Mar 18:55] Patch a series of errors after a full QA pass 
