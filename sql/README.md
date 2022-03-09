@@ -258,3 +258,4 @@ I hope that this assignment is a fun way to learn and/or practice the SQL query 
 [08 Mar 13:40] Fixed error in query10: provided query result was not correct 
 [08 Mar 18:25] Clarify that all commas are counted as operators, even in the SELECT clause
 [08 Mar 18:55] Patch a series of errors after a full QA pass 
+[08 Mar 21:25] Fixed q4 error after review of every date-based predicate to ensure it considered datetime fields
