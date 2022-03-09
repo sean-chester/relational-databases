@@ -1432,35 +1432,195 @@ class ImplementMeTest {
     }
 
     @Test
-    @DisplayName("Not pre-released")
+    @DisplayName("An entity set inherits from a subclass")
     @Timeout(value = 10, unit = TimeUnit.SECONDS)
     void case19() {
         ImplementMe myImplementation = new ImplementMe();
 
         // Input ERD object
-        // Not provided
         ERD input_erd = new ERD();
 
+        input_erd.relationships = new RelationshipList(List.of(
+                new Relationship(
+                        "LabIsACourse",
+                        new AttributeSet(),
+                        new Key()),
+                new Relationship(
+                        "VirtualIsALab",
+                        new AttributeSet(),
+                        new Key())
+        ));
+        input_erd.entitySets = new EntitySetList(List.of(
+                new EntitySet(
+                        "Course", // name
+                        new AttributeSet(List.of( // attributes
+                                new Attribute("crn"),
+                                new Attribute("section"))),
+                        new Key(new AttributeSet(List.of(
+                                new Attribute("crn")))), // primary key
+                        new ConnectionList(List.of(
+                                new Connection(input_erd.relationships.get(0), Multiplicity.ONE))), // connections
+                        new ParentList(), // parents = empty
+                        new SupportingRelationshipList() 
+                ),
+                new EntitySet(
+                        "Lab", // name
+                        new AttributeSet(),
+                        new Key(), // primary key
+                        new ConnectionList(List.of(
+                                new Connection(input_erd.relationships.get(1), Multiplicity.ONE))), // connections
+                        new ParentList(List.of( input_erd.relationships.get(0) )), // parents
+                        new SupportingRelationshipList() 
+                ),
+                new EntitySet(
+                        "Virtual", // name
+                        new AttributeSet(),
+                        new Key(), // primary key
+                        new ConnectionList(), // connections
+                        new ParentList(List.of( input_erd.relationships.get(1) )), // parents
+                        new SupportingRelationshipList())
+        ));
+
         // Actual DB object
-        // Not provided
         Database db = new Database();
+        db.add( new Table( "Course",
+                            new AttributeSet(List.of(
+                                new Attribute("crn"),
+                                new Attribute("section"))),
+                            new Key(new AttributeSet(List.of(
+                                new Attribute("crn")))),
+                            new ForeignKeySet()
+        ));
+        db.add( new Table( "Lab",
+                            new AttributeSet(List.of(
+                                new Attribute("crn"))),
+                            new Key(new AttributeSet(List.of(
+                                new Attribute("crn")))),
+                            new ForeignKeySet(List.of(
+                                new ForeignKey(
+                                        new AttributeSet(List.of(
+                                                new Attribute("crn"))),
+                                        db.get(0),
+                                        new AttributeSet(List.of(
+                                                new Attribute("crn"))))))
+        ));
+        db.add( new Table( "Virtual",
+                            new AttributeSet(List.of(
+                                new Attribute("crn"))),
+                            new Key(new AttributeSet(List.of(
+                                new Attribute("crn")))),
+                            new ForeignKeySet(List.of(
+                                new ForeignKey(
+                                        new AttributeSet(List.of(
+                                                new Attribute("crn"))),
+                                        db.get(1),
+                                        new AttributeSet(List.of(
+                                                new Attribute("crn"))))))
+        ));
 
         assertEquals(db, myImplementation.convertToDatabase(input_erd));
     }
 
     @Test
-    @DisplayName("Not pre-released")
+    @DisplayName("An entity set inherits from a subclass with a two-attribute PK")
     @Timeout(value = 10, unit = TimeUnit.SECONDS)
     void case20() {
         ImplementMe myImplementation = new ImplementMe();
 
         // Input ERD object
-        // Not provided
         ERD input_erd = new ERD();
 
+        input_erd.relationships = new RelationshipList(List.of(
+                new Relationship(
+                        "LabIsACourse",
+                        new AttributeSet(),
+                        new Key()),
+                new Relationship(
+                        "VirtualIsALab",
+                        new AttributeSet(),
+                        new Key())
+        ));
+        input_erd.entitySets = new EntitySetList(List.of(
+                new EntitySet(
+                        "Course", // name
+                        new AttributeSet(List.of( // attributes
+                                new Attribute("course_code"),
+                                new Attribute("semester"))),
+                        new Key(new AttributeSet(List.of(
+                                new Attribute("course_code"),
+                                new Attribute("semester")))), // primary key
+                        new ConnectionList(List.of(
+                                new Connection(input_erd.relationships.get(0), Multiplicity.ONE))), // connections
+                        new ParentList(), // parents = empty
+                        new SupportingRelationshipList() 
+                ),
+                new EntitySet(
+                        "Lab", // name
+                        new AttributeSet(List.of(
+                                new Attribute("TA"))),
+                        new Key(), // primary key
+                        new ConnectionList(List.of(
+                                new Connection(input_erd.relationships.get(1), Multiplicity.ONE))), // connections
+                        new ParentList(List.of( input_erd.relationships.get(0) )), // parents
+                        new SupportingRelationshipList() 
+                ),
+                new EntitySet(
+                        "Virtual", // name
+                        new AttributeSet(List.of(
+                                new Attribute("zoom_link"))),
+                        new Key(), // primary key
+                        new ConnectionList(), // connections
+                        new ParentList(List.of( input_erd.relationships.get(1) )), // parents
+                        new SupportingRelationshipList())
+        ));
+
         // Actual DB object
-        // Not provided
         Database db = new Database();
+        db.add( new Table( "Course",
+                            new AttributeSet(List.of(
+                                new Attribute("course_code"),
+                                new Attribute("semester"))),
+                            new Key(new AttributeSet(List.of(
+                                new Attribute("course_code"),
+                                new Attribute("semester")))),
+                            new ForeignKeySet()
+        ));
+        db.add( new Table( "Lab",
+                            new AttributeSet(List.of(
+                                new Attribute("course_code"),
+                                new Attribute("TA"),
+                                new Attribute("semester"))),
+                            new Key(new AttributeSet(List.of(
+                                new Attribute("course_code"),
+                                new Attribute("semester")))),
+                            new ForeignKeySet(List.of(
+                                new ForeignKey(
+                                        new AttributeSet(List.of(
+                                                new Attribute("course_code"),
+                                                new Attribute("semester"))),
+                                        db.get(0),
+                                        new AttributeSet(List.of(
+                                                new Attribute("course_code"),
+                                                new Attribute("semester"))))))
+        ));
+        db.add( new Table( "Virtual",
+                            new AttributeSet(List.of(
+                                new Attribute("course_code"),
+                                new Attribute("semester"),
+                                new Attribute("zoom_link"))),
+                            new Key(new AttributeSet(List.of(
+                                new Attribute("course_code"),
+                                new Attribute("semester")))),
+                            new ForeignKeySet(List.of(
+                                new ForeignKey(
+                                        new AttributeSet(List.of(
+                                                new Attribute("course_code"),
+                                                new Attribute("semester"))),
+                                        db.get(1),
+                                        new AttributeSet(List.of(
+                                                new Attribute("course_code"),
+                                                new Attribute("semester"))))))
+        ));
 
         assertEquals(db, myImplementation.convertToDatabase(input_erd));
     }
@@ -1537,8 +1697,67 @@ class ImplementMeTest {
                 )));
 
         // Actual DB object
-        // Not provided
         Database db = new Database();
+        db.add( new Table( "Building",
+                            new AttributeSet(List.of(
+                                new Attribute("building_id"),
+                                new Attribute("building_name"))),
+                            new Key(new AttributeSet(List.of(
+                                new Attribute("building_id")))),
+                            new ForeignKeySet()
+        ));
+        db.add( new Table( "Room",
+                            new AttributeSet(List.of(
+                                new Attribute("building_id"),
+                                new Attribute("room_number"),
+                                new Attribute("max_capacity"))),
+                            new Key(new AttributeSet(List.of(
+                                new Attribute("building_id"),
+                                new Attribute("room_number")))),
+                            new ForeignKeySet(List.of(
+                                new ForeignKey(
+                                        new AttributeSet(List.of(
+                                                new Attribute("building_id"))),
+                                        db.get(0),
+                                        new AttributeSet(List.of(
+                                                new Attribute("building_id"))))))
+        ));
+        db.add( new Table( "Desk",
+                            new AttributeSet(List.of(
+                                new Attribute("building_id"),
+                                new Attribute("room_number"),
+                                new Attribute("desk_id"))),
+                            new Key(new AttributeSet(List.of(
+                                new Attribute("building_id"),
+                                new Attribute("room_number"),
+                                new Attribute("desk_id")))),
+                            new ForeignKeySet(List.of(
+                                new ForeignKey(
+                                        new AttributeSet(List.of(
+                                                new Attribute("building_id"),
+                                                new Attribute("room_number"))),
+                                        db.get(1),
+                                        new AttributeSet(List.of(
+                                                new Attribute("building_id"),
+                                                new Attribute("room_number"))))))
+        ));
+        db.add( new Table( "Class",
+                            new AttributeSet(List.of(
+                                new Attribute("building_id"),
+                                new Attribute("room_number"),
+                                new Attribute("crn"))),
+                            new Key(new AttributeSet(List.of(
+                                new Attribute("crn")))),
+                            new ForeignKeySet(List.of(
+                                new ForeignKey(
+                                        new AttributeSet(List.of(
+                                                new Attribute("building_id"),
+                                                new Attribute("room_number"))),
+                                        db.get(1),
+                                        new AttributeSet(List.of(
+                                                new Attribute("building_id"),
+                                                new Attribute("room_number"))))))
+        ));
 
         assertEquals(db, myImplementation.convertToDatabase(input_erd));
     }
