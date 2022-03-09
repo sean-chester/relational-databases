@@ -947,7 +947,6 @@ class ImplementMeTest {
         ImplementMe myImplementation = new ImplementMe();
 
         // Input ERD object
-        // Not provided
         ERD input_erd = new ERD();
 
         input_erd.relationships = new RelationshipList(List.of(
@@ -1040,69 +1039,394 @@ class ImplementMeTest {
     }
 
     @Test
-    @DisplayName("ERD-to-DB worksheet, question 6")
+    @DisplayName("ERD-to-DB worksheet, question 6: Two many-one relationships chained together")
     @Timeout(value = 10, unit = TimeUnit.SECONDS)
     void case15() {
         ImplementMe myImplementation = new ImplementMe();
 
         // Input ERD object
-        // Not provided
         ERD input_erd = new ERD();
 
+        input_erd.relationships = new RelationshipList(List.of(
+                new Relationship(
+                        "PaintedBy",
+                        new AttributeSet(List.of(
+                                new Attribute("date_painted"))),
+                        new Key()),
+                new Relationship(
+                        "BornIn",
+                        new AttributeSet(List.of(
+                                new Attribute("birthdate"))),
+                        new Key())
+        ));
+        input_erd.entitySets = new EntitySetList(List.of(
+                new EntitySet(
+                        "Painting", // name
+                        new AttributeSet(List.of( // attributes
+                                new Attribute("painting_name"))),
+                        new Key(new AttributeSet(List.of(
+                                new Attribute("painting_name")))), // primary key
+                        new ConnectionList(List.of(
+                                new Connection(input_erd.relationships.get(0), Multiplicity.MANY))), // connections
+                        new ParentList(), // parents = empty
+                        new SupportingRelationshipList() 
+                ),
+                new EntitySet(
+                        "Artist", // name
+                        new AttributeSet(List.of( // attributes
+                                new Attribute("artist_name"))),
+                        new Key(new AttributeSet(List.of(
+                                new Attribute("artist_name")))), // primary key
+                        new ConnectionList(List.of(
+                                new Connection(input_erd.relationships.get(0), Multiplicity.ONE),
+                                new Connection(input_erd.relationships.get(1), Multiplicity.MANY))), // connections
+                        new ParentList(), // parents
+                        new SupportingRelationshipList()),
+                new EntitySet(
+                        "City", // name
+                        new AttributeSet(List.of( // attributes
+                                new Attribute("city_name"))),
+                        new Key(new AttributeSet(List.of(
+                                new Attribute("city_name")))), // primary key
+                        new ConnectionList(List.of(
+                                new Connection(input_erd.relationships.get(1), Multiplicity.ONE))), // connections
+                        new ParentList(), // parents
+                        new SupportingRelationshipList())
+        ));
+
         // Actual DB object
-        // Not provided
         Database db = new Database();
+        db.add( new Table( "City",
+                            new AttributeSet(List.of(
+                                new Attribute("city_name"))),
+                            new Key(new AttributeSet(List.of(
+                                new Attribute("city_name")))),
+                            new ForeignKeySet()
+        ));
+        db.add( new Table( "Artist",
+                            new AttributeSet(List.of(
+                                new Attribute("artist_name"),
+                                new Attribute("city_name"),
+                                new Attribute("birthdate"))),
+                            new Key(new AttributeSet(List.of(
+                                new Attribute("artist_name")))),
+                            new ForeignKeySet(List.of(
+                                new ForeignKey(
+                                        new AttributeSet(List.of(
+                                                new Attribute("city_name"))),
+                                        db.get(0),
+                                        new AttributeSet(List.of(
+                                                new Attribute("city_name"))))))
+        ));
+        db.add( new Table( "Painting",
+                            new AttributeSet(List.of(
+                                new Attribute("painting_name"),
+                                new Attribute("artist_name"),
+                                new Attribute("date_painted"))),
+                            new Key(new AttributeSet(List.of(
+                                new Attribute("painting_name")))),
+                            new ForeignKeySet(List.of(
+                                new ForeignKey(
+                                        new AttributeSet(List.of(
+                                                new Attribute("artist_name"))),
+                                        db.get(1),
+                                        new AttributeSet(List.of(
+                                                new Attribute("artist_name"))))))
+        ));
 
         assertEquals(db, myImplementation.convertToDatabase(input_erd));
     }
 
     @Test
-    @DisplayName("Not pre-released")
+    @DisplayName("Two many-many relationships 'chained' together")
     @Timeout(value = 10, unit = TimeUnit.SECONDS)
     void case16() {
         ImplementMe myImplementation = new ImplementMe();
 
         // Input ERD object
-        // Not provided
         ERD input_erd = new ERD();
 
+        input_erd.relationships = new RelationshipList(List.of(
+                new Relationship(
+                        "PaintedBy",
+                        new AttributeSet(List.of(
+                                new Attribute("date_painted"))),
+                        new Key()),
+                new Relationship(
+                        "ResidentOf",
+                        new AttributeSet(),
+                        new Key())
+        ));
+        input_erd.entitySets = new EntitySetList(List.of(
+                new EntitySet(
+                        "Painting", // name
+                        new AttributeSet(List.of( // attributes
+                                new Attribute("painting_name"))),
+                        new Key(new AttributeSet(List.of(
+                                new Attribute("painting_name")))), // primary key
+                        new ConnectionList(List.of(
+                                new Connection(input_erd.relationships.get(0), Multiplicity.MANY))), // connections
+                        new ParentList(), // parents = empty
+                        new SupportingRelationshipList() 
+                ),
+                new EntitySet(
+                        "Artist", // name
+                        new AttributeSet(List.of( // attributes
+                                new Attribute("artist_name"))),
+                        new Key(new AttributeSet(List.of(
+                                new Attribute("artist_name")))), // primary key
+                        new ConnectionList(List.of(
+                                new Connection(input_erd.relationships.get(0), Multiplicity.MANY),
+                                new Connection(input_erd.relationships.get(1), Multiplicity.MANY))), // connections
+                        new ParentList(), // parents
+                        new SupportingRelationshipList()),
+                new EntitySet(
+                        "City", // name
+                        new AttributeSet(List.of( // attributes
+                                new Attribute("city_name"))),
+                        new Key(new AttributeSet(List.of(
+                                new Attribute("city_name")))), // primary key
+                        new ConnectionList(List.of(
+                                new Connection(input_erd.relationships.get(1), Multiplicity.MANY))), // connections
+                        new ParentList(), // parents
+                        new SupportingRelationshipList())
+        ));
+
         // Actual DB object
-        // Not provided
         Database db = new Database();
+        db.add( new Table( "City",
+                            new AttributeSet(List.of(
+                                new Attribute("city_name"))),
+                            new Key(new AttributeSet(List.of(
+                                new Attribute("city_name")))),
+                            new ForeignKeySet()
+        ));
+        db.add( new Table( "Artist",
+                            new AttributeSet(List.of(
+                                new Attribute("artist_name"))),
+                            new Key(new AttributeSet(List.of(
+                                new Attribute("artist_name")))),
+                            new ForeignKeySet()
+        ));
+        db.add( new Table( "Painting",
+                            new AttributeSet(List.of(
+                                new Attribute("painting_name"))),
+                            new Key(new AttributeSet(List.of(
+                                new Attribute("painting_name")))),
+                            new ForeignKeySet()
+        ));
+        db.add( new Table( "PaintedBy",
+                            new AttributeSet(List.of(
+                                new Attribute("painting_name"),
+                                new Attribute("artist_name"),
+                                new Attribute("date_painted"))),
+                            new Key(new AttributeSet(List.of(
+                                new Attribute("painting_name"),
+                                new Attribute("artist_name")))),
+                            new ForeignKeySet(List.of(
+                                new ForeignKey(
+                                        new AttributeSet(List.of(
+                                                new Attribute("artist_name"))),
+                                        db.get(1),
+                                        new AttributeSet(List.of(
+                                                new Attribute("artist_name")))),
+                                new ForeignKey(
+                                        new AttributeSet(List.of(
+                                                new Attribute("painting_name"))),
+                                        db.get(2),
+                                        new AttributeSet(List.of(
+                                                new Attribute("painting_name"))))))
+        ));
+        db.add( new Table( "ResidentOf",
+                            new AttributeSet(List.of(
+                                new Attribute("city_name"),
+                                new Attribute("artist_name"))),
+                            new Key(new AttributeSet(List.of(
+                                new Attribute("city_name"),
+                                new Attribute("artist_name")))),
+                            new ForeignKeySet(List.of(
+                                new ForeignKey(
+                                        new AttributeSet(List.of(
+                                                new Attribute("artist_name"))),
+                                        db.get(1),
+                                        new AttributeSet(List.of(
+                                                new Attribute("artist_name")))),
+                                new ForeignKey(
+                                        new AttributeSet(List.of(
+                                                new Attribute("city_name"))),
+                                        db.get(0),
+                                        new AttributeSet(List.of(
+                                                new Attribute("city_name"))))))
+        ));
 
         assertEquals(db, myImplementation.convertToDatabase(input_erd));
     }
 
     @Test
-    @DisplayName("Not pre-released")
+    @DisplayName("Subclass hierarchy using PK with two attributes")
     @Timeout(value = 10, unit = TimeUnit.SECONDS)
     void case17() {
         ImplementMe myImplementation = new ImplementMe();
 
         // Input ERD object
-        // Not provided
         ERD input_erd = new ERD();
 
+        input_erd.relationships = new RelationshipList(List.of(
+                new Relationship(
+                        "ManagerIsAnEmployee",
+                        new AttributeSet(List.of(
+                                new Attribute("dept"))),
+                        new Key())
+        ));
+        input_erd.entitySets = new EntitySetList(List.of(
+                new EntitySet(
+                        "Employee", // name
+                        new AttributeSet(List.of( // attributes
+                                new Attribute("employee_name"),
+                                new Attribute("start_date"))),
+                        new Key(new AttributeSet(List.of(
+                                new Attribute("employee_name"),
+                                new Attribute("start_date")))), // primary key
+                        new ConnectionList(List.of(
+                                new Connection(input_erd.relationships.get(0), Multiplicity.ONE))), // connections
+                        new ParentList(), // parents = empty
+                        new SupportingRelationshipList() 
+                ),
+                new EntitySet(
+                        "Manager", // name
+                        new AttributeSet(),
+                        new Key(), // primary key
+                        new ConnectionList(), // connections
+                        new ParentList(List.of( input_erd.relationships.get(0) )), // parents
+                        new SupportingRelationshipList())
+        ));
+
         // Actual DB object
-        // Not provided
         Database db = new Database();
+        db.add( new Table( "Employee",
+                            new AttributeSet(List.of(
+                                new Attribute("employee_name"),
+                                new Attribute("start_date"))),
+                            new Key(new AttributeSet(List.of(
+                                new Attribute("employee_name"),
+                                new Attribute("start_date")))),
+                            new ForeignKeySet()
+        ));
+        db.add( new Table( "Manager",
+                            new AttributeSet(List.of(
+                                new Attribute("employee_name"),
+                                new Attribute("start_date"),
+                                new Attribute("dept"))),
+                            new Key(new AttributeSet(List.of(
+                                new Attribute("employee_name"),
+                                new Attribute("start_date")))),
+                            new ForeignKeySet(List.of(
+                                new ForeignKey(
+                                        new AttributeSet(List.of(
+                                                new Attribute("employee_name"),
+                                                new Attribute("start_date"))),
+                                        db.get(0),
+                                        new AttributeSet(List.of(
+                                                new Attribute("employee_name"),
+                                                new Attribute("start_date"))))))
+        ));
 
         assertEquals(db, myImplementation.convertToDatabase(input_erd));
     }
 
     @Test
-    @DisplayName("Not pre-released")
+    @DisplayName("A ternary relationship with multiplicity of many-one-one")
     @Timeout(value = 10, unit = TimeUnit.SECONDS)
     void case18() {
         ImplementMe myImplementation = new ImplementMe();
 
         // Input ERD object
-        // Not provided
         ERD input_erd = new ERD();
 
+        input_erd.relationships = new RelationshipList(List.of(
+                new Relationship(
+                        "Rel",
+                        new AttributeSet(),
+                        new Key())
+        ));
+        input_erd.entitySets = new EntitySetList(List.of(
+                new EntitySet(
+                        "R", // name
+                        new AttributeSet(List.of( // attributes
+                                new Attribute("a1"),
+                                new Attribute("a2"))),
+                        new Key(new AttributeSet(List.of(
+                                new Attribute("a1")))), // primary key
+                        new ConnectionList(List.of(
+                                new Connection(input_erd.relationships.get(0), Multiplicity.MANY))), // connections
+                        new ParentList(), // parents = empty
+                        new SupportingRelationshipList() 
+                ),
+                new EntitySet(
+                        "S", // name
+                        new AttributeSet(List.of( // attributes
+                                new Attribute("b1"),
+                                new Attribute("b2"))),
+                        new Key(new AttributeSet(List.of(
+                                new Attribute("b2")))), // primary key
+                        new ConnectionList(List.of(
+                                new Connection(input_erd.relationships.get(0), Multiplicity.ONE))), // connections
+                        new ParentList(), // parents = empty
+                        new SupportingRelationshipList() 
+                ),
+                new EntitySet(
+                        "T", // name
+                        new AttributeSet(List.of( // attributes
+                                new Attribute("c1"),
+                                new Attribute("c2"))),
+                        new Key(new AttributeSet(List.of(
+                                new Attribute("c1")))), // primary key
+                        new ConnectionList(List.of(
+                                new Connection(input_erd.relationships.get(0), Multiplicity.ONE))), // connections
+                        new ParentList(), // parents
+                        new SupportingRelationshipList())
+        ));
+
         // Actual DB object
-        // Not provided
         Database db = new Database();
+        db.add( new Table( "T",
+                            new AttributeSet(List.of(
+                                new Attribute("c1"),
+                                new Attribute("c2"))),
+                            new Key(new AttributeSet(List.of(
+                                new Attribute("c1")))),
+                            new ForeignKeySet()
+        ));
+        db.add( new Table( "S",
+                            new AttributeSet(List.of(
+                                new Attribute("b1"),
+                                new Attribute("b2"))),
+                            new Key(new AttributeSet(List.of(
+                                new Attribute("b2")))),
+                            new ForeignKeySet()
+        ));
+        db.add( new Table( "R",
+                            new AttributeSet(List.of(
+                                new Attribute("a1"),
+                                new Attribute("a2"),
+                                new Attribute("b2"),
+                                new Attribute("c1"))),
+                            new Key(new AttributeSet(List.of(
+                                new Attribute("a1")))),
+                            new ForeignKeySet(List.of(
+                                new ForeignKey(
+                                        new AttributeSet(List.of(
+                                                new Attribute("b2"))),
+                                        db.get(1),
+                                        new AttributeSet(List.of(
+                                                new Attribute("b2")))),
+                                new ForeignKey(
+                                        new AttributeSet(List.of(
+                                                new Attribute("c1"))),
+                                        db.get(0),
+                                        new AttributeSet(List.of(
+                                                new Attribute("c1"))))))
+        ));
 
         assertEquals(db, myImplementation.convertToDatabase(input_erd));
     }
@@ -1220,7 +1544,7 @@ class ImplementMeTest {
     }
 
     @Test
-    @DisplayName("A ternary relationship is provided. This test case may or may not shift")
+    @DisplayName("ERD-to-DB worksheet question 3 (simplified). Multiplicity of many-many-one")
     @Timeout(value = 10, unit = TimeUnit.SECONDS)
     void caseB2() {
         ImplementMe myImplementation = new ImplementMe();
@@ -1230,37 +1554,36 @@ class ImplementMeTest {
 
         input_erd.relationships = new RelationshipList(List.of(
                 new Relationship(
-                        "R",
+                        "Rel",
                         new AttributeSet(),
                         new Key())));
         input_erd.entitySets = new EntitySetList(List.of(
                 new EntitySet(
-                        "A", // name
+                        "R", // name
                         new AttributeSet(List.of( // attributes
                                 new Attribute("a1"),
                                 new Attribute("a2"))),
                         new Key(new AttributeSet(List.of(
-                                new Attribute("a1"),
-                                new Attribute("a2")))), // primary key
+                                new Attribute("a1")))), // primary key
                         new ConnectionList(List.of(
                                 new Connection(input_erd.relationships.get(0), Multiplicity.MANY))), // connections
                         new ParentList(), // parents = empty
                         new SupportingRelationshipList() 
                 ),
                 new EntitySet(
-                        "B", // name
+                        "S", // name
                         new AttributeSet(List.of( // attributes
                                 new Attribute("b1"),
                                 new Attribute("b2"))),
                         new Key(new AttributeSet(List.of(
-                                new Attribute("b1")))), // primary key
+                                new Attribute("b2")))), // primary key
                         new ConnectionList(List.of(
                                 new Connection(input_erd.relationships.get(0), Multiplicity.MANY))), // connections
                         new ParentList(), // parents = empty
                         new SupportingRelationshipList() 
                 ),
                 new EntitySet(
-                        "C", // name
+                        "T", // name
                         new AttributeSet(List.of( // attributes
                                 new Attribute("c1"),
                                 new Attribute("c2"))),
@@ -1273,8 +1596,60 @@ class ImplementMeTest {
                 )));
 
         // Actual DB object
-        // Not provided
         Database db = new Database();
+        db.add( new Table( "T",
+                            new AttributeSet(List.of(
+                                new Attribute("c1"),
+                                new Attribute("c2"))),
+                            new Key(new AttributeSet(List.of(
+                                new Attribute("c1")))),
+                            new ForeignKeySet()
+        ));
+        db.add( new Table( "S",
+                            new AttributeSet(List.of(
+                                new Attribute("b1"),
+                                new Attribute("b2"))),
+                            new Key(new AttributeSet(List.of(
+                                new Attribute("b2")))),
+                            new ForeignKeySet()
+        ));
+        db.add( new Table( "R",
+                            new AttributeSet(List.of(
+                                new Attribute("a1"),
+                                new Attribute("a2"))),
+                            new Key(new AttributeSet(List.of(
+                                new Attribute("a1")))),
+                            new ForeignKeySet()
+        ));
+        db.add( new Table( "Rel",
+                            new AttributeSet(List.of(
+                                new Attribute("a1"),
+                                new Attribute("b2"),
+                                new Attribute("c1"))),
+                            new Key(new AttributeSet(List.of(
+                                new Attribute("a1"),
+                                new Attribute("b2")))),
+                            new ForeignKeySet(List.of(
+                                new ForeignKey(
+                                        new AttributeSet(List.of(
+                                                new Attribute("b2"))),
+                                        db.get(1),
+                                        new AttributeSet(List.of(
+                                                new Attribute("b2")))),
+                                new ForeignKey(
+                                        new AttributeSet(List.of(
+                                                new Attribute("c1"))),
+                                        db.get(0),
+                                        new AttributeSet(List.of(
+                                                new Attribute("c1")))),
+                                new ForeignKey(
+                                        new AttributeSet(List.of(
+                                                new Attribute("a1"))),
+                                        db.get(2),
+                                        new AttributeSet(List.of(
+                                                new Attribute("a1"))))
+                                ))
+        ));
 
         assertEquals(db, myImplementation.convertToDatabase(input_erd));
     }
