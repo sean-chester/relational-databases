@@ -8,6 +8,7 @@ import a2.erd.EntitySet;
  * a row in a different table. It subclasses a Key because it is a
  * subset of attributes (or columns) in this table, but those attributes can be
  * referenced in a separate table
+ * @TODO: If reusing this class, make the attribute lists ordered. 
  */
 
 public class ForeignKey extends Key {
