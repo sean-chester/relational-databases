@@ -357,19 +357,19 @@ class TestCase16(unittest.TestCase):
 class TestCase17(unittest.TestCase):
     def test_converter(self):
         erd17 = ERD( \
-            [Relationship('ManagerIsAnEmployee',['dept'],[])], \
+            [Relationship('ManagerIsAnEmployee',[],[])], \
             [EntitySet('Employee', ['start_date', 'employee_name'], ['start_date', 'employee_name'], \
                 [('ManagerIsAnEmployee', Multiplicity.ONE)], [], []), \
             EntitySet('Manager', [], [], [], ['Employee'], [])])
 
         db17a = Database([ \
             Table('Employee', set(['start_date','employee_name']), set(['start_date', 'employee_name']), set()), \
-            Table('Manager', set(['start_date', 'employee_name', 'dept']), set(['start_date', 'employee_name']), \
+            Table('Manager', set(['start_date', 'employee_name']), set(['start_date', 'employee_name']), \
                 set([(('start_date', 'employee_name',), 'Employee', ('start_date', 'employee_name',))]))])
 
         db17b = Database([ \
             Table('Employee', set(['start_date','employee_name']), set(['start_date', 'employee_name']), set()), \
-            Table('Manager', set(['start_date', 'employee_name', 'dept']), set(['start_date', 'employee_name']), \
+            Table('Manager', set(['start_date', 'employee_name']), set(['start_date', 'employee_name']), \
                 set([(('employee_name', 'start_date',), 'Employee', ('employee_name', 'start_date',))]))])
 
         actual_result = wrap_student_call(convert_to_table, erd17 )
