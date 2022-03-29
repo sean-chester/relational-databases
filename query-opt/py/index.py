@@ -3,21 +3,20 @@
 #
 # This is a *linearised* tree, i.e., it is implemented as an array rather
 # than with pointers. As you have seen in previous classes, one can
-# implement a binary tree of height *h* with an array of length *2^h* as follows:
-#   * the root is at index 1
-#   * the left child of the node at index i is at 2i
-#   * the right child of the node at index i is at 2i + 1
+# implement a binary tree of height *h* with an array of length *2^h-1* as follows:
+#   * the root (if it exists) is at index 0
+#   * the left child of the node at index i is at 2i + 1
+#   * the right child of the node at index i is at 2i + 2
 # This corresponds to a breadth-first search of a full binary tree.
 #
 # In this assignment, you will use a fan-out of three, i.e., a ternary tree.
 # We can apply the same logic, and represent a ternary tree of height *h*
-# with an array of length *3^h* as follows:
-#   * the root is at index 1
-#   * the left child of the node at index i is at 3i
-#   * the middle child of the node at index i is 3i + 1
-#   * the right child of the node at index i is at 3i + 2
-# This again corresponds to a breadth-first search of a full ternary tree,
-# starting at index 1 (with cell 0 left empty/unused).
+# with an array of length *(1-3^h)/-2* as follows:
+#   * the root (if it exists) is at index 0
+#   * the left child of the node at index i is at 3i + 1
+#   * the middle child of the node at index i is 3i + 2
+#   * the right child of the node at index i is at 3i + 3
+# This corresponds to a breadth-first search of a full ternary tree.
 #
 # This B+-tree class does not have any (non-builtin) member functions,
 # but all member variables are public. You will implement the functionality
