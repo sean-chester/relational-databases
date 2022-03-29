@@ -48,9 +48,9 @@ class PointerSet:
 # node, all pointers should be sentinel values (-1). If this is a directory
 # node, only those pointers that correspond to child sub-trees should be non-zero.
 class Node:
-    keys = KeySet([-1,-1])
-    pointers = PointerSet([0,0,0])
-    def __init__(self, keys, pointers):
+    keys = KeySet((-1,-1))
+    pointers = PointerSet((0,0,0))
+    def __init__(self, keys = (-1,-1), pointers = (0,0,0)):
         self.keys = keys 
         self.pointers = pointers
     def __str__(self):

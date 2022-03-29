@@ -6,16 +6,16 @@ from index import *
 # in the ImplementMe class and submit this (and only this!) file.
 class ImplementMe:
 
-    # Inserts a key into a B+-tree index if it is not already there
-    # Parameter index is a mutable input/output parameter passed by "assignment."
-    # The function has a void return type (i.e., only creates side effects)
+    # Returns a B+-tree obtained by inserting a key into a pre-existing
+    # B+-tree index if the key is not already there. If it already exists,
+    # the return value is equivalent to the original, input tree.
     #
     # Complexity: Guaranteed to be asymptotically linear in the height of the tree
     # Because the tree is balanced, it is also asymptotically logarithmic in the
     # number of keys that already exist in the index.
     @staticmethod
     def InsertIntoIndex( index, key ):
-        return
+        return index
 
     # Returns a boolean that indicates whether a given key
     # is found among the leaves of a B+-tree index.
