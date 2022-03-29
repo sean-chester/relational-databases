@@ -34,7 +34,7 @@ class Index:
     def __init__(self, nodes):
         self.nodes = nodes
     def __str__(self):
-        return str(nodes)
+        return str(self.nodes)
     def __repr__(self):
         return str(self)
     def __hash__(self):

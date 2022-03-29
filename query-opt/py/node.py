@@ -17,7 +17,7 @@ class KeySet:
     def __init__(self, keys):
         self.keys = keys
     def __str__(self):
-        return str(keys)
+        return str(self.keys)
     def __repr__(self):
         return str(self)
     def __hash__(self):
@@ -34,7 +34,7 @@ class PointerSet:
     def __init__(self, pointers):
         self.pointers = pointers
     def __str__(self):
-        return str(pointers)
+        return str(self.pointers)
     def __repr__(self):
         return str(self)
     def __hash__(self):
@@ -54,7 +54,7 @@ class Node:
         self.keys = keys 
         self.pointers = pointers
     def __str__(self):
-        return str(keys) + "|" + str(pointers)
+        return str(self.keys) + "|" + str(self.pointers)
     def __repr__(self):
         return str(self)
     def __hash__(self):
