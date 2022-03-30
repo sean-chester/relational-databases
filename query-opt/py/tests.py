@@ -67,7 +67,7 @@ class TestCase04(unittest.TestCase):
     def test_insertion(self):
         btree = Index([Node()]*1)
         btree.nodes[ 0 ] = Node(\
-            KeySet((42, -1)),\
+            KeySet((42, 99)),\
             PointerSet((0,0,0)))
         key = 7
 
