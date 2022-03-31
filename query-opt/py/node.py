@@ -50,7 +50,7 @@ class PointerSet:
 class Node:
     keys = KeySet((-1,-1))
     pointers = PointerSet((0,0,0))
-    def __init__(self, keys = (-1,-1), pointers = (0,0,0)):
+    def __init__(self, keys = KeySet((-1,-1)), pointers = PointerSet((0,0,0))):
         self.keys = keys 
         self.pointers = pointers
     def __str__(self):
