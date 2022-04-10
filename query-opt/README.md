@@ -54,3 +54,4 @@ I hope that this assignment is a fun way to learn about database indexes in more
 
 [30 Mar 15:25] Fix typo in btree.nodes[ 0 ] for case 4 (missing key)
 [31 Mar 13:55] Fix type error in default Node constructor
+[10 Apr 16:35] Fix error in assertion for range query tests

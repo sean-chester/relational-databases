@@ -45,7 +45,7 @@ class PointerSet:
         return self.pointers == other.pointers
 
 # A B+-tree node consists of a set of keys and pointers. If this is a leaf
-# node, all pointers should be sentinel values (-1). If this is a directory
+# node, all pointers should be sentinel values (0). If this is a directory
 # node, only those pointers that correspond to child sub-trees should be non-zero.
 class Node:
     keys = KeySet((-1,-1))
