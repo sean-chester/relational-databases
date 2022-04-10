@@ -226,7 +226,7 @@ class ImplementMeTest {
 
         int[] expectedOutput = {66};
 
-        assertEquals(expectedOutput, ImplementMe.rangeSearchInIndex(btree, lowerBound, upperBound));
+        assertArrayEquals(expectedOutput, ImplementMe.rangeSearchInIndex(btree, lowerBound, upperBound));
     }
 
     @Test
@@ -248,7 +248,7 @@ class ImplementMeTest {
 
         int[] expectedOutput = {7};
 
-        assertEquals(expectedOutput, ImplementMe.rangeSearchInIndex(btree, lowerBound, upperBound));
+        assertArrayEquals(expectedOutput, ImplementMe.rangeSearchInIndex(btree, lowerBound, upperBound));
     }
 
     @Test
@@ -270,7 +270,7 @@ class ImplementMeTest {
 
         int[] expectedOutput = {7, 42, 66, 87};
 
-        assertEquals(expectedOutput, ImplementMe.rangeSearchInIndex(btree, lowerBound, upperBound));
+        assertArrayEquals(expectedOutput, ImplementMe.rangeSearchInIndex(btree, lowerBound, upperBound));
     }
 
     @Test
@@ -292,7 +292,7 @@ class ImplementMeTest {
 
         int[] expectedOutput = {};
 
-        assertEquals(expectedOutput, ImplementMe.rangeSearchInIndex(btree, lowerBound, upperBound));
+        assertArrayEquals(expectedOutput, ImplementMe.rangeSearchInIndex(btree, lowerBound, upperBound));
     }
 
     @Test
@@ -314,7 +314,7 @@ class ImplementMeTest {
 
         int[] expectedOutput = {42, 66};
 
-        assertEquals(expectedOutput, ImplementMe.rangeSearchInIndex(btree, lowerBound, upperBound));
+        assertArrayEquals(expectedOutput, ImplementMe.rangeSearchInIndex(btree, lowerBound, upperBound));
     }
 
     @Test
