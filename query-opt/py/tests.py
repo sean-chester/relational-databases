@@ -294,7 +294,7 @@ class TestCase09(unittest.TestCase):
 # Fake data in middle leaf to test complexity
 class TestCase10(unittest.TestCase):
     def test_lookup(self):
-        btree = Index([Node()]*1)
+        btree = Index([Node()]*4)
         btree.nodes[0] = Node(\
                 KeySet((42, 66)),\
                 PointerSet((1,2,3)))
@@ -318,7 +318,7 @@ class TestCase10(unittest.TestCase):
 # Fake data in one leaf to test complexity
 class TestCase11(unittest.TestCase):
     def test_lookup(self):
-        btree = Index([Node()]*1)
+        btree = Index([Node()]*4)
         btree.nodes[0] = Node(\
                 KeySet((42, 66)),\
                 PointerSet((1,2,3)))
