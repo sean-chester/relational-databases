@@ -430,7 +430,7 @@ class TestCase15(unittest.TestCase):
         lower_bound = 42
         upper_bound = 99
 
-        expected_output = [9,42,66,87,]
+        expected_output = [9,42,66,87]
 
         self.assertEqual( expected_output, ImplementMe.RangeSearchInIndex( btree, lower_bound, upper_bound ) )
 
@@ -480,38 +480,103 @@ class TestCase17(unittest.TestCase):
         lower_bound = 42
         upper_bound = 87
 
-        expected_output = [42,66,]
+        expected_output = [42,66]
 
         self.assertEqual( expected_output, ImplementMe.RangeSearchInIndex( btree, lower_bound, upper_bound ) )
 
 
-# Not disclosed
+# Lookup recently added key
 class TestCase18(unittest.TestCase):
     def test_unknown(self):
-        btree = Index([]) # Not disclosed
+        btree = Index([Node()]*13)
+        btree.nodes[0] = Node(\
+                KeySet((7, 99)),\
+                PointerSet((1,2,0)))
+        btree.nodes[2]=Node(\
+                KeySet((27,66)),\
+                PointerSet((7,8,9)))
+        btree.nodes[7]=Node(\
+                KeySet((7,9)),\
+                PointerSet((0,0,8)))
+        btree.nodes[8]=Node(\
+                KeySet((27,-1)),\
+                PointerSet((0,0,9)))
+        btree.nodes[9]=Node(\
+                KeySet((66,88)),\
+                PointerSet((0,0,0)))
+        key = 12
 
-        expected_output = False # Not disclosed, not even type
+        expected_output = True
 
-        self.assertEqual( expected_output, expected_output )
+        self.assertEqual( expected_output, ImplementMe.LookupKeyInIndex(\
+        ImplementMe.InsertIntoIndex( btree, key ), key ) )
 
 
 
-# Not disclosed
+# Lookup range that includes recently added key
 class TestCase19(unittest.TestCase):
     def test_unknown(self):
-        btree = Index([]) # Not disclosed
+        btree = Index([Node()]*13)
+        btree.nodes[0] = Node(\
+                KeySet((7, 99)),\
+                PointerSet((1,2,0)))
+        btree.nodes[2]=Node(\
+                KeySet((27,66)),\
+                PointerSet((7,8,9)))
+        btree.nodes[7]=Node(\
+                KeySet((7,9)),\
+                PointerSet((0,0,8)))
+        btree.nodes[8]=Node(\
+                KeySet((27,-1)),\
+                PointerSet((0,0,9)))
+        btree.nodes[9]=Node(\
+                KeySet((66,88)),\
+                PointerSet((0,0,0)))
+        key = 12
+        lower_bound = 12
+        upper_bound = 66
 
-        expected_output = False # Not disclosed, not even type
+        expected_output = [12,27]
 
         self.assertEqual( expected_output, expected_output )
 
 
-# Not disclosed
+# Lookup range with matching lower and upper bound equal to recently added key
 class TestCase20(unittest.TestCase):
     def test_unknown(self):
-        btree = Index([]) # Not disclosed
+        btree = Index([Node()]*13)
+        btree.nodes[0] = Node(\
+                KeySet((7, 99)),\
+                PointerSet((1,2,0)))
+        btree.nodes[2]=Node(\
+                KeySet((27,66)),\
+                PointerSet((7,8,9)))
+        btree.nodes[7]=Node(\
+                KeySet((7,9)),\
+                PointerSet((0,0,8)))
+        btree.nodes[8]=Node(\
+                KeySet((27,-1)),\
+                PointerSet((0,0,9)))
+        btree.nodes[9]=Node(\
+                KeySet((66,88)),\
+                PointerSet((0,0,0)))
+        key = 12
+        lower_bound = 12
+        upper_bound = 66
 
-        expected_output = False # Not disclosed, not even type
+        expected_output = [12]
+
+        self.assertEqual( expected_output, expected_output )
+
+
+# Freebie for grinding out a tough semester
+# Look up a key in an empty tree
+class TestCaseB1(unittest.TestCase):
+    def test_unknown(self):
+        btree = Index([Node()]*1)
+        key = 9
+
+        expected_output = False
 
         self.assertEqual( expected_output, expected_output )
 
