@@ -9,6 +9,8 @@
 # of existing test cases.
 
 import unittest
+import time
+import timeout_decorator
 from node import *
 from index import *
 from implement_me import ImplementMe
@@ -16,6 +18,7 @@ from implement_me import ImplementMe
 
 # Insert into an empty tree
 class TestCase01(unittest.TestCase):
+    @timeout_decorator.timeout(15)
     def test_insertion(self):
         btree = Index([])
         key = 99
@@ -30,6 +33,7 @@ class TestCase01(unittest.TestCase):
 
 # Insert existing key
 class TestCase02(unittest.TestCase):
+    @timeout_decorator.timeout(15)
     def test_insertion(self):
         btree = Index([Node()]*1)
         btree.nodes[ 0 ] = Node(\
@@ -47,6 +51,7 @@ class TestCase02(unittest.TestCase):
 
 # Insert into existing node that is not full
 class TestCase03(unittest.TestCase):
+    @timeout_decorator.timeout(15)
     def test_insertion(self):
         btree = Index([Node()]*1)
         btree.nodes[ 0 ] = Node(\
@@ -64,6 +69,7 @@ class TestCase03(unittest.TestCase):
 
 # Insert into full node.
 class TestCase04(unittest.TestCase):
+    @timeout_decorator.timeout(15)
     def test_insertion(self):
         btree = Index([Node()]*1)
         btree.nodes[ 0 ] = Node(\
@@ -87,6 +93,7 @@ class TestCase04(unittest.TestCase):
 
 # Insert into full node with full parent, causing root split.
 class TestCase05(unittest.TestCase):
+    @timeout_decorator.timeout(25)
     def test_insertion(self):
         btree = Index([Node()]*4)
         btree.nodes[0] = Node(\
@@ -133,6 +140,7 @@ class TestCase05(unittest.TestCase):
 # Note that only the path that should be affected has correct data (testing complexity)
 # Linearisation forces copy of some nodes to new addresses
 class TestCase06(unittest.TestCase):
+    @timeout_decorator.timeout(25)
     def test_insertion(self):
         btree = Index([Node()]*13)
         btree.nodes[0] = Node(\
@@ -189,6 +197,7 @@ class TestCase06(unittest.TestCase):
 # Note that only the path that should be affected has correct data (testing complexity)
 # Linearisation forces copy of some nodes to new addresses
 class TestCase07(unittest.TestCase):
+    @timeout_decorator.timeout(25)
     def test_insertion(self):
         btree = Index([Node()]*13)
         btree.nodes[0] = Node(\
@@ -243,6 +252,7 @@ class TestCase07(unittest.TestCase):
 # Boundary case: lookup smallest key in tree
 # Fake data in last node to test complexity
 class TestCase08(unittest.TestCase):
+    @timeout_decorator.timeout(15)
     def test_lookup(self):
         btree = Index([Node()]*4)
         btree.nodes[0] = Node(\
@@ -267,6 +277,7 @@ class TestCase08(unittest.TestCase):
 # Boundary case: lookup largest key in tree
 # Fake data in first node to test complexity
 class TestCase09(unittest.TestCase):
+    @timeout_decorator.timeout(15)
     def test_lookup(self):
         btree = Index([Node()]*4)
         btree.nodes[0] = Node(\
@@ -293,6 +304,7 @@ class TestCase09(unittest.TestCase):
 # Lookup key outside range of tree's keys
 # Fake data in middle leaf to test complexity
 class TestCase10(unittest.TestCase):
+    @timeout_decorator.timeout(15)
     def test_lookup(self):
         btree = Index([Node()]*4)
         btree.nodes[0] = Node(\
@@ -317,6 +329,7 @@ class TestCase10(unittest.TestCase):
 # Lookup key within tree's range but not in tree
 # Fake data in one leaf to test complexity
 class TestCase11(unittest.TestCase):
+    @timeout_decorator.timeout(15)
     def test_lookup(self):
         btree = Index([Node()]*4)
         btree.nodes[0] = Node(\
@@ -339,6 +352,7 @@ class TestCase11(unittest.TestCase):
 
 # Lookup key strictly within the tree's range
 class TestCase12(unittest.TestCase):
+    @timeout_decorator.timeout(15)
     def test_lookup(self):
         btree = Index([Node()]*4)
         btree.nodes[0] = Node(\
@@ -363,6 +377,7 @@ class TestCase12(unittest.TestCase):
 # Range query fully contained in one leaf node
 # Fake data in other node to test complexity
 class TestCase13(unittest.TestCase):
+    @timeout_decorator.timeout(15)
     def test_range(self):
         btree = Index([Node()]*4)
         btree.nodes[0] = Node(\
@@ -388,6 +403,7 @@ class TestCase13(unittest.TestCase):
 # Range query half-open to the left
 # Fake data in one node to test complexity.
 class TestCase14(unittest.TestCase):
+    @timeout_decorator.timeout(15)
     def test_range(self):
         btree = Index([Node()]*4)
         btree.nodes[0] = Node(\
@@ -413,6 +429,7 @@ class TestCase14(unittest.TestCase):
 # Range query half-open to the right 
 # Fake data in one node to test complexity
 class TestCase15(unittest.TestCase):
+    @timeout_decorator.timeout(15)
     def test_range(self):
         btree = Index([Node()]*4)
         btree.nodes[0] = Node(\
@@ -438,6 +455,7 @@ class TestCase15(unittest.TestCase):
 # Range query with matching upper and lower bound
 # Key not in tree but found as fake data in a different node to test complexity
 class TestCase16(unittest.TestCase):
+    @timeout_decorator.timeout(15)
     def test_range(self):
         btree = Index([Node()]*4)
         btree.nodes[0] = Node(\
@@ -463,6 +481,7 @@ class TestCase16(unittest.TestCase):
 # Multi-leaf range query in middle of tree
 # Fake data in first node to test complexity
 class TestCase17(unittest.TestCase):
+    @timeout_decorator.timeout(15)
     def test_range(self):
         btree = Index([Node()]*4)
         btree.nodes[0] = Node(\
@@ -487,6 +506,7 @@ class TestCase17(unittest.TestCase):
 
 # Lookup recently added key
 class TestCase18(unittest.TestCase):
+    @timeout_decorator.timeout(15)
     def test_unknown(self):
         btree = Index([Node()]*13)
         btree.nodes[0] = Node(\
@@ -515,6 +535,7 @@ class TestCase18(unittest.TestCase):
 
 # Lookup range that includes recently added key
 class TestCase19(unittest.TestCase):
+    @timeout_decorator.timeout(15)
     def test_unknown(self):
         btree = Index([Node()]*13)
         btree.nodes[0] = Node(\
@@ -544,6 +565,7 @@ class TestCase19(unittest.TestCase):
 
 # Lookup range with nearly matching lower and upper bound equal to recently added key
 class TestCase20(unittest.TestCase):
+    @timeout_decorator.timeout(15)
     def test_unknown(self):
         btree = Index([Node()]*13)
         btree.nodes[0] = Node(\
@@ -571,9 +593,10 @@ class TestCase20(unittest.TestCase):
         ImplementMe.InsertIntoIndex( btree, key ), lower_bound, upper_bound ) )
 
 
-# Freebie for grinding out a tough semester
+# Freebie bonus for grinding out a tough semester
 # Look up a key in an empty tree
 class TestCaseB1(unittest.TestCase):
+    @timeout_decorator.timeout(15)
     def test_unknown(self):
         btree = Index([Node()]*1)
         key = 9
@@ -581,6 +604,68 @@ class TestCaseB1(unittest.TestCase):
         expected_output = False
 
         self.assertEqual( expected_output, ImplementMe.LookupKeyInIndex( btree, key ) )
+
+
+# Easy bonus for assignment difficulty calibration
+# Insert in order
+class TestCaseB2(unittest.TestCase):
+    @timeout_decorator.timeout(15)
+    def test_unknown(self):
+        btree = Index([Node()]*1)
+        btree.nodes[ 0 ] = Node(\
+            KeySet((66, -1)),\
+            PointerSet((0,0,0)))
+        key = 87
+
+        expected_output = Index([Node()]*1)
+        expected_output.nodes[ 0 ] = Node(\
+            KeySet((66, 87)),\
+            PointerSet((0,0,0)))
+
+        self.assertEqual( expected_output, ImplementMe.InsertIntoIndex( btree, key ) )
+
+
+# Easy bonus for assignment difficulty calibration
+# Look up a key inserted into a tree with only one element
+class TestCaseB3(unittest.TestCase):
+    @timeout_decorator.timeout(15)
+    def test_unknown(self):
+        btree = Index([Node()]*1)
+        btree.nodes[0] = Node(\
+                KeySet((7, -1)),\
+                PointerSet((0,0,0)))
+        key = 12
+
+        expected_output = True
+
+        self.assertEqual( expected_output, ImplementMe.LookupKeyInIndex(\
+        ImplementMe.InsertIntoIndex( btree, key ), key ) )
+
+
+# Easy bonus for assignment difficulty calibration
+# Range query that doesn't overlap tree at all
+class TestCaseB4(unittest.TestCase):
+    @timeout_decorator.timeout(15)
+    def test_unknown(self):
+        btree = Index([Node()]*4)
+        btree.nodes[0] = Node(\
+                KeySet((42, 66)),\
+                PointerSet((1,2,3)))
+        btree.nodes[1] = Node(\
+                KeySet((7,87)),\
+                PointerSet((0,0,2)))
+        btree.nodes[2]=Node(\
+                KeySet((42,-1)),\
+                PointerSet((0,0,3)))
+        btree.nodes[3]=Node(\
+                KeySet((66,68)),\
+                PointerSet((0,0,0)))
+        lower_bound = 87
+        upper_bound = 99
+
+        expected_output = []
+
+        self.assertEqual( expected_output, ImplementMe.RangeSearchInIndex( btree, lower_bound, upper_bound ) )
 
 
 
