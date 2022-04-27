@@ -538,7 +538,8 @@ class TestCase19(unittest.TestCase):
 
         expected_output = [12,27]
 
-        self.assertEqual( expected_output, expected_output )
+        self.assertEqual( expected_output, ImplementMe.RangeSearchInIndex(\
+        ImplementMe.InsertIntoIndex( btree, key ), lower_bound, upper_bound ) )
 
 
 # Lookup range with matching lower and upper bound equal to recently added key
@@ -566,7 +567,8 @@ class TestCase20(unittest.TestCase):
 
         expected_output = [12]
 
-        self.assertEqual( expected_output, expected_output )
+        self.assertEqual( expected_output, ImplementMe.RangeSearchInIndex(\
+        ImplementMe.InsertIntoIndex( btree, key ), lower_bound, upper_bound ) )
 
 
 # Freebie for grinding out a tough semester
@@ -578,7 +580,7 @@ class TestCaseB1(unittest.TestCase):
 
         expected_output = False
 
-        self.assertEqual( expected_output, expected_output )
+        self.assertEqual( expected_output, ImplementMe.LookupKeyInIndex( btree, key ) )
 
 
 
