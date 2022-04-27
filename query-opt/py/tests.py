@@ -542,7 +542,7 @@ class TestCase19(unittest.TestCase):
         ImplementMe.InsertIntoIndex( btree, key ), lower_bound, upper_bound ) )
 
 
-# Lookup range with matching lower and upper bound equal to recently added key
+# Lookup range with nearly matching lower and upper bound equal to recently added key
 class TestCase20(unittest.TestCase):
     def test_unknown(self):
         btree = Index([Node()]*13)
@@ -563,9 +563,9 @@ class TestCase20(unittest.TestCase):
                 PointerSet((0,0,0)))
         key = 12
         lower_bound = 12
-        upper_bound = 66
+        upper_bound = 13
 
-        expected_output = [12, 27]
+        expected_output = [12]
 
         self.assertEqual( expected_output, ImplementMe.RangeSearchInIndex(\
         ImplementMe.InsertIntoIndex( btree, key ), lower_bound, upper_bound ) )
