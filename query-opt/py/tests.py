@@ -162,10 +162,10 @@ class TestCase06(unittest.TestCase):
                 PointerSet((1,2,3)))
         expected_output.nodes[2] = Node(\
                 KeySet((9,-1)),\
-                PointerSet((4,5,0)))
+                PointerSet((7,8,0)))
         expected_output.nodes[3]=Node(\
                 KeySet((66,-1)),\
-                PointerSet((7,8,0)))
+                PointerSet((10,11,0)))
         expected_output.nodes[6]=Node(\
                 KeySet((11,11)),\
                 PointerSet((0,0,90))) # Dummy data for test
@@ -430,7 +430,7 @@ class TestCase15(unittest.TestCase):
         lower_bound = 42
         upper_bound = 99
 
-        expected_output = [9,42,66,87]
+        expected_output = [42,66,87]
 
         self.assertEqual( expected_output, ImplementMe.RangeSearchInIndex( btree, lower_bound, upper_bound ) )
 
@@ -565,7 +565,7 @@ class TestCase20(unittest.TestCase):
         lower_bound = 12
         upper_bound = 66
 
-        expected_output = [12]
+        expected_output = [12, 27]
 
         self.assertEqual( expected_output, ImplementMe.RangeSearchInIndex(\
         ImplementMe.InsertIntoIndex( btree, key ), lower_bound, upper_bound ) )
