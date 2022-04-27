@@ -281,7 +281,7 @@ class TestCase09(unittest.TestCase):
         btree.nodes[3]=Node(\
                 KeySet((66,87)),\
                 PointerSet((0,0,0)))
-        key = 42
+        key = 87
 
         expected_output = True
 
