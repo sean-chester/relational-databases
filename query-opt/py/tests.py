@@ -511,7 +511,7 @@ class TestCase18(unittest.TestCase):
         btree = Index([Node()]*13)
         btree.nodes[0] = Node(\
                 KeySet((7, 99)),\
-                PointerSet((1,2,0)))
+                PointerSet((1,2,3)))
         btree.nodes[2]=Node(\
                 KeySet((27,66)),\
                 PointerSet((7,8,9)))
@@ -540,7 +540,7 @@ class TestCase19(unittest.TestCase):
         btree = Index([Node()]*13)
         btree.nodes[0] = Node(\
                 KeySet((7, 99)),\
-                PointerSet((1,2,0)))
+                PointerSet((1,2,3)))
         btree.nodes[2]=Node(\
                 KeySet((27,66)),\
                 PointerSet((7,8,9)))
@@ -570,7 +570,7 @@ class TestCase20(unittest.TestCase):
         btree = Index([Node()]*13)
         btree.nodes[0] = Node(\
                 KeySet((7, 99)),\
-                PointerSet((1,2,0)))
+                PointerSet((1,2,3)))
         btree.nodes[2]=Node(\
                 KeySet((27,66)),\
                 PointerSet((7,8,9)))
