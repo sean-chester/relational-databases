@@ -503,7 +503,7 @@ class ImplementMeTest {
     @Test
     @DisplayName("Test Case B1")
     @Description("Look up a key in an empty tree")
-    public void testCase20() throws Exception {
+    public void testCaseB1() throws Exception {
         Index btree = new Index();
 
         int key = 9;
@@ -516,7 +516,7 @@ class ImplementMeTest {
     @Test
     @DisplayName("Test Case B2")
     @Description("Insert in order")
-    public void testCase20() throws Exception {
+    public void testCaseB2() throws Exception {
         Index btree = new Index();
         btree.nodes.add(new Node(new KeySet(new int[]{66, -1}), new PointerSet(new int[]{0, 0, 0})));
         int key = 87;
@@ -531,7 +531,7 @@ class ImplementMeTest {
     @Test
     @DisplayName("Test Case B3")
     @Description("Look up a key inserted into a tree with only one element")
-    public void testCase20() throws Exception {
+    public void testCaseB3() throws Exception {
         Index btree = new Index();
         btree.nodes.add(new Node(new KeySet(new int[]{7, -1}), new PointerSet(new int[]{0, 0, 0})));
         int key = 12;
@@ -539,14 +539,14 @@ class ImplementMeTest {
         boolean expectedOutput = true;
 
         assertEquals(expectedOutput, ImplementMe.lookupKeyInIndex(
-                ImplementMe.insertIntoIndex(btree, key), key);
+                ImplementMe.insertIntoIndex(btree, key), key));
     }
 
 
     @Test
     @DisplayName("Test Case B4")
     @Description("Range query that doesn't overlap tree at all")
-    public void testCase20() throws Exception {
+    public void testCaseB4() throws Exception {
         Index btree = new Index();
         btree.nodes.add(new Node( // node #1
                 new KeySet(new int[]{42, 66}), new PointerSet(new int[]{1, 2, 3})));
