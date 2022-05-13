@@ -28,6 +28,8 @@ class Relation:
     def __repr__(self):
         return str(self)
     def __hash__(self):
+        if len( self.attributes ) == 0:
+            return 0
         return reduce(lambda x,y: x^y, [hash(x) for x in self.attributes])
     def __eq__(self, other):
         return self.attributes == other.attributes
@@ -43,6 +45,8 @@ class RelationSet:
     def __repr__(self):
         return str(self)
     def __hash__(self):
+        if len( self.relations ) == 0:
+            return 0
         return reduce(lambda x,y: x^y, [hash(x) for x in self.relations])
     def __eq__(self, other):
         return self.relations == other.relations

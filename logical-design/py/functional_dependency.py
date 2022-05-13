@@ -4,6 +4,7 @@
 # but all member variables are public. You will implement the functionality
 # in another (implementation) file.
 
+from functools import reduce
 
 # Arbitrarily chosen prime number for use in hash functions
 class Constants:
@@ -25,8 +26,13 @@ class FunctionalDependency:
     def __repr__(self):
         return str(self)
     def __hash__(self):
-        return ( reduce(lambda x,y: x^y, [hash(x) for x in self.left_hand_side]) + 1 ) \
-        ^ ( reduce(lambda x,y: x^y, [hash(x) for x in self.right_hand_side]) * Constants.arbitrary_prime )
+        lhs_hash = 0
+        rhs_hash = 0
+        if len( self.left_hand_side ) > 0:
+            lhs_hash = reduce(lambda x,y: x^y, [hash(x) for x in self.left_hand_side])
+        if len( self.right_hand_side ) > 0:
+            rhs_hash = reduce(lambda x,y: x^y, [hash(x) for x in self.right_hand_side])
+        return ( lhs_hash + 1 ) ^ ( rhs_hash * Constants.arbitrary_prime )
     def __eq__(self, other):
         return self.left_hand_side == other.left_hand_side \
         and self.right_hand_side == other.right_hand_side
@@ -43,6 +49,8 @@ class FDSet:
     def __repr__(self):
         return str(self)
     def __hash__(self):
+        if len( self.functional_dependencies ) == 0:
+            return 0
         return reduce(lambda x,y: x^y, [hash(x) for x in self.functional_dependencies])
     def __eq__(self, other):
         return self.functional_dependencies == other.functional_dependencies

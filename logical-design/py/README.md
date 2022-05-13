@@ -14,6 +14,7 @@ python3 ./tests.py
 In order to run this code, you will need:
 
   * Python3 (python2 is not guaranteed to be supported)
+  * The `timeout-decorator` package if you want to confirm time-outs under 15s (or you can comment out those lines)
 
 ## Task
 
