@@ -173,7 +173,7 @@ class TestCase12(unittest.TestCase):
         fds = FDSet({FunctionalDependency({'b', 'a'}, {'e','c'}), \
                 FunctionalDependency({'a','b'}, {'d'}) })
 
-        expected_output = -1
+        expected_output = 0
 
         self.assertEqual( expected_output, ImplementMe.DecompositionSteps( relations, fds ) )
 
