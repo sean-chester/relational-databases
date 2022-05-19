@@ -329,7 +329,7 @@ class TestCaseB1(unittest.TestCase):
 class TestCaseB1(unittest.TestCase):
     @timeout_decorator.timeout(15)
     def test_is_bncf(self):
-        relations = RelationSet({Relation({'d','c','e'}), \
+        relations = RelationSet({Relation({'d','c','e','f'}), \
                 Relation({'a','b','c','d'}) })
         fds = FDSet({FunctionalDependency({'a','b'}, {'e'}), \
                 FunctionalDependency({'c','d'}, {'e'}), \
