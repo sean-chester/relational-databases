@@ -272,7 +272,7 @@ class TestCase18(unittest.TestCase):
                 FunctionalDependency({'b','c'}, {'d'}), \
                 FunctionalDependency({'c'}, {'b'}) })
 
-        expected_output = 2
+        expected_output = 3
 
         self.assertEqual( expected_output, ImplementMe.DecompositionSteps( relations, fds ) )
 
