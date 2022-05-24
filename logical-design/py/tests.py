@@ -326,7 +326,7 @@ class TestCaseB1(unittest.TestCase):
 
 # Non-deterministic -- side where second FD is chosen first (less likely)
 # but last recursive step is missed
-class TestCaseB1(unittest.TestCase):
+class TestCaseB2(unittest.TestCase):
     @timeout_decorator.timeout(15)
     def test_is_bncf(self):
         relations = RelationSet({Relation({'d','c','e','f'}), \
