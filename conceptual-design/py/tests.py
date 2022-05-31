@@ -1,3 +1,15 @@
+# Test cases for convert_to_table() method.
+# The mocked objects (and therefore expected output) may undergo some change
+# at the point of evaluation, but set of functionality tested will not.
+# That is to say, some tests may be changed to look more like or to 
+# compose/combine other tests,
+# and all tests may have minor modifications to change the expected out,
+# but there won't be anything added beyond the scope of what is already
+# shown here.
+#
+# Note that the final two cases, B1 and B2, are bonus test cases
+# and the assignment is evaluated out of 20.
+
 from erd import *
 from table import *
 from erd_converter import convert_to_table

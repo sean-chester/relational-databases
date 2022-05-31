@@ -22,7 +22,7 @@ You are welcome to add anything you like to this file, which is the only one tha
 
 Because Python is a weakly-typed language, one sample instance of each class has been instantiated as documentation. You can also refer to the test cases and `__str__()` functions for additional documentation.
 
-When we evaluate you `erd-converter`, we will swap out `tests.py` for a new file with an expanded set of twenty-two test cases, each worth 5% of the grade (for a maximum possible score of 110%). You can expect some test cases will be quite difficult, but none will involve obscene numbers of entity sets and/or relationships.
+When we evaluate you `erd-converter`, we will swap out `tests.py` for a new file with a revised set of twenty-two test cases, each worth 5% of the grade (for a maximum possible score of 110%). You can expect some test cases will be quite difficult, but none will involve an obscene quantity of entity sets and/or relationships.
 
 ## License
 

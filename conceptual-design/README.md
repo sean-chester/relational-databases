@@ -11,39 +11,35 @@ In this assignment you will:
 
 ## Task
 
-You should write a computer program in python (or another programming language with prior approval of the instructor) that will take as input an entity-relationship diagram (ERD) and print out to the standard output stream a series of SQL DDL queries (i.e., CREATE TABLE statements) that populates an empty MySQL database with a set of tables that match the ERD.
+You should write a computer program in python (or another programming language with prior approval of the instructor) that will take as input an entity-relationship diagram (ERD) and identify the set of MySQL tables that match the ERD, specified in terms of table names, attributes, primary keys, and foreign keys.
 
-You have been provided with an ERD class that can be directly instantiated, even for complex examples like the one shown below. You are also provided with a Database class that has methods for comparing two databases for equality and for printing out CREATE TABLE statements. There is only one function missing, the one that you should implement, which converts an arbitrary ERD instance into a corresponding Database instance.
+You have been provided with an ERD class that can be directly instantiated. You are also provided with a Database class that has methods for comparing two databases for equality and for printing out CREATE TABLE statements. There is only one function missing, the one that you should implement, which converts an arbitrary ERD instance into a corresponding Database instance.
 
-You will need to handle all concepts introduced in the lessons (e.g., weak entity sets, subclass hierarchies, many-many relationships), but you should assume that every one-many and many-one relationship requires referential integrity. You should not modify any identifiers. For simplicity, we have made every attribute of data type INT and avoided use of specifiers like "AUTOINCREMENT" and NOT NULL.
+You will need to handle all concepts introduced in the lessons (e.g., weak entity sets, subclass hierarchies, many-many relationships), but you should assume that every one-many and many-one relationship requires referential integrity. You should not modify any identifiers.
 
-You _do not need to write any scripts_ for this assignment. We have instead wrapped all the code in a unit testing framework and we will directly probe the objects that you create by creating mock objects as solutions and using the provided equality comparator to determine whether you have the same solution. Where order is not important as per the SQL standard, we use set-based comparisons; where it is important, we check order. You can verify this by inspecting the comparators.
-
-The starter code, test harness, and README with build instructions has been shipped out in both C++ and Python and attached as a compressed archive to this assignment description. We anticipate releasing Java code, too, but will not extend the deadline due to delays with its release. For specific build and run instructions, refer to the relevant README.
+The starter code, test harness, and README with build instructions has been shipped out in Python and attached as a compressed archive to this assignment description. For specific build and run instructions, refer to the relevant README.
 
 ## Submission
 
-You should only submit one .py file, uncompressed, which implements the convert_to_table() function with the exact signature provided.
+You should implement the (empty) function called `convert_to_table()` in `erd_converter.py` and then submit the single file `erd_converter.py`. You are welcome to add auxillairy ("helper") functions, so long as they are in the `erd_converter.py` file that you submit.  
 
 ## Evaluation
 
-We will swap out the test file with a new set of unit tests and assign a grade of pass (1) or fail (0) for each assertion that you pass. If your code takes more than five minutes on a single test, it may be terminated before the test finishes, resulting in a fail on that test. Your grade on the assignment will be the number of tests passed. There will be a total of twenty-two tests, each worth 5%; so, it is possible to score a maximum grade of 110% on this assignment.
+Included with the starter code is a set of unit tests (`tests.py`). This imports your `erd_converter.py` code. To evaluate your submission, we will use a marking script that will run `python3 tests.py` and count the percentage of unit tests that your code passes. This percentage will be your grade on the assignment.
 
-The current code release is in "beta" state because we will provide more sample tests.
+We may make modifications to `tests.py` prior to evaluation in order to circumvent hard-coded and/or plagiarised solutions and to calibrate the assignment difficulty.
 
-## Sources
+If you upload your (in-progress?) solution at least four days prior to the deadline, we will batch grade it and provide preliminary feedback through Brightspace.
 
-You are permitted to use sources that you find on the Internet, so long as it is clear that the source existed prior to the creation of this assignment and you provide a citation in your source code. For example, GitHub and StackOverflow content is permitted, so long as they are clearly dated prior to the beginning of this semester. If you do not include a citation in your source code, your work will be considered plagiarism.
+## Sources and Academic Integrity
 
-You should, however, work through the assignment on your own. You are welcome to prepare for the assignment with peers in the class by working through the ungraded worksheets together.
+You are permitted to use sources that you find on the Internet, so long as the source is clearly dated with a last edit prior to 1-January-2022 and you provide a citation in your source code. For example, GitHub and StackOverflow content is permitted, so long as they are clearly dated prior to this year. If you do not include a citation in your source code, your work will be considered plagiarism.
 
-## Illness Policy
+You must otherwise complete the assignment independently, including the development of pseudocode. Submissions will be subjected to plagiarism detection software and evidence of collaboration will be reported as an Academic Integrity infringement. You are welcome to prepare for the assignment with peers in the class by working through the ungraded worksheets together, which are designed to prepare you well for this assignment.
 
-The end date for the assignment is three days later than the due date. This is expected to provide sufficient contingency for most minor illnesses and you should submit by the due date rather than the end date if you are not constrained by illness.
+## Illness, Lateness, Technical Issues, and Personal Circumstances
 
-In the event that three days contingency is insufficient, you could contact the instructor in advance of the due date with a brief explanation. If you have submitted all previous, graded assignments, then your quiz for this module will be used as the assessment for these learning outcomes. If, on the other hand, you have a missing assignment due to, for example, prior illness this semester, then a well-justified second absence longer than three days we be accommodated with a make-up assessment in the form of an individual, closed, recorded oral exam over Zoom conducted by the instructor. The use of make-up assessments will help to ensure that there are sufficiently many assessment activities (at least 80% of the grade) for each student to accurately reflect their achievement in this course.
-
-You are encouraged to submit your preliminary progress one week and again three days prior to the assignment deadline to document progress in case of illness. These preliminary submissions can, of course, be overwritten by your final submission.
+Submissions will be accepted until the _end date_ of the assignment listed in Brightspace, which provides a three day buffer to address most challenges that are likely to arise. Note that support for the assignment will not be available after the deadline, however. Submissions will not be accepted after the _end date_; if you have not submitted code by then, whether by choice or circumstances, the weight for this assignment will be shifted to the corresponding midterm exam.
 
 ## Summary
 
