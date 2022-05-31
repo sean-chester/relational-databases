@@ -11,7 +11,7 @@ In this assignment you will:
 
 ## Task
 
-You should write a computer program in the programming language of your choice that will take as input an entity-relationship diagram (ERD) and prints out to the standard output stream a series of SQL DDL queries (i.e., CREATE TABLE statements) that populates an empty MySQL database with a set of tables that match the ERD.
+You should write a computer program in python (or another programming language with prior approval of the instructor) that will take as input an entity-relationship diagram (ERD) and print out to the standard output stream a series of SQL DDL queries (i.e., CREATE TABLE statements) that populates an empty MySQL database with a set of tables that match the ERD.
 
 You have been provided with an ERD class that can be directly instantiated, even for complex examples like the one shown below. You are also provided with a Database class that has methods for comparing two databases for equality and for printing out CREATE TABLE statements. There is only one function missing, the one that you should implement, which converts an arbitrary ERD instance into a corresponding Database instance.
 
@@ -23,7 +23,7 @@ The starter code, test harness, and README with build instructions has been ship
 
 ## Submission
 
-If coding in Python, you should only submit one .py file, uncompressed, which implements the convert_to_table() function with the exact signature provided. If coding in C++, you should submit up to two files (one .cpp implementation file and one corresponding .hpp header file) that together implement the convert_to_table() function.
+You should only submit one .py file, uncompressed, which implements the convert_to_table() function with the exact signature provided.
 
 ## Evaluation
 
