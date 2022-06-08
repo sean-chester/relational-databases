@@ -12,6 +12,7 @@
 import unittest
 import time
 import timeout_decorator
+sudo 
 from relation import *
 from functional_dependency import *
 from bcnf import ImplementMe
@@ -68,26 +69,28 @@ class TestCase04(unittest.TestCase):
 
 
 # Cycle. Everything's a key.
+# Randomly changed: add a non-key attribute
 class TestCase05(unittest.TestCase):
     @timeout_decorator.timeout(15)
     def test_is_bncf(self):
-        relations = RelationSet({Relation({'a','b','c','d'})})
+        relations = RelationSet({Relation({'a','b','c','d','e'})})
         fds = FDSet({FunctionalDependency({'a'}, {'b'}), \
                 FunctionalDependency({'b'}, {'c'}), \
                 FunctionalDependency({'c'}, {'d'}), \
                 FunctionalDependency({'d'}, {'a'}) })
 
-        expected_output = 0
+        expected_output = -1
 
         self.assertEqual( expected_output, ImplementMe.DecompositionSteps( relations, fds ) )
 
 
 # BCNF decomposition has already been done
+# Randomly changed: omit one attribute 
 class TestCase06(unittest.TestCase):
     @timeout_decorator.timeout(15)
     def test_is_bncf(self):
         relations = RelationSet({Relation({'a','b'}), \
-                Relation({'a','c','d'}) })
+                Relation({'c','d'}) })
         fds = FDSet({FunctionalDependency({'a'}, {'b'}) })
 
         expected_output = 1
@@ -96,15 +99,15 @@ class TestCase06(unittest.TestCase):
 
 
 # In BCNF but breaks up a prime
+# Randomly changed: show correct decomposition
 class TestCase07(unittest.TestCase):
     @timeout_decorator.timeout(15)
     def test_is_bncf(self):
-        relations = RelationSet({Relation({'a','b'}), \
-                Relation({'b','c'}) })
+        relations = RelationSet({Relation({'a','b','c'}) })
         fds = FDSet({FunctionalDependency({'a'}, {'b','c'}), \
                 FunctionalDependency({'b'}, {'a'}) })
 
-        expected_output = -1
+        expected_output = 0
 
         self.assertEqual( expected_output, ImplementMe.DecompositionSteps( relations, fds ) )
 
@@ -153,27 +156,32 @@ class TestCase10(unittest.TestCase):
 
 
 # Only one FD is a key
+# Randomly changed: add another FD to split another relation
 class TestCase11(unittest.TestCase):
     @timeout_decorator.timeout(15)
     def test_is_bncf(self):
-        relations = RelationSet({Relation({'a','b','c'}), \
+        relations = RelationSet({Relation({'b','c'}), \
+                Relation({'c','a'}) , \
                 Relation({'a','d'}) })
         fds = FDSet({FunctionalDependency({'b'}, {'a','c'}), \
-                FunctionalDependency({'a'}, {'d'}) })
+                FunctionalDependency({'a'}, {'d'}), \
+                FunctionalDependency({'c'}, {'a'}) })
 
-        expected_output = 1
+        expected_output = 2
 
         self.assertEqual( expected_output, ImplementMe.DecompositionSteps( relations, fds ) )
 
 # Forgets to calculate closure
+# Randomly changed: split erroneously based on first FD
 class TestCase12(unittest.TestCase):
     @timeout_decorator.timeout(15)
     def test_is_bncf(self):
-        relations = RelationSet({Relation({'a','b','c','d','e'}) })
+        relations = RelationSet({Relation({'a','b','c','e'}), \
+                Relation({'b','a','d'}) })
         fds = FDSet({FunctionalDependency({'b', 'a'}, {'e','c'}), \
                 FunctionalDependency({'a','b'}, {'d'}) })
 
-        expected_output = 0
+        expected_output = -1
 
         self.assertEqual( expected_output, ImplementMe.DecompositionSteps( relations, fds ) )
 
@@ -227,10 +235,12 @@ class TestCase15(unittest.TestCase):
 
 # similar to non-deterministic case,
 # but completes up to the second-from-last step after random choice
+# Randomly changed: show correct answer
 class TestCase16(unittest.TestCase):
     @timeout_decorator.timeout(15)
     def test_is_bncf(self):
-        relations = RelationSet({Relation({'e','f','g'}), \
+        relations = RelationSet({Relation({'e','f'}), \
+                Relation({'g','f'}), \
                 Relation({'e','c','d'}), \
                 Relation({'a','b','c','d'}) })
         fds = FDSet({FunctionalDependency({'a','b'}, {'e'}), \
@@ -238,41 +248,39 @@ class TestCase16(unittest.TestCase):
                 FunctionalDependency({'e'}, {'f'}), \
                 FunctionalDependency({'f'}, {'g'}) })
 
-        expected_output = -1
+        expected_output = 3
 
         self.assertEqual( expected_output, ImplementMe.DecompositionSteps( relations, fds ) )
 
 
 # Recursed too far, basically applied 3NF algorithm
+# Randomly changed: show correct answer
 class TestCase17(unittest.TestCase):
     @timeout_decorator.timeout(15)
     def test_is_bncf(self):
-        relations = RelationSet({Relation({'a','b'}), \
-                Relation({'b','c'}), \
-                Relation({'c','a'}), \
+        relations = RelationSet({Relation({'a','b','c','d'}), \
                 Relation({'e','d'}) })
         fds = FDSet({FunctionalDependency({'a'}, {'b'}), \
                 FunctionalDependency({'b'}, {'c'}), \
                 FunctionalDependency({'c'}, {'a'}), \
                 FunctionalDependency({'d'}, {'e'}) })
 
-        expected_output = -1
+        expected_output = 1
 
         self.assertEqual( expected_output, ImplementMe.DecompositionSteps( relations, fds ) )
 
 
 # Question 5 from the BCNF worksheet
+# Simplified to eliminate non-determinism in assignment solution
 class TestCase18(unittest.TestCase):
     @timeout_decorator.timeout(15)
     def test_is_bncf(self):
-        relations = RelationSet({Relation({'d','b','c'}), \
-                Relation({'a','c'}), \
-                Relation({'e','a'}) })
+        relations = RelationSet({Relation({'c','d','e'}), \
+                Relation({'a','b','c'}) })
         fds = FDSet({FunctionalDependency({'a'}, {'b','c'}), \
-                FunctionalDependency({'b','c'}, {'d'}), \
-                FunctionalDependency({'c'}, {'b'}) })
+                FunctionalDependency({'c'}, {'b', 'a'}) })
 
-        expected_output = 3
+        expected_output = 1
 
         self.assertEqual( expected_output, ImplementMe.DecompositionSteps( relations, fds ) )
 
