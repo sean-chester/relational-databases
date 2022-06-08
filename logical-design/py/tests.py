@@ -12,7 +12,7 @@
 import unittest
 import time
 import timeout_decorator
-sudo 
+ 
 from relation import *
 from functional_dependency import *
 from bcnf import ImplementMe
