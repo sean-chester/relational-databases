@@ -93,7 +93,7 @@ class TestCase06(unittest.TestCase):
                 Relation({'c','d'}) })
         fds = FDSet({FunctionalDependency({'a'}, {'b'}) })
 
-        expected_output = 1
+        expected_output = -1
 
         self.assertEqual( expected_output, ImplementMe.DecompositionSteps( relations, fds ) )
 
@@ -258,14 +258,15 @@ class TestCase16(unittest.TestCase):
 class TestCase17(unittest.TestCase):
     @timeout_decorator.timeout(15)
     def test_is_bncf(self):
-        relations = RelationSet({Relation({'a','b','c','d'}), \
+        relations = RelationSet({Relation({'a','b','c'}), \
+                Relation({'b','d'}), \
                 Relation({'e','d'}) })
         fds = FDSet({FunctionalDependency({'a'}, {'b'}), \
                 FunctionalDependency({'b'}, {'c'}), \
                 FunctionalDependency({'c'}, {'a'}), \
                 FunctionalDependency({'d'}, {'e'}) })
 
-        expected_output = 1
+        expected_output = 2
 
         self.assertEqual( expected_output, ImplementMe.DecompositionSteps( relations, fds ) )
 
