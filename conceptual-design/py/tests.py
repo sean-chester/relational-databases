@@ -16,6 +16,75 @@ from erd_converter import convert_to_table
 
 import unittest
 
+from csv import DictWriter
+import os
+from os import path
+import sys
+
+class CourseMarker(unittest.TestCase):
+        currentResult = None # holds last result object passed to run method
+        TotalTests = None
+        LogFilename = None
+        def __init__(self, testName):
+                # calling the super class init
+                super(CourseMarker, self).__init__(testName)
+
+
+        def run(self, result=None):
+                self.currentResult = result # remember result for use in tearDown
+                unittest.TestCase.run(self, result) # call superclass run method
+        
+        @classmethod
+        def setResult(cls, amount, errors, failures, skipped):
+                cls.amount, cls.errors, cls.failures, cls.skipped = \
+                amount, errors, failures, skipped
+
+        def tearDown(self):
+                amount = self.currentResult.testsRun
+                errors = self.currentResult.errors
+                failures = self.currentResult.failures
+                skipped = self.currentResult.skipped
+                self.setResult(amount, errors, failures, skipped)
+
+        @classmethod
+        def tearDownClass(cls):
+                if int(cls.amount) == cls.TotalTests:
+                        subdir = os.path.dirname(os.path.realpath(__file__))
+                        st_num_pos = subdir.find(" - V")
+                        if st_num_pos == -1:
+                                print("No student ID found in the test folder name.")
+                                return
+
+                        std_num = subdir[st_num_pos+3:st_num_pos+3+9]
+                
+                        # print(f"Writings results of {std_num} to csv ...")
+                        writeHeader = True
+                        if path.exists(cls.LogFilename):
+                                writeHeader = False
+                        # Open file in append mode
+                        with open(cls.LogFilename, 'a+') as write_obj:
+                                # Create a writer object from csv module
+                                dict_writer = DictWriter(write_obj, fieldnames=["id", "total", "errors", "failed", "succeeded", "skipped"])
+                                if writeHeader:
+                                        cols = {
+                                                "id": "StudentID",
+                                                "total" : "Total",
+                                                "errors" : "Errors",
+                                                "failed" : "Failed",
+                                                "succeeded" : "Succeeded",
+                                                "skipped" : "Skipped"
+                                        }
+                                        dict_writer.writerow(cols)
+                                vals = {
+                                        "id": std_num,
+                                        "total" : str(cls.amount),
+                                        "errors" : str(len(cls.errors)),
+                                        "failed" : str(len(cls.failures)),
+                                        "succeeded" : str(cls.amount - len(cls.errors) - len(cls.failures)),
+                                        "skipped" : str(len(cls.skipped))
+                                }
+                                dict_writer.writerow(vals)
+
 def wrap_student_call( func, input ) :
     actual_result = func( input )
 
@@ -31,7 +100,7 @@ def wrap_student_call( func, input ) :
 
 # Check that the `__eq__` function works correctly on the sample table
 # Not included in assignment test cases
-class TestEquality(unittest.TestCase):
+class TestEquality(CourseMarker):
 	def test_equal_db(self):
 		sample_db2 = Database([ \
 			Table('A', set(['a1','a2']), set(['a1']), set()), \
@@ -42,7 +111,7 @@ class TestEquality(unittest.TestCase):
 
 
 # Single entity set with a single attribute which is the PK
-class TestCase1(unittest.TestCase):
+class TestCase1(CourseMarker):
 	def test_converter(self):
 		erd1 = ERD( \
             [], \
@@ -55,7 +124,7 @@ class TestCase1(unittest.TestCase):
 
 
 # Single entity set with two attributes, which are both part of the PK
-class TestCase2(unittest.TestCase):
+class TestCase2(CourseMarker):
     def test_converter(self):
         erd2 = ERD( \
             [], \
@@ -68,7 +137,7 @@ class TestCase2(unittest.TestCase):
 
 
 # Single entity set with two attributes, in which only one is part of the PK
-class TestCase3(unittest.TestCase):
+class TestCase3(CourseMarker):
 	def test_converter(self):
 		erd3 = ERD( \
             [], \
@@ -81,7 +150,7 @@ class TestCase3(unittest.TestCase):
 
 # Two entity sets, each with two attributes, one of which is the PK attribute.
 # Also a many-many relationship between them with no attributes
-class TestCase4(unittest.TestCase):
+class TestCase4(CourseMarker):
 	def test_converter(self):
 		erd4 = ERD( \
             [Relationship('ShopsAt',[],[])], \
@@ -99,7 +168,7 @@ class TestCase4(unittest.TestCase):
 
 # Two entity sets, each with two attributes, one of which is the PK attribute.
 # Also a many-many relationship between them with one PK attribute.
-class TestCase5(unittest.TestCase):
+class TestCase5(CourseMarker):
     def test_converter(self):
         erd5 = ERD( \
             [Relationship('ShopsAt',['date'],['date'])], \
@@ -117,7 +186,7 @@ class TestCase5(unittest.TestCase):
 
 # Two entity sets, each with two attributes, one of which is the PK attribute.
 # Also a many-many relationship between them with one PK attribute and one non-PK attribute
-class TestCase6(unittest.TestCase):
+class TestCase6(CourseMarker):
     def test_converter(self):
         erd6 = ERD( \
             [Relationship('ShopsAt',['date', 'purchase_amount'],['date'])], \
@@ -135,7 +204,7 @@ class TestCase6(unittest.TestCase):
 
 # Two entity sets, each with two attributes, one of which is the PK attribute.
 # Also a one-many or many-one relationship between them with no attributes
-class TestCase7(unittest.TestCase):
+class TestCase7(CourseMarker):
     def test_converter(self):
         erd7 = ERD( \
             [Relationship('Prefers',[],[])], \
@@ -152,7 +221,7 @@ class TestCase7(unittest.TestCase):
 
 # Two entity sets, each with two attributes, one of which is the PK attribute.
 # Also a one-many or many-one relationship between them with one PK attribute
-class TestCase8(unittest.TestCase):
+class TestCase8(CourseMarker):
     def test_converter(self):
         erd8 = ERD( \
             [Relationship('Prefers',['since'],['since'])], \
@@ -169,7 +238,7 @@ class TestCase8(unittest.TestCase):
 
 
 # Two entity sets, one of which is designated as a parent of the other.
-class TestCase9(unittest.TestCase):
+class TestCase9(CourseMarker):
     def test_converter(self):
         erd9 = ERD( \
             [Relationship('ManagerIsAnEmployee',[],[])], \
@@ -187,7 +256,7 @@ class TestCase9(unittest.TestCase):
 # Two entity sets, each with two attributes, one of which is the PK attribute.
 # Also a one-many relationship between them is designated in the supporting_relationship list
 # instead of the relationship list for one of the tables (the weak entity set).
-class TestCase10(unittest.TestCase):
+class TestCase10(CourseMarker):
     def test_converter(self):
         erd10 = ERD( \
             [Relationship('FoundIn',[],[])], \
@@ -204,7 +273,7 @@ class TestCase10(unittest.TestCase):
 
 # Two entity sets, each with two attributes, both of which are PK attributes for one E.S.
 # Also a many-many relationship between them with no attributes
-class TestCase11(unittest.TestCase):
+class TestCase11(CourseMarker):
     def test_converter(self):
         erd11 = ERD( \
             [Relationship('R',[],[])], \
@@ -229,7 +298,7 @@ class TestCase11(unittest.TestCase):
 
 # Two entity sets, each with two attributes, both of which are PK attributes for both E.S.
 # Also a many-many relationship between them with no attributes
-class TestCase12(unittest.TestCase):
+class TestCase12(CourseMarker):
     def test_converter(self):
         erd12 = ERD( \
             [Relationship('R',[],[])], \
@@ -267,7 +336,7 @@ class TestCase12(unittest.TestCase):
 
 # ERD-to-DB worksheet, Q1
 # many-one relationship with compound foreign key
-class TestCase13(unittest.TestCase):
+class TestCase13(CourseMarker):
     def test_converter(self):
         erd13 = ERD( \
             [Relationship('Contains',[],[])], \
@@ -291,7 +360,7 @@ class TestCase13(unittest.TestCase):
 
 # ERD-to-DB worksheet, question 2
 # many-many relationship with PK and one multi-attribute FK
-class TestCase14(unittest.TestCase):
+class TestCase14(CourseMarker):
     def test_converter(self):
         erd14 = ERD( \
             [Relationship('PlaysFor',['start_date','end_date'],['start_date',])], \
@@ -321,7 +390,7 @@ class TestCase14(unittest.TestCase):
 
 # ERD-to-DB worksheet, question 6
 # Two many-one relationships chained together
-class TestCase15(unittest.TestCase):
+class TestCase15(CourseMarker):
     def test_converter(self):
         erd15 = ERD( \
             [Relationship('PaintedBy',['date_painted',],[]), \
@@ -343,7 +412,7 @@ class TestCase15(unittest.TestCase):
 
 # Surprise easy case
 # Two many-many relationships "chained" together
-class TestCase16(unittest.TestCase):
+class TestCase16(CourseMarker):
     def test_converter(self):
         erd16 = ERD( \
             [Relationship('PaintedBy',['date_painted',],[]), \
@@ -366,7 +435,7 @@ class TestCase16(unittest.TestCase):
 
 # Two entity sets, one of which is designated as a parent of the other
 # PK with two attributes
-class TestCase17(unittest.TestCase):
+class TestCase17(CourseMarker):
     def test_converter(self):
         erd17 = ERD( \
             [Relationship('ManagerIsAnEmployee',[],[])], \
@@ -390,7 +459,7 @@ class TestCase17(unittest.TestCase):
 
 # A ternary relationship is provided.
 # Multiplicity of many-one-one
-class TestCase18(unittest.TestCase):
+class TestCase18(CourseMarker):
     def test_converter(self):
         erd18 = ERD( \
             [Relationship('Rel',[],[])], \
@@ -409,7 +478,7 @@ class TestCase18(unittest.TestCase):
 
 
 # An entity set inherits from a subclass
-class TestCase19(unittest.TestCase):
+class TestCase19(CourseMarker):
     def test_converter(self):
         erd19 = ERD( \
             [Relationship('LabIsACourse',[],[]), \
@@ -427,7 +496,7 @@ class TestCase19(unittest.TestCase):
 
 
 # An entity set inherits from a subclass with a two-attribute PK
-class TestCase20(unittest.TestCase):
+class TestCase20(CourseMarker):
     def test_converter(self):
         erd20 = ERD( \
             [Relationship('LabIsACourse',[],[]), \
@@ -472,7 +541,7 @@ class TestCase20(unittest.TestCase):
 
 # A weak entity set is supported by a weak entity set,
 # at least one of which is involved in a non-supporting relationship.
-class TestCaseB1(unittest.TestCase):
+class TestCaseB1(CourseMarker):
     def test_converter(self):
         erdB1 = ERD( \
             [Relationship('FoundIn',[],[]), \
@@ -526,7 +595,7 @@ class TestCaseB1(unittest.TestCase):
 
 # ERD-to-DB worksheet question 3 (simplified)
 # Multiplicity of many-many-one.
-class TestCaseB2(unittest.TestCase):
+class TestCaseB2(CourseMarker):
     def test_converter(self):
         erdB2 = ERD( \
             [Relationship('Rel',[],[])], \
@@ -543,7 +612,12 @@ class TestCaseB2(unittest.TestCase):
 
         self.assertEqual( dbB2, wrap_student_call(convert_to_table, erdB2 ) )
 
-
-
-# Run all unit tests above.
-unittest.main(argv=[''],verbosity=2, exit=False)
+if __name__ == "__main__":
+        # Run all unit tests above.
+        if len(sys.argv) > 1:
+                # In reverse order
+                CourseMarker.LogFilename = str(sys.argv.pop())
+                CourseMarker.TotalTests = int(sys.argv.pop())
+        unittest.main(argv=[''],
+                        verbosity=2,
+                        exit=False)
