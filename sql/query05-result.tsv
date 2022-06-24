@@ -1,6 +1,125 @@
-Name	Frequency
-game	5
-graphical-output	9
-parsing	5
-permutations	8
-popularity-contest	21
+name	abbr	labour_force	Unemployment Rate
+fresno county	CA	429670	10.5553
+san joaquin county	CA	292848	10.4413
+stanislaus county	CA	231707	11.0894
+genesee county	MI	202220	10.0509
+tulare county	CA	198899	10.8326
+merced county	CA	102153	12.6359
+yuma county	AZ	84314	18.3860
+shasta county	CA	82577	10.0754
+imperial county	CA	72434	22.5543
+kings county	CA	58735	10.5967
+orangeburg county	SC	41087	10.1030
+sutter county	CA	41058	12.3679
+navajo county	AZ	39302	10.1114
+lancaster county	SC	29582	11.4969
+yuba county	CA	27700	11.9278
+montcalm county	MI	26322	11.2795
+lake county	CA	24525	10.6626
+edgecombe county	NC	24498	10.0988
+starr county	TX	22243	11.3069
+apache county	AZ	21264	11.6253
+sanilac county	MI	21151	10.8506
+hillsdale county	MI	20879	10.1777
+maverick county	TX	20816	10.5544
+siskiyou county	CA	19204	10.2166
+santa cruz county	AZ	17888	11.0242
+hendry county	FL	17565	11.0788
+dallas county	AL	15473	11.0838
+williamsburg county	SC	15437	10.3777
+chester county	SC	15314	11.8127
+chambers county	AL	15012	14.4151
+wexford county	MI	14319	10.7829
+oceana county	MI	14064	10.2247
+scotland county	NC	13888	10.9015
+dillon county	SC	12972	10.3145
+clare county	MI	12904	11.4383
+marion county	SC	12763	13.6958
+luna county	NM	12332	12.1148
+glenn county	CA	12182	10.4909
+cheboygan county	MI	12174	11.0810
+henderson county	TN	12093	10.2291
+union county	SC	11696	10.8071
+marlboro county	SC	11659	12.5139
+fairfield county	SC	11195	10.6387
+pike county	OH	10857	10.1593
+iosco county	MI	10665	10.7173
+sunflower county	MS	10660	10.1782
+colusa county	CA	10495	13.8447
+gladwin county	MI	10451	10.6210
+lauderdale county	TN	10354	12.4107
+roscommon county	MI	10206	10.8760
+washington county	MO	10094	10.2437
+fayette county	IN	10078	11.3614
+plumas county	CA	9812	10.5789
+haywood county	TN	9490	10.5058
+jefferson county	OR	9353	10.0609
+meigs county	OH	9143	10.0405
+barnwell county	SC	8815	10.9019
+monroe county	AL	8789	10.1604
+scott county	TN	8536	11.5394
+kanabec county	MN	8014	10.2571
+arenac county	MI	7972	10.2609
+lincoln county	MT	7851	10.8266
+ben hill county	GA	7536	10.8413
+clay county	MS	7319	12.8296
+chickasaw county	MS	7254	10.6975
+holmes county	MS	7143	12.8797
+bethel census area	AK	6935	13.8861
+clay county	KY	6798	10.3560
+wayne county	TN	6641	10.0587
+missaukee county	MI	6409	10.2356
+bamberg county	SC	6326	11.2551
+mackinac county	MI	6298	11.5116
+presque isle county	MI	6013	13.4376
+martinsville city	VA	5930	11.9393
+morgan county	OH	5811	10.2392
+lewis county	TN	5462	10.0330
+lowndes county	AL	4851	10.9050
+trinity county	CA	4850	12.8247
+telfair county	GA	4713	10.7363
+sanders county	MT	4687	10.4331
+west carroll parish	LA	4469	10.4498
+tunica county	MS	4431	10.4942
+graham county	NC	4371	10.6154
+alcona county	MI	4288	11.3806
+baraga county	MI	4264	13.4381
+magoffin county	KY	4261	10.7017
+jackson county	KY	4103	11.3088
+benewah county	ID	4080	10.0980
+clearwater county	MN	4045	11.4462
+montmorency county	MI	4010	13.6908
+nome census area	AK	3991	10.3733
+lake county	MI	3940	11.1421
+schoolcraft county	MI	3893	11.0968
+oscoda county	MI	3878	12.5580
+noxubee county	MS	3813	13.5327
+zavala county	TX	3642	10.5711
+bullock county	AL	3634	10.5394
+claiborne county	MS	3628	10.6946
+perry county	AL	3592	11.3029
+wilcox county	AL	3482	13.9575
+clay county	TN	3482	10.6261
+mccormick county	SC	3444	10.7724
+grant county	OR	3379	10.5949
+hancock county	GA	3361	13.0021
+presidio county	TX	3343	10.3500
+allendale county	SC	3335	16.5217
+clearwater county	ID	3217	10.9730
+east carroll parish	LA	3082	10.5451
+northwest arctic borough	AK	2982	11.5694
+perry county	TN	2980	16.0067
+benton county	MS	2883	11.0302
+jenkins county	GA	2864	15.6774
+jefferson county	MS	2801	13.0668
+yukon-koyukuk census area	AK	2786	14.1062
+kusilvak census area	AK	2616	20.5657
+chattahoochee county	GA	2558	12.1970
+warren county	GA	2490	10.2410
+adams county	ID	1913	10.6116
+pickett county	TN	1893	10.7237
+menominee county	WI	1643	10.6512
+sierra county	CA	1589	10.5727
+keweenaw county	MI	1062	10.7345
+buffalo county	SD	482	10.1660
+alpine county	CA	465	10.5376

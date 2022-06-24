@@ -1,8 +1,10 @@
--- Retrieve by name and frequency and ordered by increasing name
--- those unique Badges that have been awarded at least five times,
--- but never before 2014 and never after 2019
--- 1.1 marks: <6 operators
--- 1.0 marks: <8 operators
+-- Retrieve in descending order of labour force size
+-- all counties that had unemployment rates over 10%
+-- in the 2008 census.
+-- Hint: Unemployment rate = unemployment / labour force
+-- 1.1 marks: <9 operators
+-- 1.0 marks: <10 operators
+-- 1.0 marks: <15 operators
 -- 0.8 marks: correct answer
 
 -- Replace this comment line with the actual query
