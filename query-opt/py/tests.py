@@ -1,12 +1,10 @@
 # Test cases for ImplementMe class.
 # The mocked objects (and therefore expected output) may change
 # at the point of evaluation, including into a more complex object,  
-# but the functionality tested by each test case will not.
-# Your implementation should anticipate ways in which these mocks could
-# be more complex.
-#
-# Three cases are not yet disclosed; they will be challenging combinations
-# of existing test cases.
+# and the functionality tested by each test case may increase in difficulty.
+# Your implementation should anticipate ways in which these mocks
+# or tests could be more complex, as well as design mocks
+# for some disclosed but not written test cases.
 
 import unittest
 import time
@@ -20,13 +18,12 @@ from implement_me import ImplementMe
 class TestCase01(unittest.TestCase):
     @timeout_decorator.timeout(15)
     def test_insertion(self):
-        btree = Index([])
+        btree = Index()
         key = 99
 
-        expected_output = Index([Node()]*1)
-        expected_output.nodes[ 0 ] = Node(\
-            KeySet((99, -1)),\
-            PointerSet((0,0,0)))
+        expected_output = Index(Node(\
+            KeySet([99, None]),\
+            PointerSet([None]*3)))
 
         self.assertEqual( expected_output, ImplementMe.InsertIntoIndex( btree, key ) )
 
@@ -35,16 +32,14 @@ class TestCase01(unittest.TestCase):
 class TestCase02(unittest.TestCase):
     @timeout_decorator.timeout(15)
     def test_insertion(self):
-        btree = Index([Node()]*1)
-        btree.nodes[ 0 ] = Node(\
-            KeySet((99, -1)),\
-            PointerSet((0,0,0)))
+        btree = Index(Node(\
+            KeySet([99, None]),\
+            PointerSet([None]*3)))
         key = 99
 
-        expected_output = Index([Node()]*1)
-        expected_output.nodes[ 0 ] = Node(\
-            KeySet((99, -1)),\
-            PointerSet((0,0,0)))
+        expected_output = Index(Node(\
+            KeySet([99, None]),\
+            PointerSet([None]*3)))
 
         self.assertEqual( expected_output, ImplementMe.InsertIntoIndex( btree, key ) )
 
@@ -53,16 +48,14 @@ class TestCase02(unittest.TestCase):
 class TestCase03(unittest.TestCase):
     @timeout_decorator.timeout(15)
     def test_insertion(self):
-        btree = Index([Node()]*1)
-        btree.nodes[ 0 ] = Node(\
-            KeySet((87, -1)),\
-            PointerSet((0,0,0)))
+        btree = Index(Node(\
+            KeySet([87, None]),\
+            PointerSet([None]*3)))
         key = 66
 
-        expected_output = Index([Node()]*1)
-        expected_output.nodes[ 0 ] = Node(\
-            KeySet((66, 87)),\
-            PointerSet((0,0,0)))
+        expected_output = Index(Node(\
+            KeySet([66, 87]),\
+            PointerSet([None]*3)))
 
         self.assertEqual( expected_output, ImplementMe.InsertIntoIndex( btree, key ) )
 
@@ -71,203 +64,76 @@ class TestCase03(unittest.TestCase):
 class TestCase04(unittest.TestCase):
     @timeout_decorator.timeout(15)
     def test_insertion(self):
-        btree = Index([Node()]*1)
-        btree.nodes[ 0 ] = Node(\
-            KeySet((66, 99)),\
-            PointerSet((0,0,0)))
+        btree = Index(Node(\
+            KeySet([66, 99]),\
+            PointerSet([None]*3)))
         key = 87
 
-        expected_output = Index([Node()]*4)
-        expected_output.nodes[0] = Node(\
-                KeySet((87, -1)),\
-                PointerSet((1,2,0)))
-        expected_output.nodes[1] = Node(\
-                KeySet((66,-1)),\
-                PointerSet((0,0,2)))
-        expected_output.nodes[2]=Node(\
-                KeySet((87,99)),\
-                PointerSet((0,0,0)))
+        expected_output = Index(Node(\
+            KeySet([87, None]),\
+            PointerSet([Node(\
+                KeySet([66, None]),\
+                PointerSet([None]*3)),\
+            Node(\
+                KeySet([87,99]),\
+                PointerSet([None]*3)
+                )])))
 
         self.assertEqual( expected_output, ImplementMe.InsertIntoIndex( btree, key ) )
 
 
 # Insert into full node with full parent, causing root split.
+# Not shown. To be designed by student.
 class TestCase05(unittest.TestCase):
     @timeout_decorator.timeout(25)
     def test_insertion(self):
-        btree = Index([Node()]*4)
-        btree.nodes[0] = Node(\
-                KeySet((42, 66)),\
-                PointerSet((1,2,3)))
-        btree.nodes[1] = Node(\
-                KeySet((7,-1)),\
-                PointerSet((0,0,2)))
-        btree.nodes[2]=Node(\
-                KeySet((42,-1)),\
-                PointerSet((0,0,3)))
-        btree.nodes[3]=Node(\
-                KeySet((66,87)),\
-                PointerSet((0,0,0)))
+        btree = Index()
         key = 99
 
-        expected_output = Index([Node()]*13)
-        expected_output.nodes[0] = Node(\
-                KeySet((66, -1)),\
-                PointerSet((1,2,0)))
-        expected_output.nodes[1] = Node(\
-                KeySet((42,-1)),\
-                PointerSet((4,5,0)))
-        expected_output.nodes[2]=Node(\
-                KeySet((87,-1)),\
-                PointerSet((7,8,0)))
-        expected_output.nodes[4]=Node(\
-                KeySet((7,-1)),\
-                PointerSet((0,0,5)))
-        expected_output.nodes[5]=Node(\
-                KeySet((42,-1)),\
-                PointerSet((0,0,7)))
-        expected_output.nodes[7]=Node(\
-                KeySet((66,-1)),\
-                PointerSet((0,0,8)))
-        expected_output.nodes[8]=Node(\
-                KeySet((87,99)),\
-                PointerSet((0,0,0)))
+        expected_output = Index()
 
         self.assertEqual( expected_output, ImplementMe.InsertIntoIndex( btree, key ) )
 
 
 # Insert into full node with full parent, but does not cause a root split.
-# Note that only the path that should be affected has correct data (testing complexity)
-# Linearisation forces copy of some nodes to new addresses
 class TestCase06(unittest.TestCase):
     @timeout_decorator.timeout(25)
     def test_insertion(self):
-        btree = Index([Node()]*13)
-        btree.nodes[0] = Node(\
-                KeySet((7, -1)),\
-                PointerSet((1,2,0)))
-        btree.nodes[2]=Node(\
-                KeySet((27,66)),\
-                PointerSet((7,8,9)))
-        btree.nodes[6]=Node(\
-                KeySet((11,11)),\
-                PointerSet((0,0,90))) # Dummy data for test
-        btree.nodes[7]=Node(\
-                KeySet((7,9)),\
-                PointerSet((0,0,8)))
-        btree.nodes[8]=Node(\
-                KeySet((27,-1)),\
-                PointerSet((0,0,9)))
-        btree.nodes[9]=Node(\
-                KeySet((66,88)),\
-                PointerSet((0,0,0)))
+        btree = Index()
         key = 12
 
 
-        expected_output = Index([Node()]*13)
-        expected_output.nodes[0] = Node(\
-                KeySet((7, 27)),\
-                PointerSet((1,2,3)))
-        expected_output.nodes[2] = Node(\
-                KeySet((9,-1)),\
-                PointerSet((7,8,0)))
-        expected_output.nodes[3]=Node(\
-                KeySet((66,-1)),\
-                PointerSet((10,11,0)))
-        expected_output.nodes[6]=Node(\
-                KeySet((11,11)),\
-                PointerSet((0,0,90))) # Dummy data for test
-        expected_output.nodes[7]=Node(\
-                KeySet((7,-1)),\
-                PointerSet((0,0,8)))
-        expected_output.nodes[8]=Node(\
-                KeySet((9,12)),\
-                PointerSet((0,0,10)))
-        expected_output.nodes[10]=Node(\
-                KeySet((27,-1)),\
-                PointerSet((0,0,11)))
-        expected_output.nodes[11]=Node(\
-                KeySet((66,88)),\
-                PointerSet((0,0,0)))
+        expected_output = Index()
 
         self.assertEqual( expected_output, ImplementMe.InsertIntoIndex( btree, key ) )
 
 
 # Insertion causes splits that propagates at least three times
-# Note that only the path that should be affected has correct data (testing complexity)
-# Linearisation forces copy of some nodes to new addresses
 class TestCase07(unittest.TestCase):
     @timeout_decorator.timeout(25)
     def test_insertion(self):
-        btree = Index([Node()]*13)
-        btree.nodes[0] = Node(\
-                KeySet((7, 99)),\
-                PointerSet((1,2,0)))
-        btree.nodes[2]=Node(\
-                KeySet((27,66)),\
-                PointerSet((7,8,9)))
-        btree.nodes[7]=Node(\
-                KeySet((7,9)),\
-                PointerSet((0,0,8)))
-        btree.nodes[8]=Node(\
-                KeySet((27,-1)),\
-                PointerSet((0,0,9)))
-        btree.nodes[9]=Node(\
-                KeySet((66,88)),\
-                PointerSet((0,0,0)))
+        btree = Index()
         key = 12
 
-        expected_output = Index([Node()]*40)
-        expected_output.nodes[0] = Node(\
-                KeySet((27, -1)),\
-                PointerSet((1,2,0)))
-        expected_output.nodes[1] = Node(\
-                KeySet((7, -1)),\
-                PointerSet((4,5,0)))
-        expected_output.nodes[2] = Node(\
-                KeySet((99, -1)),\
-                PointerSet((7,8,0)))
-        expected_output.nodes[5] = Node(\
-                KeySet((9,-1)),\
-                PointerSet((16,17,0)))
-        expected_output.nodes[7]=Node(\
-                KeySet((66,-1)),\
-                PointerSet((22,23,0)))
-        expected_output.nodes[16]=Node(\
-                KeySet((7,-1)),\
-                PointerSet((0,0,17)))
-        expected_output.nodes[17]=Node(\
-                KeySet((9,12)),\
-                PointerSet((0,0,22)))
-        expected_output.nodes[22]=Node(\
-                KeySet((27,-1)),\
-                PointerSet((0,0,23)))
-        expected_output.nodes[23]=Node(\
-                KeySet((66,88)),\
-                PointerSet((0,0,0)))
+        expected_output = Index()
 
         self.assertEqual( expected_output, ImplementMe.InsertIntoIndex( btree, key ) )
 
 
 # Boundary case: lookup smallest key in tree
-# Fake data in last node to test complexity
 class TestCase08(unittest.TestCase):
     @timeout_decorator.timeout(15)
     def test_lookup(self):
-        btree = Index([Node()]*4)
-        btree.nodes[0] = Node(\
-                KeySet((42, 66)),\
-                PointerSet((1,2,3)))
-        btree.nodes[1] = Node(\
-                KeySet((9,-1)),\
-                PointerSet((0,0,2)))
-        btree.nodes[2]=Node(\
-                KeySet((42,-1)),\
-                PointerSet((0,0,3)))
-        btree.nodes[3]=Node(\
-                KeySet((66,7)),\
-                PointerSet((0,0,0)))
-        key = 9
+        btree = Index(Node(\
+            KeySet([87, None]),\
+            PointerSet([Node(\
+                KeySet([66, None]),\
+                PointerSet([None]*3)),\
+            Node(\
+                KeySet([87,99]),\
+                PointerSet([None]*3)
+                )])))
+        key = 66
 
         expected_output = True
 
@@ -279,20 +145,16 @@ class TestCase08(unittest.TestCase):
 class TestCase09(unittest.TestCase):
     @timeout_decorator.timeout(15)
     def test_lookup(self):
-        btree = Index([Node()]*4)
-        btree.nodes[0] = Node(\
-                KeySet((42, 66)),\
-                PointerSet((1,2,3)))
-        btree.nodes[1] = Node(\
-                KeySet((7,99)),\
-                PointerSet((0,0,2)))
-        btree.nodes[2]=Node(\
-                KeySet((42,-1)),\
-                PointerSet((0,0,3)))
-        btree.nodes[3]=Node(\
-                KeySet((66,87)),\
-                PointerSet((0,0,0)))
-        key = 87
+        btree = Index(Node(\
+            KeySet([87, None]),\
+            PointerSet([Node(\
+                KeySet([66, None]),\
+                PointerSet([None]*3)),\
+            Node(\
+                KeySet([87,99]),\
+                PointerSet([None]*3)
+                )])))
+        key = 99
 
         expected_output = True
 
@@ -306,20 +168,16 @@ class TestCase09(unittest.TestCase):
 class TestCase10(unittest.TestCase):
     @timeout_decorator.timeout(15)
     def test_lookup(self):
-        btree = Index([Node()]*4)
-        btree.nodes[0] = Node(\
-                KeySet((42, 66)),\
-                PointerSet((1,2,3)))
-        btree.nodes[1] = Node(\
-                KeySet((9,-1)),\
-                PointerSet((0,0,2)))
-        btree.nodes[2]=Node(\
-                KeySet((7,-1)),\
-                PointerSet((0,0,3)))
-        btree.nodes[3]=Node(\
-                KeySet((66,99)),\
-                PointerSet((0,0,0)))
-        key = 7
+        btree = Index(Node(\
+            KeySet([87, None]),\
+            PointerSet([Node(\
+                KeySet([66, None]),\
+                PointerSet([None]*3)),\
+            Node(\
+                KeySet([87,99]),\
+                PointerSet([None]*3)
+                )])))
+        key = 42
 
         expected_output = False
 
@@ -331,20 +189,16 @@ class TestCase10(unittest.TestCase):
 class TestCase11(unittest.TestCase):
     @timeout_decorator.timeout(15)
     def test_lookup(self):
-        btree = Index([Node()]*4)
-        btree.nodes[0] = Node(\
-                KeySet((42, 66)),\
-                PointerSet((1,2,3)))
-        btree.nodes[1] = Node(\
-                KeySet((7,-1)),\
-                PointerSet((0,0,2)))
-        btree.nodes[2]=Node(\
-                KeySet((42,-1)),\
-                PointerSet((0,0,3)))
-        btree.nodes[3]=Node(\
-                KeySet((66,9)),\
-                PointerSet((0,0,0)))
-        key = 9
+        btree = Index(Node(\
+            KeySet([87, None]),\
+            PointerSet([Node(\
+                KeySet([41, None]),\
+                PointerSet([None]*3)),\
+            Node(\
+                KeySet([87,99]),\
+                PointerSet([None]*3)
+                )])))
+        key = 66
 
         expected_output = False
 
@@ -354,20 +208,16 @@ class TestCase11(unittest.TestCase):
 class TestCase12(unittest.TestCase):
     @timeout_decorator.timeout(15)
     def test_lookup(self):
-        btree = Index([Node()]*4)
-        btree.nodes[0] = Node(\
-                KeySet((41, 66)),\
-                PointerSet((1,2,3)))
-        btree.nodes[1] = Node(\
-                KeySet((7,-1)),\
-                PointerSet((0,0,2)))
-        btree.nodes[2]=Node(\
-                KeySet((42,-1)),\
-                PointerSet((0,0,3)))
-        btree.nodes[3]=Node(\
-                KeySet((66,99)),\
-                PointerSet((0,0,0)))
-        key = 42
+        btree = Index(Node(\
+            KeySet([87, None]),\
+            PointerSet([Node(\
+                KeySet([41, 66]),\
+                PointerSet([None]*3)),\
+            Node(\
+                KeySet([87,99]),\
+                PointerSet([None]*3)
+                )])))
+        key = 66
 
         expected_output = True
 
@@ -375,101 +225,73 @@ class TestCase12(unittest.TestCase):
 
 
 # Range query fully contained in one leaf node
-# Fake data in other node to test complexity
 class TestCase13(unittest.TestCase):
     @timeout_decorator.timeout(15)
     def test_range(self):
-        btree = Index([Node()]*4)
-        btree.nodes[0] = Node(\
-                KeySet((42, 66)),\
-                PointerSet((1,2,3)))
-        btree.nodes[1] = Node(\
-                KeySet((7,68)),\
-                PointerSet((0,0,2)))
-        btree.nodes[2]=Node(\
-                KeySet((42,-1)),\
-                PointerSet((0,0,3)))
-        btree.nodes[3]=Node(\
-                KeySet((66,99)),\
-                PointerSet((0,0,0)))
-        lower_bound = 66
-        upper_bound = 87
+        btree = Index(Node(\
+            KeySet([87, None]),\
+            PointerSet([Node(\
+                KeySet([41, 68]),\
+                PointerSet([None]*3)),\
+            Node(\
+                KeySet([87,99]),\
+                PointerSet([None]*3)
+                )])))
+        lower_bound = 42
+        upper_bound = 66
 
-        expected_output = [66]
+        expected_output = []
 
         self.assertEqual( expected_output, ImplementMe.RangeSearchInIndex( btree, lower_bound, upper_bound ) )
 
 
 # Range query half-open to the left
-# Fake data in one node to test complexity.
 class TestCase14(unittest.TestCase):
     @timeout_decorator.timeout(15)
     def test_range(self):
-        btree = Index([Node()]*4)
-        btree.nodes[0] = Node(\
-                KeySet((42, 66)),\
-                PointerSet((1,2,3)))
-        btree.nodes[1] = Node(\
-                KeySet((7,-1)),\
-                PointerSet((0,0,2)))
-        btree.nodes[2]=Node(\
-                KeySet((42,-1)),\
-                PointerSet((0,0,3)))
-        btree.nodes[3]=Node(\
-                KeySet((66,9)),\
-                PointerSet((0,0,0)))
+        btree = Index(Node(\
+            KeySet([87, None]),\
+            PointerSet([Node(\
+                KeySet([41, 68]),\
+                PointerSet([None]*3)),\
+            Node(\
+                KeySet([87,99]),\
+                PointerSet([None]*3)
+                )])))
         lower_bound = 0
         upper_bound = 42
 
-        expected_output = [7]
+        expected_output = [41]
 
         self.assertEqual( expected_output, ImplementMe.RangeSearchInIndex( btree, lower_bound, upper_bound ) )
 
 
-# Range query half-open to the right 
-# Fake data in one node to test complexity
+# Range query half-open to the right
 class TestCase15(unittest.TestCase):
     @timeout_decorator.timeout(15)
     def test_range(self):
-        btree = Index([Node()]*4)
-        btree.nodes[0] = Node(\
-                KeySet((42, 66)),\
-                PointerSet((1,2,3)))
-        btree.nodes[1] = Node(\
-                KeySet((7,68)),\
-                PointerSet((0,0,2)))
-        btree.nodes[2]=Node(\
-                KeySet((42,-1)),\
-                PointerSet((0,0,3)))
-        btree.nodes[3]=Node(\
-                KeySet((66,87)),\
-                PointerSet((0,0,0)))
+        btree = Index(Node(\
+            KeySet([87, None]),\
+            PointerSet([Node(\
+                KeySet([41, 68]),\
+                PointerSet([None]*3)),\
+            Node(\
+                KeySet([87,99]),\
+                PointerSet([None]*3)
+                )])))
         lower_bound = 42
-        upper_bound = 99
+        upper_bound = 1024
 
-        expected_output = [42,66,87]
+        expected_output = [68,87,99]
 
         self.assertEqual( expected_output, ImplementMe.RangeSearchInIndex( btree, lower_bound, upper_bound ) )
 
 
 # Range query with matching upper and lower bound
-# Key not in tree but found as fake data in a different node to test complexity
 class TestCase16(unittest.TestCase):
     @timeout_decorator.timeout(15)
     def test_range(self):
-        btree = Index([Node()]*4)
-        btree.nodes[0] = Node(\
-                KeySet((42, 66)),\
-                PointerSet((1,2,3)))
-        btree.nodes[1] = Node(\
-                KeySet((7,-1)),\
-                PointerSet((0,0,2)))
-        btree.nodes[2]=Node(\
-                KeySet((42,-1)),\
-                PointerSet((0,0,3)))
-        btree.nodes[3]=Node(\
-                KeySet((66,7)),\
-                PointerSet((0,0,0)))
+        btree = Index()
         lower_bound = 7
         upper_bound = 7
 
@@ -479,27 +301,14 @@ class TestCase16(unittest.TestCase):
 
 
 # Multi-leaf range query in middle of tree
-# Fake data in first node to test complexity
 class TestCase17(unittest.TestCase):
     @timeout_decorator.timeout(15)
     def test_range(self):
-        btree = Index([Node()]*4)
-        btree.nodes[0] = Node(\
-                KeySet((42, 66)),\
-                PointerSet((1,2,3)))
-        btree.nodes[1] = Node(\
-                KeySet((68,-1)),\
-                PointerSet((0,0,2)))
-        btree.nodes[2]=Node(\
-                KeySet((42,-1)),\
-                PointerSet((0,0,3)))
-        btree.nodes[3]=Node(\
-                KeySet((66,99)),\
-                PointerSet((0,0,0)))
+        btree = Index()
         lower_bound = 42
         upper_bound = 87
 
-        expected_output = [42,66]
+        expected_output = []
 
         self.assertEqual( expected_output, ImplementMe.RangeSearchInIndex( btree, lower_bound, upper_bound ) )
 
@@ -508,22 +317,7 @@ class TestCase17(unittest.TestCase):
 class TestCase18(unittest.TestCase):
     @timeout_decorator.timeout(15)
     def test_unknown(self):
-        btree = Index([Node()]*13)
-        btree.nodes[0] = Node(\
-                KeySet((7, 99)),\
-                PointerSet((1,2,3)))
-        btree.nodes[2]=Node(\
-                KeySet((27,66)),\
-                PointerSet((7,8,9)))
-        btree.nodes[7]=Node(\
-                KeySet((7,9)),\
-                PointerSet((0,0,8)))
-        btree.nodes[8]=Node(\
-                KeySet((27,-1)),\
-                PointerSet((0,0,9)))
-        btree.nodes[9]=Node(\
-                KeySet((66,88)),\
-                PointerSet((0,0,0)))
+        btree = Index()
         key = 12
 
         expected_output = True
@@ -537,22 +331,7 @@ class TestCase18(unittest.TestCase):
 class TestCase19(unittest.TestCase):
     @timeout_decorator.timeout(15)
     def test_unknown(self):
-        btree = Index([Node()]*13)
-        btree.nodes[0] = Node(\
-                KeySet((7, 99)),\
-                PointerSet((1,2,3)))
-        btree.nodes[2]=Node(\
-                KeySet((27,66)),\
-                PointerSet((7,8,9)))
-        btree.nodes[7]=Node(\
-                KeySet((7,9)),\
-                PointerSet((0,0,8)))
-        btree.nodes[8]=Node(\
-                KeySet((27,-1)),\
-                PointerSet((0,0,9)))
-        btree.nodes[9]=Node(\
-                KeySet((66,88)),\
-                PointerSet((0,0,0)))
+        btree = Index()
         key = 12
         lower_bound = 12
         upper_bound = 66
@@ -567,106 +346,15 @@ class TestCase19(unittest.TestCase):
 class TestCase20(unittest.TestCase):
     @timeout_decorator.timeout(15)
     def test_unknown(self):
-        btree = Index([Node()]*13)
-        btree.nodes[0] = Node(\
-                KeySet((7, 99)),\
-                PointerSet((1,2,3)))
-        btree.nodes[2]=Node(\
-                KeySet((27,66)),\
-                PointerSet((7,8,9)))
-        btree.nodes[7]=Node(\
-                KeySet((7,9)),\
-                PointerSet((0,0,8)))
-        btree.nodes[8]=Node(\
-                KeySet((27,-1)),\
-                PointerSet((0,0,9)))
-        btree.nodes[9]=Node(\
-                KeySet((66,88)),\
-                PointerSet((0,0,0)))
+        btree = Index()
         key = 12
         lower_bound = 12
         upper_bound = 13
 
-        expected_output = [12]
+        expected_output = []
 
         self.assertEqual( expected_output, ImplementMe.RangeSearchInIndex(\
         ImplementMe.InsertIntoIndex( btree, key ), lower_bound, upper_bound ) )
-
-
-# Freebie bonus for grinding out a tough semester
-# Look up a key in an empty tree
-class TestCaseB1(unittest.TestCase):
-    @timeout_decorator.timeout(15)
-    def test_unknown(self):
-        btree = Index([Node()]*1)
-        key = 9
-
-        expected_output = False
-
-        self.assertEqual( expected_output, ImplementMe.LookupKeyInIndex( btree, key ) )
-
-
-# Easy bonus for assignment difficulty calibration
-# Insert in order
-class TestCaseB2(unittest.TestCase):
-    @timeout_decorator.timeout(15)
-    def test_unknown(self):
-        btree = Index([Node()]*1)
-        btree.nodes[ 0 ] = Node(\
-            KeySet((66, -1)),\
-            PointerSet((0,0,0)))
-        key = 87
-
-        expected_output = Index([Node()]*1)
-        expected_output.nodes[ 0 ] = Node(\
-            KeySet((66, 87)),\
-            PointerSet((0,0,0)))
-
-        self.assertEqual( expected_output, ImplementMe.InsertIntoIndex( btree, key ) )
-
-
-# Easy bonus for assignment difficulty calibration
-# Look up a key inserted into a tree with only one element
-class TestCaseB3(unittest.TestCase):
-    @timeout_decorator.timeout(15)
-    def test_unknown(self):
-        btree = Index([Node()]*1)
-        btree.nodes[0] = Node(\
-                KeySet((7, -1)),\
-                PointerSet((0,0,0)))
-        key = 12
-
-        expected_output = True
-
-        self.assertEqual( expected_output, ImplementMe.LookupKeyInIndex(\
-        ImplementMe.InsertIntoIndex( btree, key ), key ) )
-
-
-# Easy bonus for assignment difficulty calibration
-# Range query that doesn't overlap tree at all
-class TestCaseB4(unittest.TestCase):
-    @timeout_decorator.timeout(15)
-    def test_unknown(self):
-        btree = Index([Node()]*4)
-        btree.nodes[0] = Node(\
-                KeySet((42, 66)),\
-                PointerSet((1,2,3)))
-        btree.nodes[1] = Node(\
-                KeySet((7,87)),\
-                PointerSet((0,0,2)))
-        btree.nodes[2]=Node(\
-                KeySet((42,-1)),\
-                PointerSet((0,0,3)))
-        btree.nodes[3]=Node(\
-                KeySet((66,68)),\
-                PointerSet((0,0,0)))
-        lower_bound = 87
-        upper_bound = 99
-
-        expected_output = []
-
-        self.assertEqual( expected_output, ImplementMe.RangeSearchInIndex( btree, lower_bound, upper_bound ) )
-
 
 
 # Run all unit tests above.
