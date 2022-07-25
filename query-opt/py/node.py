@@ -15,8 +15,11 @@ class Constants:
 class KeySet:
     NUM_KEYS = 2
     keys = [None]*NUM_KEYS
-    def __init__(self, keys = [None]*NUM_KEYS):
-        self.keys = keys
+    def __init__(self, keys = None):
+        if keys is None:
+            self.keys = [None]*KeySet.NUM_KEYS
+        else:
+            self.keys = keys
     def __str__(self):
         return str(self.keys)
     def __repr__(self):
@@ -34,8 +37,11 @@ class KeySet:
 class PointerSet:
     FAN_OUT = 3
     pointers = [None]*FAN_OUT
-    def __init__(self, pointers = [None]*FAN_OUT):
-        self.pointers = pointers
+    def __init__(self, pointers = None):
+        if pointers is None:
+            self.pointers = [None]*PointerSet.FAN_OUT
+        else:
+            self.pointers = pointers
     def __str__(self):
         return str(self.pointers)
     def __repr__(self):
@@ -53,9 +59,15 @@ class PointerSet:
 class Node:
     keys = KeySet()
     pointers = PointerSet()
-    def __init__(self, keys = KeySet(), pointers = PointerSet()):
-        self.keys = keys 
-        self.pointers = pointers
+    def __init__(self, keys = None, pointers = None):
+        if keys is None:
+            self.keys = KeySet()
+        else:
+            self.keys = keys
+        if pointers is None:
+            pointers = PointerSet()
+        else:
+            self.pointers = pointers
     def __str__(self):
         return "Node(" + str(self.keys) + "|" + str(self.pointers) +")"
     def __repr__(self):
