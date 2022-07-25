@@ -64,7 +64,9 @@ class Node:
         return hash(keys) ^ hash(pointers)
     def __eq__(self, other):
         return self.keys == other.keys and self.pointers == other.pointers
-    def get_num_keys(self):
+    @staticmethod
+    def get_num_keys():
         return KeySet.NUM_KEYS
-    def get_fan_out(self):
+    @staticmethod
+    def get_fan_out():
         return KeySet.NUM_KEYS + 1

@@ -10,8 +10,8 @@ from functools import reduce
 
 class Index:
     root = Node()
-    NUM_KEYS = root.get_num_keys()
-    FAN_OUT = root.get_fan_out()
+    NUM_KEYS = Node.get_num_keys()
+    FAN_OUT = Node.get_fan_out()
     def __init__(self, root = Node()):
         self.root = root
     def __str__(self):
