@@ -13,8 +13,9 @@ class Constants:
 # two such keys, though some may hold the sentinel value of None.
 # The only member variable is a 2-tuple of integer values. Order is important.
 class KeySet:
-    keys = [None]*2
-    def __init__(self, keys = [None]*2):
+    NUM_KEYS = 2
+    keys = [None]*NUM_KEYS
+    def __init__(self, keys = [None]*NUM_KEYS):
         self.keys = keys
     def __str__(self):
         return str(self.keys)
@@ -23,7 +24,7 @@ class KeySet:
     def __hash__(self):
         if keys[ 0 ] is None:
             return 0
-        return reduce(lambda x, y: x^y, [x * Constants.a_prime for x in keys if x is not None]) 
+        return reduce(lambda x, y: x^y, [x * Constants.a_prime for x in keys if x is not None])
     def __eq__(self, other):
         return self.keys == other.keys
 
@@ -31,8 +32,9 @@ class KeySet:
 # to Node objects at which the children can be found, or use the None sentinel value in the
 # i'th position iff there is no (i+1)'st child. Order, again, is important.
 class PointerSet:
-    pointers = [None]*3
-    def __init__(self, pointers = [None]*3):
+    FAN_OUT = 3
+    pointers = [None]*FAN_OUT
+    def __init__(self, pointers = [None]*FAN_OUT):
         self.pointers = pointers
     def __str__(self):
         return str(self.pointers)
@@ -55,10 +57,14 @@ class Node:
         self.keys = keys 
         self.pointers = pointers
     def __str__(self):
-        return str(self.keys) + "|" + str(self.pointers)
+        return "Node(" + str(self.keys) + "|" + str(self.pointers) +")"
     def __repr__(self):
         return str(self)
     def __hash__(self):
         return hash(keys) ^ hash(pointers)
     def __eq__(self, other):
         return self.keys == other.keys and self.pointers == other.pointers
+    def get_num_keys(self):
+        return KeySet.NUM_KEYS
+    def get_fan_out(self):
+        return KeySet.NUM_KEYS + 1
