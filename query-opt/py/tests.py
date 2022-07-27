@@ -77,7 +77,8 @@ class TestCase04(unittest.TestCase):
             Node(\
                 KeySet([87,99]),\
                 PointerSet([None]*Index.FAN_OUT)
-                )])))
+                ),\
+            None])))
         expected_output.root.pointers.pointers[0].pointers.pointers[Index.NUM_KEYS] = \
          expected_output.root.pointers.pointers[1]
 
@@ -134,7 +135,8 @@ class TestCase08(unittest.TestCase):
             Node(\
                 KeySet([87,99]),\
                 PointerSet([None]*Index.FAN_OUT)
-                )])))
+                ),\
+            None])))
         btree.root.pointers.pointers[0].pointers.pointers[Index.NUM_KEYS] = \
          btree.root.pointers.pointers[1]
 
@@ -158,7 +160,8 @@ class TestCase09(unittest.TestCase):
             Node(\
                 KeySet([87,99]),\
                 PointerSet([None]*Index.FAN_OUT)
-                )])))
+                ),\
+            None])))
         btree.root.pointers.pointers[0].pointers.pointers[Index.NUM_KEYS] = \
          btree.root.pointers.pointers[1]
 
@@ -184,7 +187,8 @@ class TestCase10(unittest.TestCase):
             Node(\
                 KeySet([87,99]),\
                 PointerSet([None]*Index.FAN_OUT)
-                )])))
+                ),\
+            None])))
         btree.root.pointers.pointers[0].pointers.pointers[Index.NUM_KEYS] = \
          btree.root.pointers.pointers[1]
 
@@ -208,7 +212,8 @@ class TestCase11(unittest.TestCase):
             Node(\
                 KeySet([87,99]),\
                 PointerSet([None]*Index.FAN_OUT)
-                )])))
+                ),\
+            None])))
         btree.root.pointers.pointers[0].pointers.pointers[Index.NUM_KEYS] = \
          btree.root.pointers.pointers[1]
 
@@ -230,7 +235,8 @@ class TestCase12(unittest.TestCase):
             Node(\
                 KeySet([87,99]),\
                 PointerSet([None]*Index.FAN_OUT)
-                )])))
+                ),\
+            None])))
         btree.root.pointers.pointers[0].pointers.pointers[Index.NUM_KEYS] = \
          btree.root.pointers.pointers[1]
 
@@ -253,7 +259,8 @@ class TestCase13(unittest.TestCase):
             Node(\
                 KeySet([87,99]),\
                 PointerSet([None]*Index.FAN_OUT)
-                )])))
+                ),\
+            None])))
         btree.root.pointers.pointers[0].pointers.pointers[Index.NUM_KEYS] = \
          btree.root.pointers.pointers[1]
 
@@ -277,7 +284,8 @@ class TestCase14(unittest.TestCase):
             Node(\
                 KeySet([87,99]),\
                 PointerSet([None]*Index.FAN_OUT)
-                )])))
+                ),\
+            None])))
         btree.root.pointers.pointers[0].pointers.pointers[Index.NUM_KEYS] = \
          btree.root.pointers.pointers[1]
 
@@ -301,7 +309,8 @@ class TestCase15(unittest.TestCase):
             Node(\
                 KeySet([87,99]),\
                 PointerSet([None]*Index.FAN_OUT)
-                )])))
+                ),\
+            None])))
         btree.root.pointers.pointers[0].pointers.pointers[Index.NUM_KEYS] = \
          btree.root.pointers.pointers[1]
 
