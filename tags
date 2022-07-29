@@ -1,0 +1,400 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_OUTPUT_EXCMD	mixed	/number, pattern, mixed, or combineV2/
+!_TAG_OUTPUT_FILESEP	slash	/slash or backslash/
+!_TAG_OUTPUT_MODE	u-ctags	/u-ctags or e-ctags/
+!_TAG_PATTERN_LENGTH_LIMIT	96	/0 for no limit/
+!_TAG_PROC_CWD	/home/am/repos/relational-databases/	//
+!_TAG_PROGRAM_AUTHOR	Universal Ctags Team	//
+!_TAG_PROGRAM_NAME	Universal Ctags	/Derived from Exuberant Ctags/
+!_TAG_PROGRAM_URL	https://ctags.io/	/official site/
+!_TAG_PROGRAM_VERSION	5.9.0	//
+A4	query-opt/java/src/main/java/A4/Constant.java	/^package A4;$/;"	p
+A4	query-opt/java/src/main/java/A4/Index.java	/^package A4;$/;"	p
+A4	query-opt/java/src/main/java/A4/KeySet.java	/^package A4;$/;"	p
+A4	query-opt/java/src/main/java/A4/Node.java	/^package A4;$/;"	p
+A4	query-opt/java/src/main/java/A4/PointerSet.java	/^package A4;$/;"	p
+Assignment Goals	conceptual-design/README.md	/^## Assignment Goals$/;"	s	chapter:CSC 370 - Conceptual Data Modelling Assignment
+Assignment Goals	logical-design/README.md	/^## Assignment Goals$/;"	s	chapter:CSC 370 - Relational Data Model Assignment
+Assignment Goals	query-opt/README.md	/^## Assignment Goals$/;"	s	chapter:CSC 370 - B+-Tree Implementation
+Assignment Goals	sql/README.md	/^## Assignment Goals$/;"	s	chapter:CSC 370 - SQL Golf
+Build Instructions	conceptual-design/py/README.md	/^## Build Instructions$/;"	s	chapter:CSC370-202201 Assignment 2 Python Implementation
+Build Instructions	logical-design/py/README.md	/^## Build Instructions$/;"	s	chapter:CSC370 Assignment 1 Python Implementation
+Build Instructions	query-opt/py/README.md	/^## Build Instructions$/;"	s	chapter:CSC370-202201 Assignment 4 Python Implementation
+CSC 370 - B+-Tree Implementation	query-opt/README.md	/^# CSC 370 - B+-Tree Implementation$/;"	c
+CSC 370 - Conceptual Data Modelling Assignment	conceptual-design/README.md	/^# CSC 370 - Conceptual Data Modelling Assignment$/;"	c
+CSC 370 - Relational Data Model Assignment	logical-design/README.md	/^# CSC 370 - Relational Data Model Assignment$/;"	c
+CSC 370 - SQL Golf	sql/README.md	/^# CSC 370 - SQL Golf$/;"	c
+CSC 370: Database Systems	README.md	/^# CSC 370: Database Systems$/;"	c
+CSC370 Assignment 1 Python Implementation	logical-design/py/README.md	/^# CSC370 Assignment 1 Python Implementation$/;"	c
+CSC370-202201 Assignment 2 Python Implementation	conceptual-design/py/README.md	/^# CSC370-202201 Assignment 2 Python Implementation$/;"	c
+CSC370-202201 Assignment 4 Python Implementation	query-opt/py/README.md	/^# CSC370-202201 Assignment 4 Python Implementation$/;"	c
+Change Log	query-opt/README.md	/^## Change Log$/;"	s	chapter:CSC 370 - B+-Tree Implementation
+Change Log	sql/README.md	/^## Change Log$/;"	s	chapter:CSC 370 - SQL Golf
+Classes	logical-design/py/README.md	/^## Classes$/;"	s	chapter:CSC370 Assignment 1 Python Implementation
+Constant	query-opt/java/src/main/java/A4/Constant.java	/^public class Constant {$/;"	c
+Constants	logical-design/py/functional_dependency.py	/^class Constants:$/;"	c
+Constants	query-opt/py/node.py	/^class Constants:$/;"	c
+CourseMarker	logical-design/py/tests.py	/^class CourseMarker(unittest.TestCase):$/;"	c
+Database	conceptual-design/py/table.py	/^class Database:$/;"	c
+Dataset	sql/README.md	/^## Dataset$/;"	s	chapter:CSC 370 - SQL Golf
+DecompositionSteps	logical-design/py/bcnf.py	/^    def DecompositionSteps( relations, fds ):$/;"	m	class:ImplementMe
+Dependencies	conceptual-design/py/README.md	/^## Dependencies$/;"	s	chapter:CSC370-202201 Assignment 2 Python Implementation
+Dependencies	logical-design/py/README.md	/^## Dependencies$/;"	s	chapter:CSC370 Assignment 1 Python Implementation
+Dependencies	query-opt/py/README.md	/^## Dependencies$/;"	s	chapter:CSC370-202201 Assignment 4 Python Implementation
+ERD	conceptual-design/py/erd.py	/^class ERD:$/;"	c
+EntitySet	conceptual-design/py/erd.py	/^class EntitySet:$/;"	c
+Evaluation	conceptual-design/README.md	/^## Evaluation$/;"	s	chapter:CSC 370 - Conceptual Data Modelling Assignment
+Evaluation	logical-design/README.md	/^## Evaluation$/;"	s	chapter:CSC 370 - Relational Data Model Assignment
+Evaluation	query-opt/README.md	/^## Evaluation$/;"	s	chapter:CSC 370 - B+-Tree Implementation
+Evaluation	sql/README.md	/^## Evaluation$/;"	s	chapter:CSC 370 - SQL Golf
+FDSet	logical-design/py/functional_dependency.py	/^class FDSet:$/;"	c
+FunctionalDependency	logical-design/py/functional_dependency.py	/^class FunctionalDependency:$/;"	c
+Illness Policy	query-opt/README.md	/^## Illness Policy$/;"	s	chapter:CSC 370 - B+-Tree Implementation
+Illness Policy	sql/README.md	/^## Illness Policy$/;"	s	chapter:CSC 370 - SQL Golf
+Illness, Lateness, Technical Issues, and Personal Circumstances	conceptual-design/README.md	/^## Illness, Lateness, Technical Issues, and Personal Circumstances$/;"	s	chapter:CSC 370 - Conceptual Data Modelling Assignment
+Illness, Lateness, Technical Issues, and Personal Circumstances	logical-design/README.md	/^## Illness, Lateness, Technical Issues, and Personal Circumstances$/;"	s	chapter:CSC 370 - Relational Data Model Assignment
+ImplementMe	logical-design/py/bcnf.py	/^class ImplementMe:$/;"	c
+ImplementMe	query-opt/java/src/main/java/ImplementMe.java	/^public class ImplementMe {$/;"	c
+ImplementMe	query-opt/py/implement_me.py	/^class ImplementMe:$/;"	c
+ImplementMeTest	query-opt/java/src/test/java/ImplementMeTest.java	/^class ImplementMeTest {$/;"	c
+Index	query-opt/java/src/main/java/A4/Index.java	/^    public Index() {$/;"	m	class:Index
+Index	query-opt/java/src/main/java/A4/Index.java	/^    public Index(ArrayList<Node> nodes) {$/;"	m	class:Index
+Index	query-opt/java/src/main/java/A4/Index.java	/^    public Index(int numNodes) throws Exception {$/;"	m	class:Index
+Index	query-opt/java/src/main/java/A4/Index.java	/^public class Index {$/;"	c
+Index	query-opt/py/index.py	/^class Index:$/;"	c
+IndexTest	query-opt/java/src/test/java/IndexTest.java	/^class IndexTest {$/;"	c
+InsertIntoIndex	query-opt/py/implement_me.py	/^    def InsertIntoIndex( index, key ):$/;"	m	class:ImplementMe
+KeySet	query-opt/java/src/main/java/A4/KeySet.java	/^    public KeySet() {$/;"	m	class:KeySet
+KeySet	query-opt/java/src/main/java/A4/KeySet.java	/^    public KeySet(int[] keys) throws Exception {$/;"	m	class:KeySet
+KeySet	query-opt/java/src/main/java/A4/KeySet.java	/^public class KeySet {$/;"	c
+KeySet	query-opt/py/node.py	/^class KeySet:$/;"	c
+KeySetTest	query-opt/java/src/test/java/KeySetTest.java	/^class KeySetTest {$/;"	c
+License	conceptual-design/py/README.md	/^## License$/;"	s	chapter:CSC370-202201 Assignment 2 Python Implementation
+License	logical-design/py/README.md	/^## License$/;"	s	chapter:CSC370 Assignment 1 Python Implementation
+License	query-opt/py/README.md	/^## License$/;"	s	chapter:CSC370-202201 Assignment 4 Python Implementation
+LogFilename	logical-design/py/tests.py	/^        LogFilename = None$/;"	v	class:CourseMarker
+LookupKeyInIndex	query-opt/py/implement_me.py	/^    def LookupKeyInIndex( index, key ):$/;"	m	class:ImplementMe
+MANY	conceptual-design/py/erd.py	/^    MANY = 1$/;"	v	class:Multiplicity
+Main	query-opt/java/src/main/java/Main.java	/^public class Main {$/;"	c
+Multiplicity	conceptual-design/py/erd.py	/^class Multiplicity(Enum):$/;"	c
+Node	query-opt/java/src/main/java/A4/Node.java	/^    public Node() throws Exception {$/;"	m	class:Node
+Node	query-opt/java/src/main/java/A4/Node.java	/^    public Node(KeySet keys, PointerSet pointers) throws Exception {$/;"	m	class:Node
+Node	query-opt/java/src/main/java/A4/Node.java	/^public class Node {$/;"	c
+Node	query-opt/py/node.py	/^class Node:$/;"	c
+NodeTest	query-opt/java/src/test/java/NodeTest.java	/^class NodeTest {$/;"	c
+ONE	conceptual-design/py/erd.py	/^    ONE = 0$/;"	v	class:Multiplicity
+PRIME	query-opt/java/src/main/java/A4/Constant.java	/^    public static int PRIME = 7879;$/;"	f	class:Constant
+PointerSet	query-opt/java/src/main/java/A4/PointerSet.java	/^    public PointerSet() {$/;"	m	class:PointerSet
+PointerSet	query-opt/java/src/main/java/A4/PointerSet.java	/^    public PointerSet(int[] pointers) throws Exception {$/;"	m	class:PointerSet
+PointerSet	query-opt/java/src/main/java/A4/PointerSet.java	/^public class PointerSet {$/;"	c
+PointerSet	query-opt/py/node.py	/^class PointerSet:$/;"	c
+PointerSetTest	query-opt/java/src/test/java/PointerSetTest.java	/^class PointerSetTest {$/;"	c
+Queries	sql/README.md	/^## Queries$/;"	s	chapter:CSC 370 - SQL Golf
+RangeSearchInIndex	query-opt/py/implement_me.py	/^    def RangeSearchInIndex( index, lower_bound, upper_bound ):$/;"	m	class:ImplementMe
+Relation	logical-design/py/relation.py	/^class Relation:$/;"	c
+RelationSet	logical-design/py/relation.py	/^class RelationSet:$/;"	c
+Relationship	conceptual-design/py/erd.py	/^class Relationship:$/;"	c
+Sources	query-opt/README.md	/^## Sources$/;"	s	chapter:CSC 370 - B+-Tree Implementation
+Sources	sql/README.md	/^## Sources$/;"	s	chapter:CSC 370 - SQL Golf
+Sources and Academic Integrity	conceptual-design/README.md	/^## Sources and Academic Integrity$/;"	s	chapter:CSC 370 - Conceptual Data Modelling Assignment
+Sources and Academic Integrity	logical-design/README.md	/^## Sources and Academic Integrity$/;"	s	chapter:CSC 370 - Relational Data Model Assignment
+Submission	conceptual-design/README.md	/^## Submission$/;"	s	chapter:CSC 370 - Conceptual Data Modelling Assignment
+Submission	logical-design/README.md	/^## Submission$/;"	s	chapter:CSC 370 - Relational Data Model Assignment
+Submission	query-opt/README.md	/^## Submission$/;"	s	chapter:CSC 370 - B+-Tree Implementation
+Submission	sql/README.md	/^## Submission$/;"	s	chapter:CSC 370 - SQL Golf
+Summary	conceptual-design/README.md	/^## Summary$/;"	s	chapter:CSC 370 - Conceptual Data Modelling Assignment
+Summary	logical-design/README.md	/^## Summary$/;"	s	chapter:CSC 370 - Relational Data Model Assignment
+Summary	query-opt/README.md	/^## Summary$/;"	s	chapter:CSC 370 - B+-Tree Implementation
+Summary	sql/README.md	/^## Summary$/;"	s	chapter:CSC 370 - SQL Golf
+Table	conceptual-design/py/table.py	/^class Table:$/;"	c
+Task	conceptual-design/README.md	/^## Task$/;"	s	chapter:CSC 370 - Conceptual Data Modelling Assignment
+Task	conceptual-design/py/README.md	/^## Task$/;"	s	chapter:CSC370-202201 Assignment 2 Python Implementation
+Task	logical-design/README.md	/^## Task$/;"	s	chapter:CSC 370 - Relational Data Model Assignment
+Task	logical-design/py/README.md	/^## Task$/;"	s	chapter:CSC370 Assignment 1 Python Implementation
+Task	query-opt/README.md	/^## Task$/;"	s	chapter:CSC 370 - B+-Tree Implementation
+Task	query-opt/py/README.md	/^## Task$/;"	s	chapter:CSC370-202201 Assignment 4 Python Implementation
+Task	sql/README.md	/^## Task$/;"	s	chapter:CSC 370 - SQL Golf
+TestCase01	logical-design/py/tests.py	/^class TestCase01(CourseMarker):$/;"	c
+TestCase01	query-opt/py/tests.py	/^class TestCase01(unittest.TestCase):$/;"	c
+TestCase02	logical-design/py/tests.py	/^class TestCase02(CourseMarker):$/;"	c
+TestCase02	query-opt/py/tests.py	/^class TestCase02(unittest.TestCase):$/;"	c
+TestCase03	logical-design/py/tests.py	/^class TestCase03(CourseMarker):$/;"	c
+TestCase03	query-opt/py/tests.py	/^class TestCase03(unittest.TestCase):$/;"	c
+TestCase04	logical-design/py/tests.py	/^class TestCase04(CourseMarker):$/;"	c
+TestCase04	query-opt/py/tests.py	/^class TestCase04(unittest.TestCase):$/;"	c
+TestCase05	logical-design/py/tests.py	/^class TestCase05(CourseMarker):$/;"	c
+TestCase05	query-opt/py/tests.py	/^class TestCase05(unittest.TestCase):$/;"	c
+TestCase06	logical-design/py/tests.py	/^class TestCase06(CourseMarker):$/;"	c
+TestCase06	query-opt/py/tests.py	/^class TestCase06(unittest.TestCase):$/;"	c
+TestCase07	logical-design/py/tests.py	/^class TestCase07(CourseMarker):$/;"	c
+TestCase07	query-opt/py/tests.py	/^class TestCase07(unittest.TestCase):$/;"	c
+TestCase08	logical-design/py/tests.py	/^class TestCase08(CourseMarker):$/;"	c
+TestCase08	query-opt/py/tests.py	/^class TestCase08(unittest.TestCase):$/;"	c
+TestCase09	logical-design/py/tests.py	/^class TestCase09(CourseMarker):$/;"	c
+TestCase09	query-opt/py/tests.py	/^class TestCase09(unittest.TestCase):$/;"	c
+TestCase1	conceptual-design/py/tests.py	/^class TestCase1(unittest.TestCase):$/;"	c
+TestCase10	conceptual-design/py/tests.py	/^class TestCase10(unittest.TestCase):$/;"	c
+TestCase10	logical-design/py/tests.py	/^class TestCase10(CourseMarker):$/;"	c
+TestCase10	query-opt/py/tests.py	/^class TestCase10(unittest.TestCase):$/;"	c
+TestCase11	conceptual-design/py/tests.py	/^class TestCase11(unittest.TestCase):$/;"	c
+TestCase11	logical-design/py/tests.py	/^class TestCase11(CourseMarker):$/;"	c
+TestCase11	query-opt/py/tests.py	/^class TestCase11(unittest.TestCase):$/;"	c
+TestCase12	conceptual-design/py/tests.py	/^class TestCase12(unittest.TestCase):$/;"	c
+TestCase12	logical-design/py/tests.py	/^class TestCase12(CourseMarker):$/;"	c
+TestCase12	query-opt/py/tests.py	/^class TestCase12(unittest.TestCase):$/;"	c
+TestCase13	conceptual-design/py/tests.py	/^class TestCase13(unittest.TestCase):$/;"	c
+TestCase13	logical-design/py/tests.py	/^class TestCase13(CourseMarker):$/;"	c
+TestCase13	query-opt/py/tests.py	/^class TestCase13(unittest.TestCase):$/;"	c
+TestCase14	conceptual-design/py/tests.py	/^class TestCase14(unittest.TestCase):$/;"	c
+TestCase14	logical-design/py/tests.py	/^class TestCase14(CourseMarker):$/;"	c
+TestCase14	query-opt/py/tests.py	/^class TestCase14(unittest.TestCase):$/;"	c
+TestCase15	conceptual-design/py/tests.py	/^class TestCase15(unittest.TestCase):$/;"	c
+TestCase15	logical-design/py/tests.py	/^class TestCase15(CourseMarker):$/;"	c
+TestCase15	query-opt/py/tests.py	/^class TestCase15(unittest.TestCase):$/;"	c
+TestCase16	conceptual-design/py/tests.py	/^class TestCase16(unittest.TestCase):$/;"	c
+TestCase16	logical-design/py/tests.py	/^class TestCase16(CourseMarker):$/;"	c
+TestCase16	query-opt/py/tests.py	/^class TestCase16(unittest.TestCase):$/;"	c
+TestCase17	conceptual-design/py/tests.py	/^class TestCase17(unittest.TestCase):$/;"	c
+TestCase17	logical-design/py/tests.py	/^class TestCase17(CourseMarker):$/;"	c
+TestCase17	query-opt/py/tests.py	/^class TestCase17(unittest.TestCase):$/;"	c
+TestCase18	conceptual-design/py/tests.py	/^class TestCase18(unittest.TestCase):$/;"	c
+TestCase18	logical-design/py/tests.py	/^class TestCase18(CourseMarker):$/;"	c
+TestCase18	query-opt/py/tests.py	/^class TestCase18(unittest.TestCase):$/;"	c
+TestCase19	conceptual-design/py/tests.py	/^class TestCase19(unittest.TestCase):$/;"	c
+TestCase19	logical-design/py/tests.py	/^class TestCase19(CourseMarker):$/;"	c
+TestCase19	query-opt/py/tests.py	/^class TestCase19(unittest.TestCase):$/;"	c
+TestCase2	conceptual-design/py/tests.py	/^class TestCase2(unittest.TestCase):$/;"	c
+TestCase20	conceptual-design/py/tests.py	/^class TestCase20(unittest.TestCase):$/;"	c
+TestCase20	logical-design/py/tests.py	/^class TestCase20(CourseMarker):$/;"	c
+TestCase20	query-opt/py/tests.py	/^class TestCase20(unittest.TestCase):$/;"	c
+TestCase3	conceptual-design/py/tests.py	/^class TestCase3(unittest.TestCase):$/;"	c
+TestCase4	conceptual-design/py/tests.py	/^class TestCase4(unittest.TestCase):$/;"	c
+TestCase5	conceptual-design/py/tests.py	/^class TestCase5(unittest.TestCase):$/;"	c
+TestCase6	conceptual-design/py/tests.py	/^class TestCase6(unittest.TestCase):$/;"	c
+TestCase7	conceptual-design/py/tests.py	/^class TestCase7(unittest.TestCase):$/;"	c
+TestCase8	conceptual-design/py/tests.py	/^class TestCase8(unittest.TestCase):$/;"	c
+TestCase9	conceptual-design/py/tests.py	/^class TestCase9(unittest.TestCase):$/;"	c
+TestCaseB1	conceptual-design/py/tests.py	/^class TestCaseB1(unittest.TestCase):$/;"	c
+TestCaseB1	logical-design/py/tests.py	/^class TestCaseB1(CourseMarker):$/;"	c
+TestCaseB1	query-opt/py/tests.py	/^class TestCaseB1(unittest.TestCase):$/;"	c
+TestCaseB2	conceptual-design/py/tests.py	/^class TestCaseB2(unittest.TestCase):$/;"	c
+TestCaseB2	logical-design/py/tests.py	/^class TestCaseB2(CourseMarker):$/;"	c
+TestCaseB2	query-opt/py/tests.py	/^class TestCaseB2(unittest.TestCase):$/;"	c
+TestCaseB3	query-opt/py/tests.py	/^class TestCaseB3(unittest.TestCase):$/;"	c
+TestCaseB4	query-opt/py/tests.py	/^class TestCaseB4(unittest.TestCase):$/;"	c
+TestEquality	conceptual-design/py/tests.py	/^class TestEquality(unittest.TestCase):$/;"	c
+TotalTests	logical-design/py/tests.py	/^        TotalTests = None$/;"	v	class:CourseMarker
+__eq__	conceptual-design/py/table.py	/^    def __eq__(self, other):$/;"	m	class:Database
+__eq__	conceptual-design/py/table.py	/^    def __eq__(self, other):$/;"	m	class:Table
+__eq__	logical-design/py/functional_dependency.py	/^    def __eq__(self, other):$/;"	m	class:FDSet
+__eq__	logical-design/py/functional_dependency.py	/^    def __eq__(self, other):$/;"	m	class:FunctionalDependency
+__eq__	logical-design/py/relation.py	/^    def __eq__(self, other):$/;"	m	class:Relation
+__eq__	logical-design/py/relation.py	/^    def __eq__(self, other):$/;"	m	class:RelationSet
+__eq__	query-opt/py/index.py	/^    def __eq__(self, other):$/;"	m	class:Index
+__eq__	query-opt/py/node.py	/^    def __eq__(self, other):$/;"	m	class:KeySet
+__eq__	query-opt/py/node.py	/^    def __eq__(self, other):$/;"	m	class:Node
+__eq__	query-opt/py/node.py	/^    def __eq__(self, other):$/;"	m	class:PointerSet
+__hash__	conceptual-design/py/table.py	/^    def __hash__(self):$/;"	m	class:Table
+__hash__	logical-design/py/functional_dependency.py	/^    def __hash__(self):$/;"	m	class:FDSet
+__hash__	logical-design/py/functional_dependency.py	/^    def __hash__(self):$/;"	m	class:FunctionalDependency
+__hash__	logical-design/py/relation.py	/^    def __hash__(self):$/;"	m	class:Relation
+__hash__	logical-design/py/relation.py	/^    def __hash__(self):$/;"	m	class:RelationSet
+__hash__	query-opt/py/index.py	/^    def __hash__(self):$/;"	m	class:Index
+__hash__	query-opt/py/node.py	/^    def __hash__(self):$/;"	m	class:KeySet
+__hash__	query-opt/py/node.py	/^    def __hash__(self):$/;"	m	class:Node
+__hash__	query-opt/py/node.py	/^    def __hash__(self):$/;"	m	class:PointerSet
+__init__	conceptual-design/py/erd.py	/^    def __init__( self, relationships, entity_sets ):$/;"	m	class:ERD
+__init__	conceptual-design/py/erd.py	/^    def __init__(self, name, attributes, primary_key):$/;"	m	class:Relationship
+__init__	conceptual-design/py/erd.py	/^    def __init__(self, name, attributes, primary_key, connections, parents, supporting_relations/;"	m	class:EntitySet
+__init__	conceptual-design/py/table.py	/^    def __init__(self, name, attributes, primary_key, foreign_keys):$/;"	m	class:Table
+__init__	conceptual-design/py/table.py	/^    def __init__(self, tables):$/;"	m	class:Database
+__init__	logical-design/py/functional_dependency.py	/^    def __init__(self, fds):$/;"	m	class:FDSet
+__init__	logical-design/py/functional_dependency.py	/^    def __init__(self, lhs, rhs):$/;"	m	class:FunctionalDependency
+__init__	logical-design/py/relation.py	/^    def __init__(self, attributes):$/;"	m	class:Relation
+__init__	logical-design/py/relation.py	/^    def __init__(self, relations):$/;"	m	class:RelationSet
+__init__	logical-design/py/tests.py	/^        def __init__(self, testName):$/;"	m	class:CourseMarker
+__init__	query-opt/py/index.py	/^    def __init__(self, nodes):$/;"	m	class:Index
+__init__	query-opt/py/node.py	/^    def __init__(self, keys = KeySet((-1,-1)), pointers = PointerSet((0,0,0))):$/;"	m	class:Node
+__init__	query-opt/py/node.py	/^    def __init__(self, keys):$/;"	m	class:KeySet
+__init__	query-opt/py/node.py	/^    def __init__(self, pointers):$/;"	m	class:PointerSet
+__repr__	conceptual-design/py/table.py	/^    def __repr__(self):$/;"	m	class:Table
+__repr__	logical-design/py/functional_dependency.py	/^    def __repr__(self):$/;"	m	class:FDSet
+__repr__	logical-design/py/functional_dependency.py	/^    def __repr__(self):$/;"	m	class:FunctionalDependency
+__repr__	logical-design/py/relation.py	/^    def __repr__(self):$/;"	m	class:Relation
+__repr__	logical-design/py/relation.py	/^    def __repr__(self):$/;"	m	class:RelationSet
+__repr__	query-opt/py/index.py	/^    def __repr__(self):$/;"	m	class:Index
+__repr__	query-opt/py/node.py	/^    def __repr__(self):$/;"	m	class:KeySet
+__repr__	query-opt/py/node.py	/^    def __repr__(self):$/;"	m	class:Node
+__repr__	query-opt/py/node.py	/^    def __repr__(self):$/;"	m	class:PointerSet
+__str__	conceptual-design/py/table.py	/^    def __str__(self):$/;"	m	class:Table
+__str__	logical-design/py/functional_dependency.py	/^    def __str__(self):$/;"	m	class:FDSet
+__str__	logical-design/py/functional_dependency.py	/^    def __str__(self):$/;"	m	class:FunctionalDependency
+__str__	logical-design/py/relation.py	/^    def __str__(self):$/;"	m	class:Relation
+__str__	logical-design/py/relation.py	/^    def __str__(self):$/;"	m	class:RelationSet
+__str__	query-opt/py/index.py	/^    def __str__(self):$/;"	m	class:Index
+__str__	query-opt/py/node.py	/^    def __str__(self):$/;"	m	class:KeySet
+__str__	query-opt/py/node.py	/^    def __str__(self):$/;"	m	class:Node
+__str__	query-opt/py/node.py	/^    def __str__(self):$/;"	m	class:PointerSet
+arbitrary_prime	logical-design/py/functional_dependency.py	/^    arbitrary_prime = 7879$/;"	v	class:Constants
+arbitrary_prime	query-opt/py/node.py	/^    arbitrary_prime = 7879$/;"	v	class:Constants
+attributes	conceptual-design/py/erd.py	/^    attributes = []$/;"	v	class:EntitySet
+attributes	conceptual-design/py/erd.py	/^    attributes = []$/;"	v	class:Relationship
+attributes	conceptual-design/py/table.py	/^    attributes = set()$/;"	v	class:Table
+attributes	logical-design/py/relation.py	/^    attributes = set()$/;"	v	class:Relation
+connections	conceptual-design/py/erd.py	/^    connections = []$/;"	v	class:EntitySet
+convert_to_table	conceptual-design/py/erd_converter.py	/^def convert_to_table( erd ):$/;"	f
+currentResult	logical-design/py/tests.py	/^        currentResult = None # holds last result object passed to run method$/;"	v	class:CourseMarker
+entity_sets	conceptual-design/py/erd.py	/^    entity_sets = []$/;"	v	class:ERD
+equalityTest	query-opt/java/src/test/java/IndexTest.java	/^    public void equalityTest() throws Exception {$/;"	m	class:IndexTest
+equalityTest	query-opt/java/src/test/java/KeySetTest.java	/^    public void equalityTest() throws Exception {$/;"	m	class:KeySetTest
+equalityTest	query-opt/java/src/test/java/NodeTest.java	/^    public void equalityTest() throws Exception {$/;"	m	class:NodeTest
+equalityTest	query-opt/java/src/test/java/PointerSetTest.java	/^    public void equalityTest() throws Exception {$/;"	m	class:PointerSetTest
+equals	query-opt/java/src/main/java/A4/Index.java	/^    public boolean equals(Object o) {$/;"	m	class:Index
+equals	query-opt/java/src/main/java/A4/KeySet.java	/^    public boolean equals(Object o) {$/;"	m	class:KeySet
+equals	query-opt/java/src/main/java/A4/Node.java	/^    public boolean equals(Object o) {$/;"	m	class:Node
+equals	query-opt/java/src/main/java/A4/PointerSet.java	/^    public boolean equals(Object o) {$/;"	m	class:PointerSet
+fk_to_string	conceptual-design/py/table.py	/^def fk_to_string(fk):$/;"	f
+foreign_keys	conceptual-design/py/table.py	/^    foreign_keys = set()$/;"	v	class:Table
+functional_dependencies	logical-design/py/functional_dependency.py	/^    functional_dependencies = set()$/;"	v	class:FDSet
+hashCode	query-opt/java/src/main/java/A4/Index.java	/^    public int hashCode() {$/;"	m	class:Index
+hashCode	query-opt/java/src/main/java/A4/KeySet.java	/^    public int hashCode() {$/;"	m	class:KeySet
+hashCode	query-opt/java/src/main/java/A4/Node.java	/^    public int hashCode() {$/;"	m	class:Node
+hashCode	query-opt/java/src/main/java/A4/PointerSet.java	/^    public int hashCode() {$/;"	m	class:PointerSet
+insertIntoIndex	query-opt/java/src/main/java/ImplementMe.java	/^    public static Index insertIntoIndex(Index btree, int key) {$/;"	m	class:ImplementMe
+java	query-opt/java/pom.xml	/^    <artifactId>java<\/artifactId>$/;"	a	groupId:org.example
+keys	query-opt/java/src/main/java/A4/KeySet.java	/^    public int[] keys;$/;"	f	class:KeySet
+keys	query-opt/java/src/main/java/A4/Node.java	/^    public KeySet keys;$/;"	f	class:Node
+keys	query-opt/py/node.py	/^    keys = (-1,-1)$/;"	v	class:KeySet
+keys	query-opt/py/node.py	/^    keys = KeySet((-1,-1))$/;"	v	class:Node
+left_hand_side	logical-design/py/functional_dependency.py	/^    left_hand_side = set()$/;"	v	class:FunctionalDependency
+lookupKeyInIndex	query-opt/java/src/main/java/ImplementMe.java	/^    public static boolean lookupKeyInIndex(Index btree, int key) {$/;"	m	class:ImplementMe
+main	query-opt/java/src/main/java/Main.java	/^    public static void main(String[] args) throws Exception {$/;"	m	class:Main
+maven.compiler.source	query-opt/java/pom.xml	/^        <maven.compiler.source>18<\/maven.compiler.source>$/;"	p
+maven.compiler.target	query-opt/java/pom.xml	/^        <maven.compiler.target>18<\/maven.compiler.target>$/;"	p
+name	conceptual-design/py/erd.py	/^    name = 'E'$/;"	v	class:EntitySet
+name	conceptual-design/py/erd.py	/^    name = 'R'$/;"	v	class:Relationship
+name	conceptual-design/py/table.py	/^    name = 'T'$/;"	v	class:Table
+nodes	query-opt/java/src/main/java/A4/Index.java	/^    public ArrayList<Node> nodes;$/;"	f	class:Index
+nodes	query-opt/py/index.py	/^    nodes = []$/;"	v	class:Index
+nsa89765a60101	query-opt/java/pom.xml	/^         xsi:schemaLocation="http:\/\/maven.apache.org\/POM\/4.0.0 http:\/\/maven.apache.org\/xs/;"	n	uri:http://maven.apache.org/POM/4.0.0
+org.example	query-opt/java/pom.xml	/^    <groupId>org.example<\/groupId>$/;"	g
+parents	conceptual-design/py/erd.py	/^    parents = []$/;"	v	class:EntitySet
+pointers	query-opt/java/src/main/java/A4/Node.java	/^    public PointerSet pointers;$/;"	f	class:Node
+pointers	query-opt/java/src/main/java/A4/PointerSet.java	/^    public int[] pointers;$/;"	f	class:PointerSet
+pointers	query-opt/py/node.py	/^    pointers = (0,0,0)$/;"	v	class:PointerSet
+pointers	query-opt/py/node.py	/^    pointers = PointerSet((0,0,0))$/;"	v	class:Node
+primary_key	conceptual-design/py/erd.py	/^    primary_key = []$/;"	v	class:EntitySet
+primary_key	conceptual-design/py/erd.py	/^    primary_key = []$/;"	v	class:Relationship
+primary_key	conceptual-design/py/table.py	/^    primary_key = set()$/;"	v	class:Table
+rangeSearchInIndex	query-opt/java/src/main/java/ImplementMe.java	/^    public static int[] rangeSearchInIndex(Index btree, int lowerBound, int upperBound) {$/;"	m	class:ImplementMe
+relations	logical-design/py/relation.py	/^    relations = set()$/;"	v	class:RelationSet
+relationships	conceptual-design/py/erd.py	/^    relationships = []$/;"	v	class:ERD
+right_hand_side	logical-design/py/functional_dependency.py	/^    right_hand_side = set()$/;"	v	class:FunctionalDependency
+run	logical-design/py/tests.py	/^        def run(self, result=None):$/;"	m	class:CourseMarker
+sample_db	conceptual-design/py/table.py	/^sample_db = Database([ \\$/;"	v
+sample_erd	conceptual-design/py/erd.py	/^sample_erd = ERD( \\$/;"	v
+setResult	logical-design/py/tests.py	/^        def setResult(cls, amount, errors, failures, skipped):$/;"	m	class:CourseMarker
+supporting_relations	conceptual-design/py/erd.py	/^    supporting_relations = []$/;"	v	class:EntitySet
+tables	conceptual-design/py/table.py	/^    tables = []$/;"	v	class:Database
+tearDown	logical-design/py/tests.py	/^        def tearDown(self):$/;"	m	class:CourseMarker
+tearDownClass	logical-design/py/tests.py	/^        def tearDownClass(cls):$/;"	m	class:CourseMarker
+testCase01	query-opt/java/src/test/java/ImplementMeTest.java	/^    public void testCase01() throws Exception {$/;"	m	class:ImplementMeTest
+testCase02	query-opt/java/src/test/java/ImplementMeTest.java	/^    public void testCase02() throws Exception {$/;"	m	class:ImplementMeTest
+testCase03	query-opt/java/src/test/java/ImplementMeTest.java	/^    public void testCase03() throws Exception {$/;"	m	class:ImplementMeTest
+testCase04	query-opt/java/src/test/java/ImplementMeTest.java	/^    public void testCase04() throws Exception {$/;"	m	class:ImplementMeTest
+testCase05	query-opt/java/src/test/java/ImplementMeTest.java	/^    public void testCase05() throws Exception {$/;"	m	class:ImplementMeTest
+testCase06	query-opt/java/src/test/java/ImplementMeTest.java	/^    public void testCase06() throws Exception {$/;"	m	class:ImplementMeTest
+testCase07	query-opt/java/src/test/java/ImplementMeTest.java	/^    public void testCase07() throws Exception {$/;"	m	class:ImplementMeTest
+testCase08	query-opt/java/src/test/java/ImplementMeTest.java	/^    public void testCase08() throws Exception {$/;"	m	class:ImplementMeTest
+testCase09	query-opt/java/src/test/java/ImplementMeTest.java	/^    public void testCase09() throws Exception {$/;"	m	class:ImplementMeTest
+testCase10	query-opt/java/src/test/java/ImplementMeTest.java	/^    public void testCase10() throws Exception {$/;"	m	class:ImplementMeTest
+testCase11	query-opt/java/src/test/java/ImplementMeTest.java	/^    public void testCase11() throws Exception {$/;"	m	class:ImplementMeTest
+testCase12	query-opt/java/src/test/java/ImplementMeTest.java	/^    public void testCase12() throws Exception {$/;"	m	class:ImplementMeTest
+testCase13	query-opt/java/src/test/java/ImplementMeTest.java	/^    public void testCase13() throws Exception {$/;"	m	class:ImplementMeTest
+testCase14	query-opt/java/src/test/java/ImplementMeTest.java	/^    public void testCase14() throws Exception {$/;"	m	class:ImplementMeTest
+testCase15	query-opt/java/src/test/java/ImplementMeTest.java	/^    public void testCase15() throws Exception {$/;"	m	class:ImplementMeTest
+testCase16	query-opt/java/src/test/java/ImplementMeTest.java	/^    public void testCase16() throws Exception {$/;"	m	class:ImplementMeTest
+testCase17	query-opt/java/src/test/java/ImplementMeTest.java	/^    public void testCase17() throws Exception {$/;"	m	class:ImplementMeTest
+testCase18	query-opt/java/src/test/java/ImplementMeTest.java	/^    public void testCase18() throws Exception {$/;"	m	class:ImplementMeTest
+testCase19	query-opt/java/src/test/java/ImplementMeTest.java	/^    public void testCase19() throws Exception {$/;"	m	class:ImplementMeTest
+testCase20	query-opt/java/src/test/java/ImplementMeTest.java	/^    public void testCase20() throws Exception {$/;"	m	class:ImplementMeTest
+testCaseB1	query-opt/java/src/test/java/ImplementMeTest.java	/^    public void testCaseB1() throws Exception {$/;"	m	class:ImplementMeTest
+testCaseB2	query-opt/java/src/test/java/ImplementMeTest.java	/^    public void testCaseB2() throws Exception {$/;"	m	class:ImplementMeTest
+testCaseB3	query-opt/java/src/test/java/ImplementMeTest.java	/^    public void testCaseB3() throws Exception {$/;"	m	class:ImplementMeTest
+testCaseB4	query-opt/java/src/test/java/ImplementMeTest.java	/^    public void testCaseB4() throws Exception {$/;"	m	class:ImplementMeTest
+test_converter	conceptual-design/py/tests.py	/^	def test_converter(self):$/;"	m	class:TestCase1
+test_converter	conceptual-design/py/tests.py	/^	def test_converter(self):$/;"	m	class:TestCase3
+test_converter	conceptual-design/py/tests.py	/^	def test_converter(self):$/;"	m	class:TestCase4
+test_converter	conceptual-design/py/tests.py	/^    def test_converter(self):$/;"	m	class:TestCase10
+test_converter	conceptual-design/py/tests.py	/^    def test_converter(self):$/;"	m	class:TestCase11
+test_converter	conceptual-design/py/tests.py	/^    def test_converter(self):$/;"	m	class:TestCase12
+test_converter	conceptual-design/py/tests.py	/^    def test_converter(self):$/;"	m	class:TestCase13
+test_converter	conceptual-design/py/tests.py	/^    def test_converter(self):$/;"	m	class:TestCase14
+test_converter	conceptual-design/py/tests.py	/^    def test_converter(self):$/;"	m	class:TestCase15
+test_converter	conceptual-design/py/tests.py	/^    def test_converter(self):$/;"	m	class:TestCase16
+test_converter	conceptual-design/py/tests.py	/^    def test_converter(self):$/;"	m	class:TestCase17
+test_converter	conceptual-design/py/tests.py	/^    def test_converter(self):$/;"	m	class:TestCase18
+test_converter	conceptual-design/py/tests.py	/^    def test_converter(self):$/;"	m	class:TestCase19
+test_converter	conceptual-design/py/tests.py	/^    def test_converter(self):$/;"	m	class:TestCase2
+test_converter	conceptual-design/py/tests.py	/^    def test_converter(self):$/;"	m	class:TestCase20
+test_converter	conceptual-design/py/tests.py	/^    def test_converter(self):$/;"	m	class:TestCase5
+test_converter	conceptual-design/py/tests.py	/^    def test_converter(self):$/;"	m	class:TestCase6
+test_converter	conceptual-design/py/tests.py	/^    def test_converter(self):$/;"	m	class:TestCase7
+test_converter	conceptual-design/py/tests.py	/^    def test_converter(self):$/;"	m	class:TestCase8
+test_converter	conceptual-design/py/tests.py	/^    def test_converter(self):$/;"	m	class:TestCase9
+test_converter	conceptual-design/py/tests.py	/^    def test_converter(self):$/;"	m	class:TestCaseB1
+test_converter	conceptual-design/py/tests.py	/^    def test_converter(self):$/;"	m	class:TestCaseB2
+test_equal_db	conceptual-design/py/tests.py	/^	def test_equal_db(self):$/;"	m	class:TestEquality
+test_insertion	query-opt/py/tests.py	/^    def test_insertion(self):$/;"	m	class:TestCase01
+test_insertion	query-opt/py/tests.py	/^    def test_insertion(self):$/;"	m	class:TestCase02
+test_insertion	query-opt/py/tests.py	/^    def test_insertion(self):$/;"	m	class:TestCase03
+test_insertion	query-opt/py/tests.py	/^    def test_insertion(self):$/;"	m	class:TestCase04
+test_insertion	query-opt/py/tests.py	/^    def test_insertion(self):$/;"	m	class:TestCase05
+test_insertion	query-opt/py/tests.py	/^    def test_insertion(self):$/;"	m	class:TestCase06
+test_insertion	query-opt/py/tests.py	/^    def test_insertion(self):$/;"	m	class:TestCase07
+test_is_bncf	logical-design/py/tests.py	/^    def test_is_bncf(self):$/;"	m	class:TestCase01
+test_is_bncf	logical-design/py/tests.py	/^    def test_is_bncf(self):$/;"	m	class:TestCase02
+test_is_bncf	logical-design/py/tests.py	/^    def test_is_bncf(self):$/;"	m	class:TestCase03
+test_is_bncf	logical-design/py/tests.py	/^    def test_is_bncf(self):$/;"	m	class:TestCase04
+test_is_bncf	logical-design/py/tests.py	/^    def test_is_bncf(self):$/;"	m	class:TestCase05
+test_is_bncf	logical-design/py/tests.py	/^    def test_is_bncf(self):$/;"	m	class:TestCase06
+test_is_bncf	logical-design/py/tests.py	/^    def test_is_bncf(self):$/;"	m	class:TestCase07
+test_is_bncf	logical-design/py/tests.py	/^    def test_is_bncf(self):$/;"	m	class:TestCase08
+test_is_bncf	logical-design/py/tests.py	/^    def test_is_bncf(self):$/;"	m	class:TestCase09
+test_is_bncf	logical-design/py/tests.py	/^    def test_is_bncf(self):$/;"	m	class:TestCase10
+test_is_bncf	logical-design/py/tests.py	/^    def test_is_bncf(self):$/;"	m	class:TestCase11
+test_is_bncf	logical-design/py/tests.py	/^    def test_is_bncf(self):$/;"	m	class:TestCase12
+test_is_bncf	logical-design/py/tests.py	/^    def test_is_bncf(self):$/;"	m	class:TestCase13
+test_is_bncf	logical-design/py/tests.py	/^    def test_is_bncf(self):$/;"	m	class:TestCase14
+test_is_bncf	logical-design/py/tests.py	/^    def test_is_bncf(self):$/;"	m	class:TestCase15
+test_is_bncf	logical-design/py/tests.py	/^    def test_is_bncf(self):$/;"	m	class:TestCase16
+test_is_bncf	logical-design/py/tests.py	/^    def test_is_bncf(self):$/;"	m	class:TestCase17
+test_is_bncf	logical-design/py/tests.py	/^    def test_is_bncf(self):$/;"	m	class:TestCase18
+test_is_bncf	logical-design/py/tests.py	/^    def test_is_bncf(self):$/;"	m	class:TestCase19
+test_is_bncf	logical-design/py/tests.py	/^    def test_is_bncf(self):$/;"	m	class:TestCase20
+test_is_bncf	logical-design/py/tests.py	/^    def test_is_bncf(self):$/;"	m	class:TestCaseB1
+test_is_bncf	logical-design/py/tests.py	/^    def test_is_bncf(self):$/;"	m	class:TestCaseB2
+test_lookup	query-opt/py/tests.py	/^    def test_lookup(self):$/;"	m	class:TestCase08
+test_lookup	query-opt/py/tests.py	/^    def test_lookup(self):$/;"	m	class:TestCase09
+test_lookup	query-opt/py/tests.py	/^    def test_lookup(self):$/;"	m	class:TestCase10
+test_lookup	query-opt/py/tests.py	/^    def test_lookup(self):$/;"	m	class:TestCase11
+test_lookup	query-opt/py/tests.py	/^    def test_lookup(self):$/;"	m	class:TestCase12
+test_range	query-opt/py/tests.py	/^    def test_range(self):$/;"	m	class:TestCase13
+test_range	query-opt/py/tests.py	/^    def test_range(self):$/;"	m	class:TestCase14
+test_range	query-opt/py/tests.py	/^    def test_range(self):$/;"	m	class:TestCase15
+test_range	query-opt/py/tests.py	/^    def test_range(self):$/;"	m	class:TestCase16
+test_range	query-opt/py/tests.py	/^    def test_range(self):$/;"	m	class:TestCase17
+test_unknown	query-opt/py/tests.py	/^    def test_unknown(self):$/;"	m	class:TestCase18
+test_unknown	query-opt/py/tests.py	/^    def test_unknown(self):$/;"	m	class:TestCase19
+test_unknown	query-opt/py/tests.py	/^    def test_unknown(self):$/;"	m	class:TestCase20
+test_unknown	query-opt/py/tests.py	/^    def test_unknown(self):$/;"	m	class:TestCaseB1
+test_unknown	query-opt/py/tests.py	/^    def test_unknown(self):$/;"	m	class:TestCaseB2
+test_unknown	query-opt/py/tests.py	/^    def test_unknown(self):$/;"	m	class:TestCaseB3
+test_unknown	query-opt/py/tests.py	/^    def test_unknown(self):$/;"	m	class:TestCaseB4
+toString	query-opt/java/src/main/java/A4/Index.java	/^    public String toString() {$/;"	m	class:Index
+toString	query-opt/java/src/main/java/A4/KeySet.java	/^    public String toString() {$/;"	m	class:KeySet
+toString	query-opt/java/src/main/java/A4/Node.java	/^    public String toString() {$/;"	m	class:Node
+toString	query-opt/java/src/main/java/A4/PointerSet.java	/^    public String toString() {$/;"	m	class:PointerSet
+wrap_student_call	conceptual-design/py/tests.py	/^def wrap_student_call( func, input ) :$/;"	f
+xsi	query-opt/java/pom.xml	/^         xsi:schemaLocation="http:\/\/maven.apache.org\/POM\/4.0.0 http:\/\/maven.apache.org\/xs/;"	n	uri:http://www.w3.org/2001/XMLSchema-instance

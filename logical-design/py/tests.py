@@ -10,16 +10,83 @@
 # and the assignment is evaluated out of 20.
 
 import unittest
-import time
 import timeout_decorator
+from csv import DictWriter
+import os
+from os import path
+import sys
  
 from relation import *
 from functional_dependency import *
 from bcnf import ImplementMe
 
 
+class CourseMarker(unittest.TestCase):
+        currentResult = None # holds last result object passed to run method
+        TotalTests = None
+        LogFilename = None
+        def __init__(self, testName):
+                # calling the super class init
+                super(CourseMarker, self).__init__(testName)
+
+
+        def run(self, result=None):
+                self.currentResult = result # remember result for use in tearDown
+                unittest.TestCase.run(self, result) # call superclass run method
+        
+        @classmethod
+        def setResult(cls, amount, errors, failures, skipped):
+                cls.amount, cls.errors, cls.failures, cls.skipped = \
+                amount, errors, failures, skipped
+
+        def tearDown(self):
+                amount = self.currentResult.testsRun
+                errors = self.currentResult.errors
+                failures = self.currentResult.failures
+                skipped = self.currentResult.skipped
+                self.setResult(amount, errors, failures, skipped)
+
+        @classmethod
+        def tearDownClass(cls):
+                if int(cls.amount) == cls.TotalTests:
+                        subdir = os.path.dirname(os.path.realpath(__file__))
+                        st_num_pos = subdir.find(" - V")
+                        if st_num_pos == -1:
+                                print("No student ID found in the test folder name.")
+                                return
+
+                        std_num = subdir[st_num_pos+3:st_num_pos+3+9]
+                
+                        # print(f"Writings results of {std_num} to csv ...")
+                        writeHeader = True
+                        if path.exists(cls.LogFilename):
+                                writeHeader = False
+                        # Open file in append mode
+                        with open(cls.LogFilename, 'a+') as write_obj:
+                                # Create a writer object from csv module
+                                dict_writer = DictWriter(write_obj, fieldnames=["id", "total", "errors", "failed", "succeeded", "skipped"])
+                                if writeHeader:
+                                        cols = {
+                                                "id": "StudentID",
+                                                "total" : "Total",
+                                                "errors" : "Errors",
+                                                "failed" : "Failed",
+                                                "succeeded" : "Succeeded",
+                                                "skipped" : "Skipped"
+                                        }
+                                        dict_writer.writerow(cols)
+                                vals = {
+                                        "id": std_num,
+                                        "total" : str(cls.amount),
+                                        "errors" : str(len(cls.errors)),
+                                        "failed" : str(len(cls.failures)),
+                                        "succeeded" : str(cls.amount - len(cls.errors) - len(cls.failures)),
+                                        "skipped" : str(len(cls.skipped))
+                                }
+                                dict_writer.writerow(vals)
+
 # A single attribute forms a key
-class TestCase01(unittest.TestCase):
+class TestCase01(CourseMarker):
     @timeout_decorator.timeout(15)
     def test_is_bncf(self):
         relations = RelationSet({Relation({'a','b','c'})})
@@ -31,7 +98,7 @@ class TestCase01(unittest.TestCase):
 
 
 # Decomposition misses a violation
-class TestCase02(unittest.TestCase):
+class TestCase02(CourseMarker):
     @timeout_decorator.timeout(15)
     def test_is_bncf(self):
         relations = RelationSet({Relation({'a','b','c'})})
@@ -43,7 +110,7 @@ class TestCase02(unittest.TestCase):
 
 
 # Uses combining rule to make key
-class TestCase03(unittest.TestCase):
+class TestCase03(CourseMarker):
     @timeout_decorator.timeout(15)
     def test_is_bncf(self):
         relations = RelationSet({Relation({'a','b','c'})})
@@ -56,7 +123,7 @@ class TestCase03(unittest.TestCase):
 
 
 # Misses violation on second FD
-class TestCase04(unittest.TestCase):
+class TestCase04(CourseMarker):
     @timeout_decorator.timeout(15)
     def test_is_bncf(self):
         relations = RelationSet({Relation({'a','b','c'})})
@@ -70,7 +137,7 @@ class TestCase04(unittest.TestCase):
 
 # Cycle. Everything's a key.
 # Randomly changed: add a non-key attribute
-class TestCase05(unittest.TestCase):
+class TestCase05(CourseMarker):
     @timeout_decorator.timeout(15)
     def test_is_bncf(self):
         relations = RelationSet({Relation({'a','b','c','d','e'})})
@@ -86,7 +153,7 @@ class TestCase05(unittest.TestCase):
 
 # BCNF decomposition has already been done
 # Randomly changed: omit one attribute 
-class TestCase06(unittest.TestCase):
+class TestCase06(CourseMarker):
     @timeout_decorator.timeout(15)
     def test_is_bncf(self):
         relations = RelationSet({Relation({'a','b'}), \
@@ -100,7 +167,7 @@ class TestCase06(unittest.TestCase):
 
 # In BCNF but breaks up a prime
 # Randomly changed: show correct decomposition
-class TestCase07(unittest.TestCase):
+class TestCase07(CourseMarker):
     @timeout_decorator.timeout(15)
     def test_is_bncf(self):
         relations = RelationSet({Relation({'a','b','c'}) })
@@ -113,7 +180,7 @@ class TestCase07(unittest.TestCase):
 
 
 # Decomposition not lossless
-class TestCase08(unittest.TestCase):
+class TestCase08(CourseMarker):
     @timeout_decorator.timeout(15)
     def test_is_bncf(self):
         relations = RelationSet({Relation({'a','b'}), \
@@ -126,7 +193,7 @@ class TestCase08(unittest.TestCase):
 
 
 # Decomposition swaps FD
-class TestCase09(unittest.TestCase):
+class TestCase09(CourseMarker):
     @timeout_decorator.timeout(15)
     def test_is_bncf(self):
         relations = RelationSet({Relation({'a','b'}), \
@@ -142,7 +209,7 @@ class TestCase09(unittest.TestCase):
 
 
 # Need to calculate full closure with combining rule
-class TestCase10(unittest.TestCase):
+class TestCase10(CourseMarker):
     @timeout_decorator.timeout(15)
     def test_is_bncf(self):
         relations = RelationSet({Relation({'a','b','c','d'}), \
@@ -157,7 +224,7 @@ class TestCase10(unittest.TestCase):
 
 # Only one FD is a key
 # Randomly changed: add another FD to split another relation
-class TestCase11(unittest.TestCase):
+class TestCase11(CourseMarker):
     @timeout_decorator.timeout(15)
     def test_is_bncf(self):
         relations = RelationSet({Relation({'b','c'}), \
@@ -173,7 +240,7 @@ class TestCase11(unittest.TestCase):
 
 # Forgets to calculate closure
 # Randomly changed: split erroneously based on first FD
-class TestCase12(unittest.TestCase):
+class TestCase12(CourseMarker):
     @timeout_decorator.timeout(15)
     def test_is_bncf(self):
         relations = RelationSet({Relation({'a','b','c','e'}), \
@@ -187,7 +254,7 @@ class TestCase12(unittest.TestCase):
 
 
 # Standard multi-recursion case
-class TestCase13(unittest.TestCase):
+class TestCase13(CourseMarker):
     @timeout_decorator.timeout(15)
     def test_is_bncf(self):
         relations = RelationSet({Relation({'a','b'}), \
@@ -202,7 +269,7 @@ class TestCase13(unittest.TestCase):
 
 
 # First half of non-deterministic case 1
-class TestCase14(unittest.TestCase):
+class TestCase14(CourseMarker):
     @timeout_decorator.timeout(15)
     def test_is_bncf(self):
         relations = RelationSet({Relation({'e','f'}), \
@@ -218,7 +285,7 @@ class TestCase14(unittest.TestCase):
 
 
 # Similar to above, but forgot a step and non-determinism removed
-class TestCase15(unittest.TestCase):
+class TestCase15(CourseMarker):
     @timeout_decorator.timeout(15)
     def test_is_bncf(self):
         relations = RelationSet({Relation({'c','e','f'}), \
@@ -236,7 +303,7 @@ class TestCase15(unittest.TestCase):
 # similar to non-deterministic case,
 # but completes up to the second-from-last step after random choice
 # Randomly changed: show correct answer
-class TestCase16(unittest.TestCase):
+class TestCase16(CourseMarker):
     @timeout_decorator.timeout(15)
     def test_is_bncf(self):
         relations = RelationSet({Relation({'e','f'}), \
@@ -255,7 +322,7 @@ class TestCase16(unittest.TestCase):
 
 # Recursed too far, basically applied 3NF algorithm
 # Randomly changed: show correct answer
-class TestCase17(unittest.TestCase):
+class TestCase17(CourseMarker):
     @timeout_decorator.timeout(15)
     def test_is_bncf(self):
         relations = RelationSet({Relation({'a','b','c'}), \
@@ -273,7 +340,7 @@ class TestCase17(unittest.TestCase):
 
 # Question 5 from the BCNF worksheet
 # Simplified to eliminate non-determinism in assignment solution
-class TestCase18(unittest.TestCase):
+class TestCase18(CourseMarker):
     @timeout_decorator.timeout(15)
     def test_is_bncf(self):
         relations = RelationSet({Relation({'c','d','e'}), \
@@ -288,7 +355,7 @@ class TestCase18(unittest.TestCase):
 
 
 # Only one violation out of four
-class TestCase19(unittest.TestCase):
+class TestCase19(CourseMarker):
     @timeout_decorator.timeout(15)
     def test_is_bncf(self):
         relations = RelationSet({Relation({'a','b','c','d'}) })
@@ -303,7 +370,7 @@ class TestCase19(unittest.TestCase):
 
 
 # Recursion non-linear
-class TestCase20(unittest.TestCase):
+class TestCase20(CourseMarker):
     @timeout_decorator.timeout(15)
     def test_is_bncf(self):
         relations = RelationSet({Relation({'e','d','f','g'}), \
@@ -318,7 +385,7 @@ class TestCase20(unittest.TestCase):
 
 
 # Non-deterministic -- side where second FD is chosen first (less likely)
-class TestCaseB1(unittest.TestCase):
+class TestCaseB1(CourseMarker):
     @timeout_decorator.timeout(15)
     def test_is_bncf(self):
         relations = RelationSet({Relation({'e','f'}), \
@@ -335,7 +402,7 @@ class TestCaseB1(unittest.TestCase):
 
 # Non-deterministic -- side where second FD is chosen first (less likely)
 # but last recursive step is missed
-class TestCaseB2(unittest.TestCase):
+class TestCaseB2(CourseMarker):
     @timeout_decorator.timeout(15)
     def test_is_bncf(self):
         relations = RelationSet({Relation({'d','c','e','f'}), \
@@ -348,6 +415,12 @@ class TestCaseB2(unittest.TestCase):
 
         self.assertEqual( expected_output, ImplementMe.DecompositionSteps( relations, fds ) )
 
-
-# Run all unit tests above.
-unittest.main(argv=[''],verbosity=2, exit=False)
+if __name__ == "__main__":
+        # Run all unit tests above.
+        if len(sys.argv) > 1:
+                # In reverse order
+                CourseMarker.LogFilename = str(sys.argv.pop())
+                CourseMarker.TotalTests = int(sys.argv.pop())
+        unittest.main(argv=[''],
+                        verbosity=2,
+                        exit=False)
