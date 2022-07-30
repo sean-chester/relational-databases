@@ -118,7 +118,7 @@ class TestCase06(unittest.TestCase):
             KeySet([7,9]),\
             PointerSet([None,None,leaf1]))
         parent1 = Node(\
-            KeySet([97]),\
+            KeySet([97,None]),\
             PointerSet([leaf3,leaf4,None]))
         parent0 = Node(\
             KeySet([27,66]),\
@@ -417,7 +417,7 @@ class TestCase19(unittest.TestCase):
             KeySet([7,9]),\
             PointerSet([None,None,leaf1]))
         parent1 = Node(\
-            KeySet([97]),\
+            KeySet([97,None]),\
             PointerSet([leaf3,leaf4,None]))
         parent0 = Node(\
             KeySet([27,66]),\
