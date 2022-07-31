@@ -14,12 +14,8 @@ class Constants:
 # The only member variable is a 2-tuple of integer values. Order is important.
 class KeySet:
     NUM_KEYS = 2
-    keys = [None]*NUM_KEYS
     def __init__(self, keys = None):
-        if keys is None:
-            self.keys = [None]*KeySet.NUM_KEYS
-        else:
-            self.keys = keys
+        self.keys = keys if keys else [None]*KeySet.NUM_KEYS
     def __str__(self):
         return str(self.keys)
     def __repr__(self):
@@ -36,12 +32,8 @@ class KeySet:
 # i'th position iff there is no (i+1)'st child. Order, again, is important.
 class PointerSet:
     FAN_OUT = 3
-    pointers = [None]*FAN_OUT
     def __init__(self, pointers = None):
-        if pointers is None:
-            self.pointers = [None]*PointerSet.FAN_OUT
-        else:
-            self.pointers = pointers
+        self.pointers = pointers if pointers else [None]*PointerSet.FAN_OUT
     def __str__(self):
         return str(self.pointers)
     def __repr__(self):
@@ -57,17 +49,9 @@ class PointerSet:
 # node, the first pointer should have a sentinel value: None. If this is a directory
 # node with k children, only the first k pointers should be non-None.
 class Node:
-    keys = KeySet()
-    pointers = PointerSet()
     def __init__(self, keys = None, pointers = None):
-        if keys is None:
-            self.keys = KeySet()
-        else:
-            self.keys = keys
-        if pointers is None:
-            pointers = PointerSet()
-        else:
-            self.pointers = pointers
+        self.keys = keys if keys else KeySet()
+        self.pointers = pointers if pointers else PointerSet()
     def __str__(self):
         return "Node(" + str(self.keys) + "|" + str(self.pointers) +")"
     def __repr__(self):
