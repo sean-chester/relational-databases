@@ -116,9 +116,10 @@ class TestCase05(unittest.TestCase):
 class TestCase06(unittest.TestCase):
     @timeout_decorator.timeout(25)
     def test_insertion(self):
+
         leaf4 = Node(\
             KeySet([97,99]),\
-            PointerSet([None]*3))
+            PointerSet([None]*Index.FAN_OUT))
         leaf3 = Node(\
             KeySet([87, None]),\
             PointerSet([None,None,leaf4]))
@@ -143,18 +144,37 @@ class TestCase06(unittest.TestCase):
         btree = Index(root)
 
         key = 5
+
+        newLeaf5 = Node(\
+            KeySet([97,99]),\
+            PointerSet([None]*Index.FAN_OUT))
+        newLeaf4 = Node(\
+            KeySet([87, None]),\
+            PointerSet([None,None,newLeaf5]))
+        newLeaf3 = Node(\
+            KeySet([66,None]),\
+            PointerSet([None,None,newLeaf4]))
+        newLeaf2 = Node(\
+            KeySet([27,None]),\
+            PointerSet([None,None,newLeaf3]))
+        newLeaf1 = Node(\
+            KeySet([7,9]),\
+            PointerSet([None,None,newLeaf2]))
         newLeaf0 = Node(\
             KeySet([5,None]),\
-            PointerSet([None,None,leaf0]))
+            PointerSet([None,None,newLeaf1]))
+        newParent2 = Node(\
+            KeySet([97,None]),\
+            PointerSet([newLeaf4,newLeaf5,None]))
+        newParent1 = Node(\
+            KeySet([66,None]),\
+            PointerSet([newLeaf2,newLeaf3,None]))
         newParent0 = Node(\
             KeySet([7,None]),\
-            PointerSet([newLeaf0,leaf0,None]))
-        newNextParent = Node(\
-            KeySet([66,None]),\
-            PointerSet([leaf1,leaf2,None]))
+            PointerSet([newLeaf0,newLeaf1,None]))
         newRoot = Node(\
             KeySet([27,87]),\
-            PointerSet([newParent0,newNextParent,parent1]))
+            PointerSet([newParent0,newParent1,newParent2]))
         expected_output = Index(newRoot)
 
         self.assertEqual( expected_output, ImplementMe.InsertIntoIndex( btree, key ) )
@@ -413,9 +433,10 @@ class TestCase18(unittest.TestCase):
 class TestCase19(unittest.TestCase):
     @timeout_decorator.timeout(15)
     def test_unknown(self):
+
         leaf4 = Node(\
             KeySet([97,99]),\
-            PointerSet([None]*3))
+            PointerSet([None]*Index.FAN_OUT))
         leaf3 = Node(\
             KeySet([87, None]),\
             PointerSet([None,None,leaf4]))
@@ -438,6 +459,7 @@ class TestCase19(unittest.TestCase):
             KeySet([87,None]),\
             PointerSet([parent0,parent1,None]))
         btree = Index(root)
+
         key = 5
         lower_bound = 1
         upper_bound = 68
@@ -454,7 +476,7 @@ class TestCase20(unittest.TestCase):
     def test_unknown(self):
 
         btree = Index()
-        
+
         key = 12
         lower_bound = 12
         upper_bound = 13
