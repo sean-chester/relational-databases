@@ -42,3 +42,8 @@ I hope that this assignment is a fun way to learn and/or practice the SQL query 
 
 
 ## Change Log
+
+[31 July: 00:48] Repaired test case 6, which falsely inherited references from input object
+[29 July: 13.03] Added two new test cases to better document classes
+[27 July: 11.36] Add missing linked list pointers in leaf nodes
+[25 July: 11.13] Repair default constructor that did not properly handle mutable default values

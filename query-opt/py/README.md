@@ -28,9 +28,3 @@ When we evaluate you `ImplementMe` class, we will swap out `tests.py` for a new 
 
 This code is released under the terms of the [Unlicense](https://unlicense.org/). Please refer to [the difference between copyright and citation](https://researchguides.uic.edu/c.php?g=252209&p=1682805)
 (TL;DR: it is still plagiarism to forget citations to works in the public domain).
-
-## Change Log
-
-[29 July: 13.03] Added two new test cases to better document classes
-[27 July: 11.36] Add missing linked list pointers in leaf nodes
-[25 July: 11.13] Repair default constructor that did not properly handle mutable default values
