@@ -85,10 +85,10 @@ class TestCase04(unittest.TestCase):
         key = 87
 
         leaf1 = Node(\
-            KeySet([66, None]),\
+            KeySet([87, 99]),\
             PointerSet([None]*Index.FAN_OUT))
         leaf0 = Node(\
-            KeySet([87, 99]),\
+            KeySet([66, None]),\
             PointerSet([None, None, leaf1]))
         newRoot = Node(\
             KeySet([87, None]),\
