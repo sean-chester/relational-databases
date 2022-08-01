@@ -481,7 +481,7 @@ class TestCase20(unittest.TestCase):
         lower_bound = 12
         upper_bound = 13
 
-        expected_output = []
+        expected_output = [12]
 
         self.assertEqual( expected_output, ImplementMe.RangeSearchInIndex(\
         ImplementMe.InsertIntoIndex( btree, key ), lower_bound, upper_bound ) )
