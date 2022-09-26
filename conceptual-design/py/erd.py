@@ -1,64 +1,65 @@
 # Entity-Relationship Diagram (ERD) Definition
 
-from enum import Enum
+import networkx as nx
+import matplotlib.pyplot as plt
+from functools import reduce
 
-# Corresponds to a *relationship* in an Entity-Relationship Diagram (ERD)
-# It consists of three member variables:
-#  * [name] a name (unique identifier)
-#  * [attributes] an unordered list of attributes that are a property *of the relationship*
-#  * [primary_key] an unordered sublist of those attributes that are necessary to fully define the primary key of this relationship
+# An Entity-Relationship Diagram as a type of networkx graph
 #
-# NB: primary_key is a subset of attributes 
-class Relationship:
-    name = 'R'
-    attributes = []
-    primary_key = []
-    def __init__(self, name, attributes, primary_key):
-        self.name = name
-        self.attributes = attributes
-        self.primary_key = primary_key
-
-# Possible values for the multiplicity of an entity set with respect to a relationship
-class Multiplicity(Enum):
-    ONE = 0
-    MANY = 1
-
-# Corresponds to an *entity set* in an Entity-Relationship Diagram (ERD)
-# It consists of six member variables:
-#   * [name] a name (unique identifier)
-#   * [attributes] an unordered list of attributes that are *directly drawn on this entity set*
-#   * [primary_key] an unordered sublist of those attributes that are necessary to fully define the primary key of this entity set
-#   * [connections] an unordered list of pairs (relationship_name, multiplicity) of all (non-IsA) relationships involving this entity set
-#   * [parents] an unordered list of names of any entity sets that are parents of this entity set in an IsA relationship
-#   * [supporting_relations] an unordered list of (non-IsA) relationship names that partially define this entity set 
-class EntitySet:
-    name = 'E'
-    attributes = []
-    primary_key = []
-    connections = []
-    parents = []
-    supporting_relations = []
-    def __init__(self, name, attributes, primary_key, connections, parents, supporting_relations):
-        self.name = name
-        self.attributes = attributes
-        self.primary_key = primary_key
-        self.connections = connections
-        self.parents = parents
-        self.supporting_relations = supporting_relations
-
-# Corresponds to an entire Entity-Relationship Diagram (ERD)
-# It consists of two member variables:
-#   * [relationships] an unordered list of Relationship objects that are part of this ERD
-#   * [entity_sets] an unordered list of EntitySet objects that are part of this ERD
+# The vertex set includes all entity sets, relationships,
+# attributes, and collections of entity sets
+# The edge set connects entity sets to relationships, attributes,
+# and/or collections of other entity sets. It also may connect
+# attributes to relationships (i.e., the graph has a min colouring of 3)
+#
+# The class also contains a mapping from every entity set to one identifier.
+# These are not drawn by the plotting library due to the complexity of support
+# for weak entity sets.
 class ERD:
-    relationships = []
-    entity_sets = []
-    def __init__( self, relationships, entity_sets ):
-        self.relationships = relationships
-        self.entity_sets = entity_sets
+    def __init__(self):
+        self.graph = nx.Graph()
+        self.identifiers = {}
+    def add_entity_set(self, es):
+        self.graph.add_node(es, s='s')
+    def add_relationship(self, rel):
+        self.graph.add_node(rel, s='d')
+    def add_attribute(self, att):
+        self.graph.add_node(att, s='o')
+    def add_identifier(self, es, attributes):
+        self.identifiers[es] = attributes
+    def add_generalisation(self, generalisation, specialisations, style):
+        self.add_entity_set(generalisation)
+        isA = reduce(lambda x, y: x + " " + y, specialisations)
+        self.graph.add_node(isA, s='^')
+        self.graph.add_edges_from([(generalisation, isA, {"style":style})])
+        self.graph.add_edges_from([(specialisation, isA) for specialisation in specialisations])
+    def connect(self, es, rel, min_card, max_card):
+        self.graph.add_edges_from([(es, rel, {"min": min_card, "max" : max_card})])
+    def attach(self, att, es):
+        self.graph.add_edge(att, es)
+    def draw(self):
+        # TODO: Draw edge and vertex labels
+        # From https://stackoverflow.com/a/31195070/2769271
+        nodePos = nx.layout.spring_layout(self.graph)
+        nodeShapes = set((aShape[1]["s"] for aShape in self.graph.nodes(data = True)))
+        for aShape in nodeShapes:
+             nx.draw_networkx_nodes(self.graph,nodePos,node_shape = aShape, \
+                nodelist = [sNode[0] for sNode in filter(lambda x: x[1]["s"]==aShape,self.graph.nodes(data = True))])
+        nx.draw_networkx_edges(self.graph,nodePos)
+        plt.show()
 
-# An example instantiation of the ERD class.
-sample_erd = ERD( \
-    [Relationship('R1',['x'],[])], \
-    [EntitySet('A', ['a1','a2'], ['a1'], [('R1', Multiplicity.MANY)], [], []), \
-     EntitySet('B', ['b1','b2'], ['b1'], [('R1', Multiplicity.MANY)], [], [])])
+def test():
+    erd = ERD()
+    erd.add_entity_set("A")
+    erd.add_attribute("a")
+    erd.add_entity_set("B")
+    erd.add_attribute("b")
+    erd.add_relationship("R")
+    erd.connect("A", "R", 0, 1)
+    erd.connect("B", "R", 1, 100)
+    erd.attach('a', "A")
+    erd.attach('b', "B")
+    erd.add_generalisation("C", ["A","B"], "(t,e)")
+    erd.draw()
+
+# test()
