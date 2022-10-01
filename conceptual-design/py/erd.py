@@ -3,6 +3,7 @@
 import networkx as nx
 import matplotlib.pyplot as plt
 from functools import reduce
+import math
 
 # An Entity-Relationship Diagram as a type of networkx graph
 #
