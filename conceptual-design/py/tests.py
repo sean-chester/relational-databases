@@ -16,7 +16,7 @@ from cardinalities_bounds import calculate_bounds
 import unittest
 
 
-# Two entity sets in a many-to-one relationship.
+# Two entity sets in a one-to-many or many-to-one relationship.
 class TestCase01(unittest.TestCase):
     def test_converter(self):
         erd = ERD()
@@ -56,7 +56,7 @@ class TestCase02(unittest.TestCase):
         erd.attach('c', "C")
         erd.add_identifier("C", ["c"])
 
-        expected_bounds = (1,1)
+        expected_bounds = (1,math.inf)
 
         self.assertEqual( expected_bounds, calculate_bounds( erd, ["a"], ["b"] ) )
 
@@ -85,7 +85,7 @@ class TestCase03(unittest.TestCase):
         erd.add_identifier('B', ['b'])
         erd.add_identifier('C', ['c'])
 
-        expected_bounds = (0,1)
+        expected_bounds = (0,math.inf)
 
         self.assertEqual( expected_bounds, calculate_bounds( erd, ["a"], ["c"] ) )
 
@@ -167,7 +167,7 @@ class TestCase10(unittest.TestCase):
         erd.connect("B", "R", 0, 3)
         erd.connect("D", "R", 1, 1)
 
-        expected_bounds = (0,3)
+        expected_bounds = (0,4)
 
         self.assertEqual( expected_bounds, calculate_bounds( erd, ["c"], ["d"] ) )
 
