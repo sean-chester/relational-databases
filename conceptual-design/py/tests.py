@@ -87,7 +87,7 @@ class TestCase03(unittest.TestCase):
 
         expected_bounds = (0,1)
 
-        self.assertEqual( expected_bounds, calculate_bounds( erd, ["a"], ["b"] ) )
+        self.assertEqual( expected_bounds, calculate_bounds( erd, ["a"], ["c"] ) )
 
 
 # Two entity sets are connected via relationships in parallel.
