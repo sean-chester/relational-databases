@@ -139,6 +139,35 @@ class TestCase05(unittest.TestCase):
         self.assertEqual( expected_bounds, calculate_bounds( erd, ["a1"], ["r"] ) )
 
 
+# Involving a weak entity set
+class TestCase06(unittest.TestCase):
+    def test_converter(self):
+        erd = ERD()
+        erd.add_entity_set("A")
+        erd.add_entity_set("B")
+        erd.add_entity_set("B")
+        erd.add_attribute("a1")
+        erd.add_attribute("a2")
+        erd.add_attribute("b")
+        erd.add_attribute("c")
+        erd.add_relationship("R1")
+        erd.add_relationship("R2")
+        erd.connect("A", "R1", 1, 1)
+        erd.connect("B", "R1", 1, math.inf)
+        erd.connect("A", "R2", 0, 1)
+        erd.connect("C", "R2", 0, math.inf)
+        erd.attach('a1', "A")
+        erd.attach('a2', "A")
+        erd.attach('b', "B")
+        erd.attach('c', "C")
+        erd.add_identifier('A', ['a1','b'])
+        erd.add_identifier('B', ['b'])
+        erd.add_identifier('C', ['c'])
+
+        expected_bounds = (0,1)
+
+        self.assertEqual( expected_bounds, calculate_bounds( erd, ["a1", "b"], ["c"] ) )
+
 
 
 # Two entity sets are related to each other across a generalisation hierarchy.
