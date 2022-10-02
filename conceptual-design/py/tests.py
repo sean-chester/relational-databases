@@ -167,7 +167,7 @@ class TestCase10(unittest.TestCase):
         erd.connect("B", "R", 0, 3)
         erd.connect("D", "R", 1, 1)
 
-        expected_bounds = (0,4)
+        expected_bounds = (0,3)
 
         self.assertEqual( expected_bounds, calculate_bounds( erd, ["c"], ["d"] ) )
 
