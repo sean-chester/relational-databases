@@ -168,6 +168,60 @@ class TestCase06(unittest.TestCase):
 
         self.assertEqual( expected_bounds, calculate_bounds( erd, ["a1", "b"], ["c"] ) )
 
+# Involves a subset hierarchy
+class TestCase07(unittest.TestCase):
+    def test_converter(self):
+        erd = ERD()
+        erd.add_entity_set("A")
+        erd.add_entity_set("C")
+        erd.add_attribute("a")
+        erd.add_attribute("b")
+        erd.add_attribute("c")
+        erd.add_generalisation("B", ["C"], "(p,e)")
+        erd.attach('c', "C")
+        erd.attach('b', "B")
+        erd.attach('a', "A")
+
+        erd.add_identifier("A", ["a"])
+        erd.add_identifier("B", ["B"])
+
+        erd.add_relationship("R")
+        erd.connect("A", "R", 1, 1)
+        erd.connect("B", "R", 1, 1)
+
+        expected_bounds = (1,math.inf)
+
+        self.assertEqual( expected_bounds, calculate_bounds( erd, ["c"], ["a"] ) )
+
+
+
+# Two entity sets are related to each other across a generalisation hierarchy.
+class TestCase09(unittest.TestCase):
+    def test_converter(self):
+        erd = ERD()
+        erd.add_entity_set("A")
+        erd.add_entity_set("B")
+        erd.add_entity_set("D")
+        erd.add_attribute("d")
+        erd.add_attribute("c")
+        erd.add_generalisation("C", ["A","B"], "(t,e)")
+        erd.attach('c', "C")
+        erd.attach('d', "D")
+
+        erd.add_identifier("C", ["c"])
+        erd.add_identifier("D", ["d"])
+
+        erd.add_relationship("R1")
+        erd.add_relationship("R2")
+        erd.connect("A", "R1", 1, 1)
+        erd.connect("B", "R2", 0, 1)
+        erd.connect("D", "R1", 1, math.inf)
+        erd.connect("D", "R2", 1, math.inf)
+
+        expected_bounds = (0,1)
+
+        self.assertEqual( expected_bounds, calculate_bounds( erd, ["c"], ["d"] ) )
+
 
 
 # Two entity sets are related to each other across a generalisation hierarchy.
@@ -200,6 +254,54 @@ class TestCase10(unittest.TestCase):
 
         self.assertEqual( expected_bounds, calculate_bounds( erd, ["c"], ["d"] ) )
 
+# Hardest test case.
+# Involves multiple components
+# (parallel paths, subsets, multi-level generalisation hierarchies, and weak entity sets)
+class TestCase20(unittest.TestCase):
+    def test_converter(self):
+        erd = ERD()
+        erd.add_entity_set("B")
+        erd.add_entity_set("E")
+        erd.add_entity_set("F")
+        erd.add_entity_set("H")
+
+        erd.add_attribute("a")
+        erd.add_attribute("b")
+        erd.add_attribute("e")
+        erd.add_attribute("f")
+        erd.add_attribute("g1")
+        erd.add_attribute("g2")
+        erd.add_attribute("h")
+
+        erd.add_generalisation("C", ["E"], "(p,e)")
+        erd.add_generalisation("D", ["F"], "(p,e)")
+        erd.add_generalisation("G", ["H"], "(p,e)")
+        erd.add_generalisation("A", ["B", "C", "D"], "(p,o)")
+
+        erd.attach('a', "A")
+        erd.attach('b', "B")
+        erd.attach('e', "E")
+        erd.attach('f', "F")
+        erd.attach('g1', "G")
+        erd.attach('g2', "G")
+        erd.attach('h', "H")
+
+        erd.add_identifier("G", ["g1"])
+        erd.add_identifier("G", ["g2"])
+        erd.add_identifier("A", ["a", "g1"])
+        erd.add_identifier("F", ["f"])
+
+
+        erd.add_relationship("R1")
+        erd.add_relationship("R2")
+        erd.connect("A", "R1", 1, 1)
+        erd.connect("G", "R1", 0, math.inf)
+        erd.connect("F", "R2", 1, 1)
+        erd.connect("H", "R2", 0, math.inf)
+
+        expected_bounds = (2,2)
+
+        self.assertEqual( expected_bounds, calculate_bounds( erd, ["f"], ["h"] ) )
 
 
 # Run all unit tests above.
