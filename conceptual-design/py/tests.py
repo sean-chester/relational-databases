@@ -145,7 +145,7 @@ class TestCase06(unittest.TestCase):
         erd = ERD()
         erd.add_entity_set("A")
         erd.add_entity_set("B")
-        erd.add_entity_set("B")
+        erd.add_entity_set("C")
         erd.add_attribute("a1")
         erd.add_attribute("a2")
         erd.add_attribute("b")
