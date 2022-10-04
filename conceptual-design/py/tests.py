@@ -183,7 +183,7 @@ class TestCase07(unittest.TestCase):
         erd.attach('a', "A")
 
         erd.add_identifier("A", ["a"])
-        erd.add_identifier("B", ["B"])
+        erd.add_identifier("B", ["b"])
 
         erd.add_relationship("R")
         erd.connect("A", "R", 1, 1)
