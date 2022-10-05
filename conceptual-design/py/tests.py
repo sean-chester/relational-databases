@@ -25,14 +25,14 @@ class TestCase01(unittest.TestCase):
         erd.add_entity_set("B")
         erd.add_attribute("b")
         erd.add_relationship("R")
-        erd.connect("A", "R", 0, math.inf)
+        erd.connect("A", "R", 1, math.inf)
         erd.connect("B", "R", 1, 1)
         erd.attach('a', "A")
         erd.attach('b', "B")
         erd.add_identifier('A', ['a'])
         erd.add_identifier('B', ['b'])
 
-        expected_bounds = (0,math.inf)
+        expected_bounds = (1,math.inf)
 
         self.assertEqual( expected_bounds, calculate_bounds( erd, ["a"], ["b"] ) )
 
