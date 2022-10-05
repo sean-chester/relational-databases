@@ -660,7 +660,6 @@ class TestCase20(unittest.TestCase):
         erd.attach('h', "H")
 
         erd.add_identifier("G", ["g1"])
-        erd.add_identifier("G", ["g2"])
         erd.add_identifier("A", ["a", "g1"])
         erd.add_identifier("F", ["f"])
 
@@ -672,7 +671,7 @@ class TestCase20(unittest.TestCase):
         erd.connect("F", "R2", 1, 1)
         erd.connect("H", "R2", 0, math.inf)
 
-        expected_bounds = (2,2)
+        expected_bounds = (1,2)
 
         self.assertEqual( expected_bounds, calculate_bounds( erd, ["f"], ["h"] ) )
 
