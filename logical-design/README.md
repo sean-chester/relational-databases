@@ -40,7 +40,7 @@ As you can see from `tests.py`, you will pass:
   * at least 30% more tests if you can also correctly solve those that involve multiple levels of recursion
   * bonus marks if you can handle very challenging cases, such as those involving non-determinism
 
-If you upload your (in-progress?) solution at least three days prior to the deadline, we will batch grade it and provide preliminary feedback through Brightspace.
+If you upload your (in-progress?) solution at least ten days prior to the deadline, we will batch grade it and provide preliminary feedback through Brightspace. We will pre-grade again for those submissions received at least three days prior to the deadline (including those which have already been pre-graded one week earlier).
 
 ## Sources and Academic Integrity
 
