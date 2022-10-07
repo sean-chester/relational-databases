@@ -16,9 +16,7 @@ class Constants:
 # Both the left_hand_side and right_hand_side are
 # (not necessarily disjoint) sets of attributes 
 class FunctionalDependency:
-    left_hand_side = set()
-    right_hand_side = set()
-    def __init__(self, lhs, rhs):
+    def __init__(self, lhs = set(), rhs = set()):
         self.left_hand_side = lhs
         self.right_hand_side = rhs
     def __str__(self):
@@ -41,8 +39,7 @@ class FunctionalDependency:
 # A set of FunctionalDependency instances that together
 # define the functional constraints of a relational database
 class FDSet:
-    functional_dependencies = set()
-    def __init__(self, fds):
+    def __init__(self, fds = set()):
         self.functional_dependencies = fds
     def __str__(self):
         return str(self.functional_dependencies)

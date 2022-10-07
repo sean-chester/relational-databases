@@ -20,8 +20,7 @@ from functools import reduce
 # and this is equal to an instance declared as:
 #   r2 = Relation(set(['B','A']))
 class Relation:
-    attributes = set()
-    def __init__(self, attributes):
+    def __init__(self, attributes = set()):
         self.attributes = attributes
     def __str__(self):
         return str(self.attributes)
@@ -37,8 +36,7 @@ class Relation:
 # A set of relations that together define
 # the structure of a relational database
 class RelationSet:
-    relations = set()
-    def __init__(self, relations):
+    def __init__(self, relations = set()):
         self.relations = relations
     def __str__(self):
         return str(self.relations)

@@ -11,7 +11,7 @@ In this assignment you will:
 
 ## Task
 
-You should write a computer program in either Python or Java (or, after consultation with the instructor, another language of your choice) that determines how many levels of recursion are required to decompose a relation into BCNF. More specifically, you are provided with a class definition for a set of relations R and a set of functional dependencies F, and you should implement a function that returns -1 if the relations are not in BCNF or a non-negative integer indicating how many recursive steps of BCNF decomposition are required to convert the union of elements of R into R using BCNF decomposition with F. 
+You should write a computer program in Python that determines how many levels of recursion are required to decompose a relation into BCNF. More specifically, you are provided with a class definition for a set of relations R and a set of functional dependencies F, and you should implement a function that returns -1 if the relations are not in BCNF or a non-negative integer indicating how many recursive steps of BCNF decomposition are required to convert the union of attributes of relations of R into R using BCNF decomposition with F. 
 
 Be careful that there is more than one possible decomposition for a given input, depending on the order in which you process BCNF violations. For example, if you were to decompose R(A,B,C,D,E) into BCNF with functional dependencies AB→C and BD→C, there are two correct decompositions for which your program should output 1:
 
@@ -29,9 +29,9 @@ You should implement the (empty) function called `decompose()` in `bcnf.py` and 
 
 ## Evaluation
 
-Included with the starter code is a set of unit tests (`tests.py`). This imports your `bcnf.py` code. To evaluate your submission, we will use a marking script that will run `python3 tests.py` and count the percentage of unit tests that your code passes. This percentage will be your grade on the assignment.
+Included with the starter code is a set of twenty-two unit tests (`tests.py`). This imports your `bcnf.py` code. To evaluate your submission, we will use a marking script that will run `python3 tests.py` and count the percentage of unit tests that your code passes. This percentage will be your grade on the assignment.
 
-We may make minor modifications to `tests.py` prior to evaluation in order to circumvent hard-coded and/or plagiarised solutions.
+We will make minor modifications to `tests.py` prior to evaluation in order to circumvent hard-coded and/or plagiarised solutions.
 
 As you can see from `tests.py`, you will pass:
 
@@ -40,7 +40,7 @@ As you can see from `tests.py`, you will pass:
   * at least 30% more tests if you can also correctly solve those that involve multiple levels of recursion
   * bonus marks if you can handle very challenging cases, such as those involving non-determinism
 
-If you upload your (in-progress?) solution at least four days prior to the deadline, we will batch grade it and provide preliminary feedback through Brightspace.
+If you upload your (in-progress?) solution at least three days prior to the deadline, we will batch grade it and provide preliminary feedback through Brightspace.
 
 ## Sources and Academic Integrity
 
@@ -50,8 +50,8 @@ You must otherwise complete the assignment independently, including the developm
 
 ## Illness, Lateness, Technical Issues, and Personal Circumstances
 
-Submissions will be accepted until the _end date_ of the assignment listed in Brightspace, which provides a three day buffer to address most challenges that are likely to arise. Note that support for the assignment will not be available after the deadline, however. Submissions will not be accepted after the _end date_; if you have not submitted code by then, whether by choice or circumstances, the weight for this assignment will be shifted to the corresponding midterm exam.
+Submissions will be accepted until the _end date_ of the assignment listed in Brightspace, which is three days after the deadline and should provide a buffer to address most challenges that are likely to arise. Note that support for the assignment will not be available after the deadline, however. Submissions will not be accepted after the _end date_; if you have not submitted code by then, whether by choice or circumstances, your grade on this module will be your exam mark.
 
 ## Summary
 
-I hope that this assignment is a fun way to work through the edge cases of database normalisation. Good luck!
+I hope that this assignment is a fun way to work through the edge cases of relational database normalisation. Good luck!
