@@ -30,7 +30,7 @@ class ERD:
         self.identifiers[es] = attributes
     def add_generalisation(self, generalisation, specialisations, style):
         self.add_entity_set(generalisation)
-        isA = reduce(lambda x, y: x + " " + y, specialisations)
+        isA = reduce(lambda x, y: x + " " + y, specialisations) + " "
         self.graph.add_node(isA, s='^')
         self.graph.add_edges_from([(generalisation, isA, {"style":style})])
         self.graph.add_edges_from([(specialisation, isA) for specialisation in specialisations])
