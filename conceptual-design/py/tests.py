@@ -322,7 +322,7 @@ class TestCase11(unittest.TestCase):
         erd.add_identifier('C', ['c'])
         erd.add_identifier('D', ['d'])
 
-        expected_bounds = (5,23)
+        expected_bounds = (3,23)
 
         self.assertEqual( expected_bounds, calculate_bounds( erd, ["a"], ["c"] ) )
 
@@ -358,7 +358,7 @@ class TestCase12(unittest.TestCase):
         erd.add_identifier('A', ['a'])
         erd.add_identifier('B', ['b'])
 
-        expected_bounds = (4,9)
+        expected_bounds = (2,9)
 
         self.assertEqual( expected_bounds, calculate_bounds( erd, ["b"], ["c"] ) )
 
@@ -440,7 +440,7 @@ class TestCase14(unittest.TestCase):
         erd.add_identifier('C', ['c'])
         erd.add_identifier('D', ['d'])
 
-        expected_bounds = (10,360)
+        expected_bounds = (6,360)
 
         self.assertEqual( expected_bounds, calculate_bounds( erd, ["a"], ["d"] ) )
 
@@ -513,7 +513,7 @@ class TestCase16(unittest.TestCase):
         erd.add_identifier('C', ['c'])
         erd.add_identifier('D', ['d'])
 
-        expected_bounds = (3,20)
+        expected_bounds = (2,20)
 
         self.assertEqual( expected_bounds, calculate_bounds( erd, ["a"], ["d"] ) )
 
@@ -554,7 +554,7 @@ class TestCase17(unittest.TestCase):
         erd.add_identifier('C', ['c'])
         erd.add_identifier('D', ['d'])
 
-        expected_bounds = (2,2)
+        expected_bounds = (1,2)
 
         self.assertEqual( expected_bounds, calculate_bounds( erd, ["a"], ["d"] ) )
 
