@@ -254,6 +254,134 @@ class TestCase10(unittest.TestCase):
 
         self.assertEqual( expected_bounds, calculate_bounds( erd, ["c"], ["d"] ) )
 
+# Two entity sets are connected via length-2 paths in parallel.
+class TestCase11(unittest.TestCase):
+    def test_converter(self):
+        erd = ERD()
+        erd.add_entity_set("A")
+        erd.add_entity_set("B")
+        erd.add_entity_set("C")
+        erd.add_entity_set("D")
+
+        erd.add_attribute("a")
+        erd.add_attribute("b")
+        erd.add_attribute("c")
+        erd.add_attribute("d")
+
+        erd.add_relationship("R1")
+        erd.add_relationship("R2")
+        erd.add_relationship("R3")
+        erd.add_relationship("R4")
+
+        erd.connect("A", "R1", 1, 2)
+        erd.connect("B", "R1", 1, math.inf)
+        erd.connect("C", "R2", 0, 1)
+        erd.connect("B", "R2", 3, 4)
+        erd.connect("A", "R3", 1, 3)
+        erd.connect("D", "R3", 1, 1)
+        erd.connect("C", "R4", 1, 1)
+        erd.connect("D", "R4", 2, 5)
+
+        erd.attach('a', "A")
+        erd.attach('b', "B")
+        erd.attach('c', "C")
+        erd.attach('d', "D")
+
+        erd.add_identifier('A', ['a'])
+        erd.add_identifier('B', ['b'])
+        erd.add_identifier('C', ['c'])
+        erd.add_identifier('D', ['d'])
+
+        expected_bounds = (3,23)
+
+        self.assertEqual( expected_bounds, calculate_bounds( erd, ["a"], ["c"] ) ) 
+
+# Two entity sets connected via parallel paths that temporarily merge
+class TestCase16(unittest.TestCase):
+    def test_converter(self):
+        erd = ERD()
+        erd.add_entity_set("A")
+        erd.add_entity_set("B")
+        erd.add_entity_set("C")
+        erd.add_entity_set("D")
+
+        erd.add_attribute("a")
+        erd.add_attribute("b")
+        erd.add_attribute("c")
+        erd.add_attribute("d")
+
+        erd.add_relationship("R1")
+        erd.add_relationship("R2")
+        erd.add_relationship("R3")
+        erd.add_relationship("R4")
+        erd.add_relationship("R5")
+
+        erd.connect("A", "R1", 0, 1)
+        erd.connect("B", "R1", 2, 4)
+        erd.connect("A", "R2", 1, 4)
+        erd.connect("B", "R2", 0, 3)
+        erd.connect("B", "R3", 1, 1)
+        erd.connect("C", "R3", 1, 2)
+        erd.connect("C", "R4", 2, 3)
+        erd.connect("D", "R4", 1, 2)
+        erd.connect("C", "R5", 1, 1)
+        erd.connect("D", "R5", 1, 2)
+
+        erd.attach('a', "A")
+        erd.attach('b', "B")
+        erd.attach('c', "C")
+        erd.attach('d', "D")
+
+        erd.add_identifier('A', ['a'])
+        erd.add_identifier('B', ['b'])
+        erd.add_identifier('C', ['c'])
+        erd.add_identifier('D', ['d'])
+
+        expected_bounds = (2,20)
+
+        self.assertEqual( expected_bounds, calculate_bounds( erd, ["a"], ["d"] ) )
+
+# Two entity sets are related to each other across a
+# two-level generalisation hierarchy with inconsistent types.
+class TestCase19(unittest.TestCase):
+    def test_converter(self):
+        erd = ERD()
+        erd.add_entity_set("B")
+        erd.add_entity_set("C")
+        erd.add_entity_set("E")
+        erd.add_entity_set("F")
+        erd.add_entity_set("G")
+
+        erd.add_attribute("b")
+        erd.add_attribute("a")
+        erd.add_attribute("g")
+
+        erd.add_generalisation("D", ["E","F"], "(t,e)")
+        erd.add_generalisation("A", ["C","D"], "(t,o)")
+
+        erd.attach('a', "A")
+        erd.attach('b', "B")
+        erd.attach('g', "G")
+
+        erd.add_identifier("A", ["a"])
+        erd.add_identifier("B", ["b"])
+        erd.add_identifier("G", ["g"])
+
+        erd.add_relationship("R1")
+        erd.add_relationship("R2")
+        erd.add_relationship("R3")
+
+        erd.connect("A", "R1", 0, math.inf)
+        erd.connect("B", "R1", 1, 2)
+        erd.connect("E", "R2", 1, 1)
+        erd.connect("G", "R2", 0, math.inf)
+        erd.connect("F", "R3", 1, 2)
+        erd.connect("G", "R3", 1, 1)
+
+        expected_bounds = (0,4)
+
+        self.assertEqual( expected_bounds, calculate_bounds( erd, ["b"], ["g"] ) )
+
 # Hardest test case.
 # Involves multiple components
 # (parallel paths, subsets, multi-level generalisation hierarchies, and weak entity sets)
