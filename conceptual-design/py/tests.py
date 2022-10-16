@@ -25,14 +25,14 @@ class TestCase01(unittest.TestCase):
         erd.add_entity_set("B")
         erd.add_attribute("b")
         erd.add_relationship("R")
-        erd.connect("A", "R", 0, math.inf)
+        erd.connect("A", "R", 1, math.inf)
         erd.connect("B", "R", 1, 1)
         erd.attach('a', "A")
         erd.attach('b', "B")
         erd.add_identifier('A', ['a'])
         erd.add_identifier('B', ['b'])
 
-        expected_bounds = (0,math.inf)
+        expected_bounds = (1,math.inf)
 
         self.assertEqual( expected_bounds, calculate_bounds( erd, ["a"], ["b"] ) )
 
@@ -194,6 +194,34 @@ class TestCase07(unittest.TestCase):
         self.assertEqual( expected_bounds, calculate_bounds( erd, ["c"], ["a"] ) )
 
 
+# Involves a nested subset hierarchy
+class TestCase08(unittest.TestCase):
+    def test_converter(self):
+        erd = ERD()
+        erd.add_entity_set("A")
+        erd.add_entity_set("C")
+
+        erd.add_attribute("a")
+        erd.add_attribute("b")
+        erd.add_attribute("c")
+
+        erd.add_generalisation("D", ["C"], "(p,e)")
+        erd.add_generalisation("B", ["D"], "(p,e)")
+
+        erd.attach('c', "C")
+        erd.attach('b', "B")
+        erd.attach('a', "A")
+
+        erd.add_identifier("A", ["a"])
+        erd.add_identifier("B", ["b"])
+
+        erd.add_relationship("R")
+        erd.connect("A", "R", 1, 1)
+        erd.connect("B", "R", 1, 1)
+
+        expected_bounds = (1,math.inf)
+
+        self.assertEqual( expected_bounds, calculate_bounds( erd, ["c"], ["a"] ) )
 
 # Two entity sets are related to each other across a generalisation hierarchy.
 class TestCase09(unittest.TestCase):
@@ -254,6 +282,8 @@ class TestCase10(unittest.TestCase):
 
         self.assertEqual( expected_bounds, calculate_bounds( erd, ["c"], ["d"] ) )
 
+
+
 # Two entity sets are connected via length-2 paths in parallel.
 class TestCase11(unittest.TestCase):
     def test_converter(self):
@@ -294,7 +324,153 @@ class TestCase11(unittest.TestCase):
 
         expected_bounds = (3,23)
 
-        self.assertEqual( expected_bounds, calculate_bounds( erd, ["a"], ["c"] ) ) 
+        self.assertEqual( expected_bounds, calculate_bounds( erd, ["a"], ["c"] ) )
+
+
+
+
+# Two entity sets are connected via three relationships in parallel.
+class TestCase12(unittest.TestCase):
+    def test_converter(self):
+        erd = ERD()
+        erd.add_entity_set("A")
+        erd.add_entity_set("B")
+
+        erd.add_attribute("a")
+        erd.add_attribute("b")
+        erd.add_attribute("c")
+
+        erd.add_relationship("R1")
+        erd.add_relationship("R2")
+        erd.add_relationship("R3")
+
+        erd.connect("A", "R1", 1, 1)
+        erd.connect("B", "R1", 1, 2)
+        erd.connect("A", "R2", 0, 1)
+        erd.connect("B", "R2", 1, 3)
+        erd.connect("A", "R3", 1, math.inf)
+        erd.connect("B", "R3", 2, 4)
+
+        erd.attach('a', "A")
+        erd.attach('c', "A")
+        erd.attach('b', "B")
+
+        erd.add_identifier('A', ['a'])
+        erd.add_identifier('B', ['b'])
+
+        expected_bounds = (2,9)
+
+        self.assertEqual( expected_bounds, calculate_bounds( erd, ["b"], ["c"] ) )
+
+# Two entity sets connected via a long path.
+class TestCase13(unittest.TestCase):
+    def test_converter(self):
+        erd = ERD()
+        erd.add_entity_set("A")
+        erd.add_entity_set("B")
+        erd.add_entity_set("C")
+        erd.add_entity_set("D")
+
+        erd.add_attribute("a")
+        erd.add_attribute("b")
+        erd.add_attribute("c")
+        erd.add_attribute("d")
+
+        erd.add_relationship("R1")
+        erd.add_relationship("R2")
+        erd.add_relationship("R3")
+
+        erd.connect("A", "R1", 1, math.inf)
+        erd.connect("B", "R1", 2, 4)
+        erd.connect("B", "R2", 1, 1)
+        erd.connect("C", "R2", 0, 3)
+        erd.connect("C", "R3", 1, 1)
+        erd.connect("D", "R3", 1, 2)
+
+        erd.attach('a', "A")
+        erd.attach('b', "B")
+        erd.attach('c', "C")
+        erd.attach('d', "D")
+
+        erd.add_identifier('A', ['a'])
+        erd.add_identifier('B', ['b'])
+        erd.add_identifier('C', ['c'])
+        erd.add_identifier('D', ['d'])
+
+        expected_bounds = (0,24)
+
+        self.assertEqual( expected_bounds, calculate_bounds( erd, ["d"], ["a"] ) )
+
+
+# Two entity sets connected via a long path that diverges and reconverges.
+class TestCase14(unittest.TestCase):
+    def test_converter(self):
+        erd = ERD()
+        erd.add_entity_set("A")
+        erd.add_entity_set("B")
+        erd.add_entity_set("C")
+        erd.add_entity_set("D")
+
+        erd.add_attribute("a")
+        erd.add_attribute("b")
+        erd.add_attribute("c")
+        erd.add_attribute("d")
+
+        erd.add_relationship("R1")
+        erd.add_relationship("R2")
+        erd.add_relationship("R3")
+        erd.add_relationship("R4")
+
+        erd.connect("A", "R1", 1, 3)
+        erd.connect("B", "R1", 2, 4)
+        erd.connect("B", "R2", 2, 2)
+        erd.connect("C", "R2", 0, 3)
+        erd.connect("B", "R3", 3, 10)
+        erd.connect("C", "R3", 1, 2)
+        erd.connect("C", "R4", 2, 10)
+        erd.connect("D", "R4", 1, 2)
+
+        erd.attach('a', "A")
+        erd.attach('b', "B")
+        erd.attach('c', "C")
+        erd.attach('d', "D")
+
+        erd.add_identifier('A', ['a'])
+        erd.add_identifier('B', ['b'])
+        erd.add_identifier('C', ['c'])
+        erd.add_identifier('D', ['d'])
+
+        expected_bounds = (6,360)
+
+        self.assertEqual( expected_bounds, calculate_bounds( erd, ["a"], ["d"] ) )
+
+
+
+# An identifier relates to non-identifier attributes of the same entity set.
+class TestCase15(unittest.TestCase):
+    def test_converter(self):
+        erd = ERD()
+        erd.add_entity_set("A")
+
+        erd.add_relationship("R")
+
+        erd.connect("A", "R", 1, math.inf)
+        erd.connect("A", "R", 1, math.inf)
+
+        erd.add_attribute("a")
+        erd.add_attribute("b")
+        erd.add_attribute("c")
+
+        erd.attach('a', "A")
+        erd.attach('b', "B")
+        erd.attach('c', "C")
+
+        erd.add_identifier('A', ['a','b'])
+
+        expected_bounds = (1,1)
+
+        self.assertEqual( expected_bounds, calculate_bounds( erd, ["a","b"], ["c"] ) )
+
 
 # Two entity sets connected via parallel paths that temporarily merge
 class TestCase16(unittest.TestCase):
@@ -340,6 +516,75 @@ class TestCase16(unittest.TestCase):
         expected_bounds = (2,20)
 
         self.assertEqual( expected_bounds, calculate_bounds( erd, ["a"], ["d"] ) )
+
+
+# Two entity sets connected via different paths from a ternary relationship
+class TestCase17(unittest.TestCase):
+    def test_converter(self):
+        erd = ERD()
+        erd.add_entity_set("A")
+        erd.add_entity_set("B")
+        erd.add_entity_set("C")
+        erd.add_entity_set("D")
+
+        erd.add_attribute("a")
+        erd.add_attribute("b")
+        erd.add_attribute("c")
+        erd.add_attribute("d")
+
+        erd.add_relationship("R1")
+        erd.add_relationship("R2")
+        erd.add_relationship("R3")
+
+        erd.connect("A", "R1", 1, 1)
+        erd.connect("B", "R1", 2, 4)
+        erd.connect("C", "R1", 2, 4)
+        erd.connect("D", "R2", 1, 4)
+        erd.connect("B", "R2", 1, 1)
+        erd.connect("D", "R3", 1, 1)
+        erd.connect("C", "R3", 1, 1)
+
+        erd.attach('a', "A")
+        erd.attach('b', "B")
+        erd.attach('c', "C")
+        erd.attach('d', "D")
+
+        erd.add_identifier('A', ['a'])
+        erd.add_identifier('B', ['b'])
+        erd.add_identifier('C', ['c'])
+        erd.add_identifier('D', ['d'])
+
+        expected_bounds = (1,2)
+
+        self.assertEqual( expected_bounds, calculate_bounds( erd, ["a"], ["d"] ) )
+
+
+
+# Freebie: another easy one.
+class TestCase18(unittest.TestCase):
+    def test_converter(self):
+        erd = ERD()
+        erd.add_entity_set("A")
+        erd.add_entity_set("B")
+
+        erd.add_attribute("a")
+        erd.add_attribute("b")
+
+        erd.add_relationship("R")
+
+        erd.connect("A", "R", 0, 1)
+        erd.connect("B", "R", 1, math.inf)
+
+        erd.attach('a', "A")
+        erd.attach('b', "B")
+
+        erd.add_identifier('A', ['a'])
+        erd.add_identifier('B', ['b'])
+
+        expected_bounds = (0,1)
+
+        self.assertEqual( expected_bounds, calculate_bounds( erd, ["a"], ["b"] ) )
+
 
 # Two entity sets are related to each other across a
 # two-level generalisation hierarchy with inconsistent types.
