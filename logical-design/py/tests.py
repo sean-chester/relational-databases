@@ -22,10 +22,10 @@ from bcnf import ImplementMe
 class TestCase01(unittest.TestCase):
     @timeout_decorator.timeout(15)
     def test_is_bncf(self):
-        relations = RelationSet({Relation({'a','b','c'})})
+        relations = RelationSet({Relation({'a'}),Relation({'b','c'})})
         fds = FDSet({FunctionalDependency({'a'}, {'b','c'})})
 
-        expected_output = 0
+        expected_output = -1
 
         self.assertEqual( expected_output, ImplementMe.DecompositionSteps( relations, fds ) )
 
@@ -34,8 +34,8 @@ class TestCase01(unittest.TestCase):
 class TestCase02(unittest.TestCase):
     @timeout_decorator.timeout(15)
     def test_is_bncf(self):
-        relations = RelationSet({Relation({'a','b','c'})})
-        fds = FDSet({FunctionalDependency({'a'}, {'b'})})
+        relations = RelationSet({Relation({'a','b','c','d'})})
+        fds = FDSet({FunctionalDependency({'a'}, {'b','c'})})
 
         expected_output = -1
 
@@ -69,23 +69,21 @@ class TestCase04(unittest.TestCase):
 
 
 # Cycle. Everything's a key.
-# Randomly changed: add a non-key attribute
 class TestCase05(unittest.TestCase):
     @timeout_decorator.timeout(15)
     def test_is_bncf(self):
-        relations = RelationSet({Relation({'a','b','c','d','e'})})
+        relations = RelationSet({Relation({'a','b','c','d'})})
         fds = FDSet({FunctionalDependency({'a'}, {'b'}), \
                 FunctionalDependency({'b'}, {'c'}), \
                 FunctionalDependency({'c'}, {'d'}), \
                 FunctionalDependency({'d'}, {'a'}) })
 
-        expected_output = -1
+        expected_output = 0
 
         self.assertEqual( expected_output, ImplementMe.DecompositionSteps( relations, fds ) )
 
 
-# BCNF decomposition has already been done
-# Randomly changed: omit one attribute 
+# Not lossless
 class TestCase06(unittest.TestCase):
     @timeout_decorator.timeout(15)
     def test_is_bncf(self):
@@ -99,28 +97,27 @@ class TestCase06(unittest.TestCase):
 
 
 # In BCNF but breaks up a prime
-# Randomly changed: show correct decomposition
 class TestCase07(unittest.TestCase):
     @timeout_decorator.timeout(15)
     def test_is_bncf(self):
-        relations = RelationSet({Relation({'a','b','c'}) })
+        relations = RelationSet({Relation({'a','b'}), Relation({'c','b'}) })
         fds = FDSet({FunctionalDependency({'a'}, {'b','c'}), \
                 FunctionalDependency({'b'}, {'a'}) })
 
-        expected_output = 0
+        expected_output = 1
 
         self.assertEqual( expected_output, ImplementMe.DecompositionSteps( relations, fds ) )
 
 
-# Decomposition not lossless
+# FD has semi-triviality
 class TestCase08(unittest.TestCase):
     @timeout_decorator.timeout(15)
     def test_is_bncf(self):
         relations = RelationSet({Relation({'a','b'}), \
-                Relation({'c','d'}) })
-        fds = FDSet({FunctionalDependency({'a'}, {'b'}) })
+                Relation({'a','c','d'}) })
+        fds = FDSet({FunctionalDependency({'a'}, {'a','b'}) })
 
-        expected_output = -1
+        expected_output = 1
 
         self.assertEqual( expected_output, ImplementMe.DecompositionSteps( relations, fds ) )
 
@@ -145,29 +142,30 @@ class TestCase09(unittest.TestCase):
 class TestCase10(unittest.TestCase):
     @timeout_decorator.timeout(15)
     def test_is_bncf(self):
-        relations = RelationSet({Relation({'a','b','c','d'}), \
-                Relation({'a','b','e'}) })
-        fds = FDSet({FunctionalDependency({'b', 'a'}, {'c'}), \
-                FunctionalDependency({'a','b'}, {'d'}) })
+        relations = RelationSet({Relation({'a','b','c','d','e'}) })
+        fds = FDSet({FunctionalDependency({'b', 'a', 'e'}, {'c'}), \
+                FunctionalDependency({'a','b','e'}, {'d'}) })
 
-        expected_output = 1
+        expected_output = 0
 
         self.assertEqual( expected_output, ImplementMe.DecompositionSteps( relations, fds ) )
 
 
 # Only one FD is a key
-# Randomly changed: add another FD to split another relation
+# Randomly changed: add two more FD's to split another relation
 class TestCase11(unittest.TestCase):
     @timeout_decorator.timeout(15)
     def test_is_bncf(self):
         relations = RelationSet({Relation({'b','c'}), \
                 Relation({'c','a'}) , \
-                Relation({'a','d'}) })
+                Relation({'a','d'}) , \
+                Relation({'e','d'}) })
         fds = FDSet({FunctionalDependency({'b'}, {'a','c'}), \
                 FunctionalDependency({'a'}, {'d'}), \
+                FunctionalDependency({'d'}, {'e'}), \
                 FunctionalDependency({'c'}, {'a'}) })
 
-        expected_output = 2
+        expected_output = 3
 
         self.assertEqual( expected_output, ImplementMe.DecompositionSteps( relations, fds ) )
 
@@ -347,6 +345,43 @@ class TestCase22(unittest.TestCase):
         expected_output = -1
 
         self.assertEqual( expected_output, ImplementMe.DecompositionSteps( relations, fds ) )
+
+
+# FD projects to both sides of the recursion
+class TestCase23(unittest.TestCase):
+    @timeout_decorator.timeout(15)
+    def test_is_bncf(self):
+        relations = RelationSet({Relation({'a','b'}), \
+                Relation({'a','e'}), \
+                Relation({'a','c','d'}) })
+        fds = FDSet({FunctionalDependency({'a','b'}, {'e'}), \
+                FunctionalDependency({'a'}, {'b'}) })
+
+        expected_output = 3
+
+        self.assertEqual( expected_output, ImplementMe.DecompositionSteps( relations, fds ) )
+
+
+# slide 25 of projecting FD's deck
+# with addition of f->a to make hidden FD a violation
+# Nasty test case.
+class TestCase24(unittest.TestCase):
+    @timeout_decorator.timeout(15)
+    def test_is_bncf(self):
+        relations = RelationSet({Relation({'a','b'}), \
+                Relation({'b','d'}), \
+                Relation({'a','c','e'}), \
+                Relation({'a','f'}), \
+                Relation({'f','c'}) })
+        fds = FDSet({FunctionalDependency({'a'}, {'b'}), \
+                FunctionalDependency({'b'}, {'d'}), \
+                FunctionalDependency({'d','c'}, {'e'}), \
+                FunctionalDependency({'f'}, {'a'}) })
+
+        expected_output = 4
+
+        self.assertEqual( expected_output, ImplementMe.DecompositionSteps( relations, fds ) )
+
 
 
 # Run all unit tests above.
