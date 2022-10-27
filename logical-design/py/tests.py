@@ -100,9 +100,9 @@ class TestCase06(unittest.TestCase):
 class TestCase07(unittest.TestCase):
     @timeout_decorator.timeout(15)
     def test_is_bncf(self):
-        relations = RelationSet({Relation({'a','b'}), Relation({'c','b'}) })
-        fds = FDSet({FunctionalDependency({'a'}, {'b','c'}), \
-                FunctionalDependency({'b'}, {'a'}) })
+        relations = RelationSet({Relation({'a','c'}), Relation({'c','b'}) })
+        fds = FDSet({FunctionalDependency({'a','b'}, {'c'}), \
+                FunctionalDependency({'c'}, {'b'}) })
 
         expected_output = 1
 
