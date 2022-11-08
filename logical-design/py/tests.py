@@ -351,13 +351,12 @@ class TestCase22(unittest.TestCase):
 class TestCase23(unittest.TestCase):
     @timeout_decorator.timeout(15)
     def test_is_bncf(self):
-        relations = RelationSet({Relation({'a','b'}), \
-                Relation({'a','e'}), \
+        relations = RelationSet({Relation({'a','b','e'}), \
                 Relation({'a','c','d'}) })
         fds = FDSet({FunctionalDependency({'a','b'}, {'e'}), \
                 FunctionalDependency({'a'}, {'b'}) })
 
-        expected_output = 3
+        expected_output = 2
 
         self.assertEqual( expected_output, ImplementMe.DecompositionSteps( relations, fds ) )
 
