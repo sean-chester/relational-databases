@@ -1,5 +1,8 @@
 # Definition of a B+-tree node class with fan-out 3.
-# The keys are integers.
+# The keys are integers. There are no values associated
+# with the keys: the leaf pointers are null (except for
+# the (k+1)'st pointer, which participates in the linked
+# list)
 #
 # This file will not be submitted; so, you are encouraged
 # not to make functional changes to it.
