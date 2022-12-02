@@ -45,6 +45,316 @@ class TestCase02(unittest.TestCase):
         self.assertEqual( expected_output, ImplementMe.lookup( ImplementMe.from_log( log ), key ) )
 
 
+# Insert into full node
+class TestCase03(unittest.TestCase):
+    @timeout_decorator.timeout(15)
+    def test_insertion(self):
+
+        log = Log([Record.start_transaction(1),\
+            Record.update(1,1,1),\
+            Record.update(1,2,2),\
+            Record.update(1,5,3),\
+            Record.commit_transaction(1)])
+
+        key = 2
+        expected_output = [3,1,2]
+
+        self.assertEqual( expected_output, ImplementMe.lookup( ImplementMe.from_log( log ), key ) )
+
+
+
+# Insert into full node with full parent, causing root split.
+class TestCase04(unittest.TestCase):
+    @timeout_decorator.timeout(15)
+    def test_insertion(self):
+
+        log = Log([Record.start_transaction(1),\
+            Record.update(1,1,1),\
+            Record.update(1,2,2),\
+            Record.update(1,5,4),\
+            Record.update(1,8,3),\
+            Record.update(1,9,0),\
+            Record.commit_transaction(1)])
+
+        key = 3
+        expected_output = [3,4,3]
+
+        self.assertEqual( expected_output, ImplementMe.lookup( ImplementMe.from_log( log ), key ) )
+
+
+# Insert into full node but does not cause root split
+# not provided
+class TestCase05(unittest.TestCase):
+    @timeout_decorator.timeout(15)
+    def test_insertion(self):
+
+        log = Log([])
+
+        key = 3
+        expected_output = []
+
+        self.assertEqual( expected_output, ImplementMe.lookup( ImplementMe.from_log( log ), key ) )
+
+
+# Insert causes split that propagates three times
+# not provided
+class TestCase06(unittest.TestCase):
+    @timeout_decorator.timeout(15)
+    def test_insertion(self):
+
+        log = Log([])
+
+        key = 3
+        expected_output = []
+
+        self.assertEqual( expected_output, ImplementMe.lookup( ImplementMe.from_log( log ), key ) )
+
+
+# Range search on full tree
+class TestCase07(unittest.TestCase):
+    @timeout_decorator.timeout(15)
+    def test_insertion(self):
+
+        log = Log([Record.start_transaction(1),\
+            Record.update(1,1,1),\
+            Record.update(1,2,2),\
+            Record.update(1,5,3),\
+            Record.commit_transaction(1)])
+
+        lower_bound = 0
+        upper_bound = 10
+        expected_output = [3,1,2,3]
+
+        self.assertEqual( expected_output, ImplementMe.range( ImplementMe.from_log( log ), lower_bound, upper_bound ) )
+
+
+
+# Range search that starts or ends on leaf node boundary
+# Not provided
+class TestCase08(unittest.TestCase):
+    @timeout_decorator.timeout(15)
+    def test_insertion(self):
+
+        log = Log([])
+
+        lower_bound = 3
+        upper_bound = 3
+        expected_output = []
+
+        self.assertEqual( expected_output, ImplementMe.range( ImplementMe.from_log( log ), lower_bound, upper_bound ) )
+
+
+# Range search fully contained in one leaf node
+# Not provided
+class TestCase09(unittest.TestCase):
+    @timeout_decorator.timeout(15)
+    def test_insertion(self):
+
+        log = Log([Record.start_transaction(1),\
+            Record.update(1,1,1),\
+            Record.update(1,2,2),\
+            Record.update(1,5,3),\
+            Record.commit_transaction(1)])
+
+        lower_bound = 1
+        upper_bound = 2
+        expected_output = [3,1,2]
+
+        self.assertEqual( expected_output, ImplementMe.range( ImplementMe.from_log( log ), lower_bound, upper_bound ) )
+
+
+
+# Unspecified range search
+# Not provided
+class TestCase10(unittest.TestCase):
+    @timeout_decorator.timeout(15)
+    def test_insertion(self):
+
+        log = Log([])
+
+        lower_bound = 3
+        upper_bound = 3
+        expected_output = []
+
+        self.assertEqual( expected_output, ImplementMe.range( ImplementMe.from_log( log ), lower_bound, upper_bound ) )
+
+
+
+# Unspecified lookup query
+# Not provided
+class TestCase11(unittest.TestCase):
+    @timeout_decorator.timeout(15)
+    def test_insertion(self):
+
+        log = Log([])
+
+        lower_bound = 3
+        upper_bound = 3
+        expected_output = []
+
+        self.assertEqual( expected_output, ImplementMe.range( ImplementMe.from_log( log ), lower_bound, upper_bound ) )
+
+
+
+# Log file has at least one incomplete transaction
+class TestCase12(unittest.TestCase):
+    @timeout_decorator.timeout(15)
+    def test_insertion(self):
+
+        log = Log([Record.start_transaction(1),\
+            Record.update(1,1,1),\
+            Record.start_transaction(2),\
+            Record.update(2,2,1),\
+            Record.commit_transaction(1)])
+
+        key = 1
+        expected_output = [1]
+
+        self.assertEqual( expected_output, ImplementMe.lookup( ImplementMe.from_log( log ), key ) )
+
+
+# A value is changed
+class TestCase12(unittest.TestCase):
+    @timeout_decorator.timeout(15)
+    def test_insertion(self):
+
+        log = Log([Record.start_transaction(1),\
+            Record.update(1,1,1),\
+            Record.update(1,2,2),\
+            Record.commit_transaction(1),\
+            Record.start_transaction(2),\
+            Record.update(2,1,3)])
+
+        key = 3
+        expected_output = [2,3]
+
+        self.assertEqual( expected_output, ImplementMe.lookup( ImplementMe.from_log( log ), key ) )
+
+
+
+# A repeated value is added
+class TestCase13(unittest.TestCase):
+    @timeout_decorator.timeout(15)
+    def test_insertion(self):
+
+        log = Log([Record.start_transaction(1),\
+            Record.update(1,1,1),\
+            Record.update(1,2,2),\
+            Record.commit_transaction(1),\
+            Record.start_transaction(2),\
+            Record.update(2,1,2)])
+
+        key = 1
+        expected_output = [2]
+
+        self.assertEqual( expected_output, ImplementMe.lookup( ImplementMe.from_log( log ), key ) )
+
+
+
+# A value is changed, modifying the tree structure
+# Not provided
+class TestCase14(unittest.TestCase):
+    @timeout_decorator.timeout(15)
+    def test_insertion(self):
+
+        log = Log([])
+
+        lower_bound = 3
+        upper_bound = 3
+        expected_output = []
+
+        self.assertEqual( expected_output, ImplementMe.range( ImplementMe.from_log( log ), lower_bound, upper_bound ) )
+
+
+# Undisclosed Test
+# Not provided
+class TestCase15(unittest.TestCase):
+    @timeout_decorator.timeout(15)
+    def test_insertion(self):
+
+        log = Log([])
+
+        lower_bound = 3
+        upper_bound = 3
+        expected_output = []
+
+        self.assertEqual( expected_output, ImplementMe.range( ImplementMe.from_log( log ), lower_bound, upper_bound ) )
+
+# Undisclosed Test
+# Not provided
+class TestCase16(unittest.TestCase):
+    @timeout_decorator.timeout(15)
+    def test_insertion(self):
+
+        log = Log([])
+
+        lower_bound = 3
+        upper_bound = 3
+        expected_output = []
+
+        self.assertEqual( expected_output, ImplementMe.range( ImplementMe.from_log( log ), lower_bound, upper_bound ) )
+
+# The log file is invalid
+# Not provided
+class TestCase17(unittest.TestCase):
+    @timeout_decorator.timeout(15)
+    def test_insertion(self):
+
+        log = Log([])
+
+        lower_bound = 3
+        upper_bound = 3
+        expected_output = []
+
+        self.assertEqual( expected_output, ImplementMe.range( ImplementMe.from_log( log ), lower_bound, upper_bound ) )
+
+# The log file is invalid
+# Not provided
+class TestCase18(unittest.TestCase):
+    @timeout_decorator.timeout(15)
+    def test_insertion(self):
+
+        log = Log([])
+
+        lower_bound = 3
+        upper_bound = 3
+        expected_output = []
+
+        self.assertEqual( expected_output, ImplementMe.range( ImplementMe.from_log( log ), lower_bound, upper_bound ) )
+
+# A key is modified multiple times
+# Not provided
+class TestCase19(unittest.TestCase):
+    @timeout_decorator.timeout(15)
+    def test_insertion(self):
+
+        log = Log([])
+
+        lower_bound = 3
+        upper_bound = 3
+        expected_output = []
+
+        self.assertEqual( expected_output, ImplementMe.range( ImplementMe.from_log( log ), lower_bound, upper_bound ) )
+
+
+# The tree decreases in height due to a key update
+# Not provided
+class TestCase20(unittest.TestCase):
+    @timeout_decorator.timeout(15)
+    def test_insertion(self):
+
+        log = Log([])
+
+        lower_bound = 3
+        upper_bound = 3
+        expected_output = []
+
+        self.assertEqual( expected_output, ImplementMe.range( ImplementMe.from_log( log ), lower_bound, upper_bound ) )
+
+
+
+
+
 
 
 # Run all unit tests above.
