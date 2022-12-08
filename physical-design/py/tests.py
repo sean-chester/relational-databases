@@ -292,7 +292,7 @@ class TestCase14(unittest.TestCase):
 
 
 
-# Two values in a tree change, causing the tree to collapse a level temporarily
+# Two values in a tree change, causing the tree to change shape
 class TestCase15(unittest.TestCase):
     @timeout_decorator.timeout(15)
     def test_insertion(self):
@@ -305,15 +305,14 @@ class TestCase15(unittest.TestCase):
             Record.update(1,3,3),\
             Record.commit_transaction(1),\
             Record.start_transaction(2),\
-            Record.update(2,1,4),\
-            Record.update(2,2,5),\
+            Record.update(2,1,6),\
+            Record.update(2,2,4),\
             Record.commit_transaction(2)])
 
         key = 4
         expected_output = [5,3,4]
 
         self.assertEqual( expected_output, ImplementMe.lookup( ImplementMe.from_log( log ), key ) )
-
 
 # Range search after a value is changed, leaving a search key that is not in the leaves
 class TestCase16(unittest.TestCase):
@@ -410,20 +409,19 @@ class TestCase20(unittest.TestCase):
             Record.update(3,4,7),\
             Record.update(1,1,1),\
             Record.update(1,2,2),\
-            Record.update(1,5,3),\
-            Record.update(1,3,6),\
+            Record.update(1,5,6),\
+            Record.update(1,3,5),\
             Record.commit_transaction(1),\
             Record.start_transaction(2),\
-            Record.update(2,1,4),\
+            Record.update(2,1,8),\
             Record.update(2,3,1),\
             Record.commit_transaction(2)])
 
         lower_bound = 0
         upper_bound = 9
-        expected_output = [3,1,2,3,4,7]
+        expected_output = [6,1,2,6,7,8]
 
         self.assertEqual( expected_output, ImplementMe.range( ImplementMe.from_log( log ), lower_bound, upper_bound ) )
-
 
 
 # Run all unit tests above.
