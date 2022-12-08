@@ -240,13 +240,13 @@ class TestCase12(unittest.TestCase):
     def test_insertion(self):
 
         log = Log([Record.start_transaction(1),\
-            Record.update(1,1,1),\
+            Record.update(1,1,2),\
             Record.start_transaction(2),\
             Record.update(2,2,1),\
             Record.commit_transaction(1)])
 
         key = 1
-        expected_output = [1]
+        expected_output = [2]
 
         self.assertEqual( expected_output, ImplementMe.lookup( ImplementMe.from_log( log ), key ) )
 
@@ -272,7 +272,7 @@ class TestCase13(unittest.TestCase):
         self.assertEqual( expected_output, ImplementMe.lookup( ImplementMe.from_log( log ), key ) )
 
 
-# A repeated value is added
+# A value is updated to itself
 class TestCase14(unittest.TestCase):
     @timeout_decorator.timeout(15)
     def test_insertion(self):
@@ -282,11 +282,11 @@ class TestCase14(unittest.TestCase):
             Record.update(1,2,2),\
             Record.commit_transaction(1),\
             Record.start_transaction(2),\
-            Record.update(2,1,2),\
+            Record.update(2,2,2),\
             Record.commit_transaction(2)])
 
-        key = 1
-        expected_output = [2]
+        key = 2
+        expected_output = [1,2]
 
         self.assertEqual( expected_output, ImplementMe.lookup( ImplementMe.from_log( log ), key ) )
 
