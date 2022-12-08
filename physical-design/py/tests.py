@@ -214,7 +214,7 @@ class TestCase12(unittest.TestCase):
 
 
 # A value is changed
-class TestCase12(unittest.TestCase):
+class TestCase21(unittest.TestCase):
     @timeout_decorator.timeout(15)
     def test_insertion(self):
 
@@ -223,7 +223,8 @@ class TestCase12(unittest.TestCase):
             Record.update(1,2,2),\
             Record.commit_transaction(1),\
             Record.start_transaction(2),\
-            Record.update(2,1,3)])
+            Record.update(2,1,3),\
+            Record.commit_transaction(2)])
 
         key = 3
         expected_output = [2,3]
@@ -242,7 +243,8 @@ class TestCase13(unittest.TestCase):
             Record.update(1,2,2),\
             Record.commit_transaction(1),\
             Record.start_transaction(2),\
-            Record.update(2,1,2)])
+            Record.update(2,1,2),\
+            Record.commit_transaction(2)])
 
         key = 1
         expected_output = [2]
