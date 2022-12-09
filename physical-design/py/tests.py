@@ -164,35 +164,51 @@ class TestCase09(unittest.TestCase):
 
 
 
-# Unspecified range search
-# Not provided
+# Range search on tall tree
 class TestCase10(unittest.TestCase):
     @timeout_decorator.timeout(15)
     def test_insertion(self):
 
-        log = Log([])
+        log = Log([Record.start_transaction(1),\
+            Record.update(1,1,1),\
+            Record.update(1,2,20),\
+            Record.update(1,5,40),\
+            Record.update(1,8,30),\
+            Record.update(1,9,0),\
+            Record.commit_transaction(1),\
+            Record.start_transaction(3),\
+            Record.update(3,4,4),\
+            Record.update(3,6,2),\
+            Record.update(3,16,41),\
+            Record.update(3,17,43),\
+            Record.update(3,18,42),\
+            Record.commit_transaction(3)])
 
-        lower_bound = 3
-        upper_bound = 3
-        expected_output = []
+        lower_bound = 4
+        upper_bound = 31
+        expected_output = [30,4,20,4,20,30,40]
 
         self.assertEqual( expected_output, ImplementMe.range( ImplementMe.from_log( log ), lower_bound, upper_bound ) )
 
 
-
-# Unspecified lookup query
-# Not provided
+# A value is changed, moving a tuple's key to a different leaf
 class TestCase11(unittest.TestCase):
     @timeout_decorator.timeout(15)
     def test_insertion(self):
 
-        log = Log([])
+        log = Log([Record.start_transaction(1),\
+            Record.update(1,1,1),\
+            Record.update(1,2,2),\
+            Record.update(1,3,3),\
+            Record.commit_transaction(1),\
+            Record.start_transaction(2),\
+            Record.update(2,1,4),\
+            Record.commit_transaction(2)])
 
-        lower_bound = 3
-        upper_bound = 3
-        expected_output = []
+        key = 4
+        expected_output = [3,4]
 
-        self.assertEqual( expected_output, ImplementMe.range( ImplementMe.from_log( log ), lower_bound, upper_bound ) )
+        self.assertEqual( expected_output, ImplementMe.lookup( ImplementMe.from_log( log ), key ) )
 
 
 
@@ -324,37 +340,54 @@ class TestCase18(unittest.TestCase):
 
         self.assertEqual( expected_output, ImplementMe.range( ImplementMe.from_log( log ), lower_bound, upper_bound ) )
 
-# A key is modified multiple times
-# Not provided
+# The same value is changed twice, causing persistent structural changes
 class TestCase19(unittest.TestCase):
     @timeout_decorator.timeout(15)
     def test_insertion(self):
 
-        log = Log([])
+        log = Log([Record.start_transaction(1),\
+            Record.start_transaction(3),\
+            Record.update(3,4,7),\
+            Record.update(1,1,1),\
+            Record.update(1,2,2),\
+            Record.update(1,5,3),\
+            Record.update(1,3,6),\
+            Record.commit_transaction(1),\
+            Record.start_transaction(2),\
+            Record.update(2,1,4),\
+            Record.update(2,1,8),\
+            Record.commit_transaction(2)])
 
-        lower_bound = 3
-        upper_bound = 3
-        expected_output = []
+        lower_bound = 2
+        upper_bound = 9
+        expected_output = [6,3,2,3,6,7,8]
 
         self.assertEqual( expected_output, ImplementMe.range( ImplementMe.from_log( log ), lower_bound, upper_bound ) )
 
 
 # The tree decreases in height due to a key update
-# Not provided
 class TestCase20(unittest.TestCase):
     @timeout_decorator.timeout(15)
     def test_insertion(self):
 
-        log = Log([])
+        log = Log([Record.start_transaction(1),\
+            Record.start_transaction(3),\
+            Record.update(3,4,7),\
+            Record.update(1,1,1),\
+            Record.update(1,2,2),\
+            Record.update(1,5,6),\
+            Record.update(1,3,5),\
+            Record.commit_transaction(1),\
+            Record.start_transaction(2),\
+            Record.update(2,1,8),\
+            Record.update(2,3,1),\
+            Record.commit_transaction(2)])
 
-        lower_bound = 3
-        upper_bound = 3
-        expected_output = []
+        lower_bound = 0
+        upper_bound = 9
+        expected_output = [6,1,2,6,7,8]
 
         self.assertEqual( expected_output, ImplementMe.range( ImplementMe.from_log( log ), lower_bound, upper_bound ) )
-
-
-
 
 
 
