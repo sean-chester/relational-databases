@@ -382,6 +382,7 @@ class TestCase19(unittest.TestCase):
             Record.start_transaction(3),\
             Record.update(3,4,7),\
             Record.update(1,1,1),\
+            Record.commit_transaction(3),\
             Record.update(1,2,2),\
             Record.update(1,5,3),\
             Record.update(1,3,6),\
@@ -408,6 +409,7 @@ class TestCase20(unittest.TestCase):
             Record.update(3,4,7),\
             Record.update(1,1,1),\
             Record.update(1,2,2),\
+            Record.commit_transaction(3),\
             Record.update(1,5,6),\
             Record.update(1,3,5),\
             Record.commit_transaction(1),\
