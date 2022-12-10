@@ -206,10 +206,9 @@ class TestCase11(unittest.TestCase):
             Record.commit_transaction(2)])
 
         key = 4
-        expected_output = [3,4]
+        expected_output = [3,3,4]
 
         self.assertEqual( expected_output, ImplementMe.lookup( ImplementMe.from_log( log ), key ) )
-
 
 
 # Log file has at least one incomplete transaction
