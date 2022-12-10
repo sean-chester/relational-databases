@@ -413,15 +413,14 @@ class TestCase20(unittest.TestCase):
             Record.commit_transaction(1),\
             Record.start_transaction(2),\
             Record.update(2,1,8),\
-            Record.update(2,3,1),\
+            Record.update(2,2,1),\
             Record.commit_transaction(2)])
 
         lower_bound = 0
         upper_bound = 9
-        expected_output = [6,1,2,6,7,8]
+        expected_output = [6,1,5,6,7,8]
 
         self.assertEqual( expected_output, ImplementMe.range( ImplementMe.from_log( log ), lower_bound, upper_bound ) )
-
 
 # Run all unit tests above.
 unittest.main(argv=[''],verbosity=2, exit=False)
