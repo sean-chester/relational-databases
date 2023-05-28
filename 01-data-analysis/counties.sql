@@ -1,3 +1,7 @@
+DROP DATABASE IF EXISTS `counties`;
+CREATE DATABASE `counties`;
+USE `counties`;
+
 -- MySQL dump 10.13  Distrib 8.0.29, for Linux (x86_64)
 --
 -- Host: localhost    Database: counties
