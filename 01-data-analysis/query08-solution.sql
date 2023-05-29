@@ -1,21 +1,23 @@
--- Retrieve alphabetically the abbreviations of all states in which
--- every county has a (relative) difference between
--- male and female populations strictly within 10%.
--- 1.1 marks: <9 operators
--- 1.0 marks: <11 operators
--- 0.9 marks: <14 operators
--- 0.8 marks: correct answer
+-- Retrieve alphabetically the abbreviations of the states
+-- in which one can find the ten counties that had the
+-- largest (absolute) increase in employed persons
+-- between 2008 and 2016.
+-- 1.02 marks: <11 operators
+-- 1.00 marks: <12 operators
+-- 0.90 marks: <14 operators
+-- 0.80 marks: correct answer
 
-SELECT `State`.`abbr` AS `State`
+SELECT DISTINCT `State`.`abbr`
 FROM `State`
-WHERE `id` NOT IN
-(SELECT `County`.`state`
-FROM `GenderBreakdown` AS `Boys`
-  JOIN `GenderBreakdown` AS `Girls`
-    ON (`Boys`.`county` = `Girls`.`county`
-    AND `Boys`.`gender` = 'male'
-    AND `Girls`.`gender` = 'female')
-  JOIN `County`
-    ON (`Boys`.`county` = `County`.`fips`)
-WHERE ABS(`Boys`.`population` - `Girls`.`population`) / (`Boys`.`population` + `Girls`.`population`) >= .1 )
-ORDER BY `abbr`;
+NATURAL JOIN
+  (SELECT `County`.`state` AS `id`
+   FROM `CountyLabourStats` AS `2016Stats`
+     JOIN `County`
+       ON (`County`.`fips` = `2016Stats`.`county`
+       AND `2016Stats`.`year` = 2016)
+     JOIN `CountyLabourStats` AS `2008Stats`
+       ON (`County`.`fips` = `2008Stats`.`county`
+       AND `2008Stats`.`year` = 2008)
+   ORDER BY `2016Stats`.`employed` - `2008Stats`.`employed` DESC
+   LIMIT 10) As `CountyDifferences`
+ORDER BY `State`.`abbr`;
