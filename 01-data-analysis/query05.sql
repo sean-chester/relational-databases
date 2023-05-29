@@ -1,10 +1,14 @@
--- Retrieve in descending order of labour force size
--- all counties that had unemployment rates over 10%
--- in the 2008 census.
--- Hint: Unemployment rate = unemployment / labour force
--- 1.1 marks: <9 operators
--- 1.0 marks: <10 operators
--- 1.0 marks: <15 operators
+-- Retrieve the name of all counties, ordered alphabetically,
+-- whose male population is less than its annual precipitation in cm
+-- 1.1 marks: <5 operators
+-- 1.0 marks: <6 operators
 -- 0.8 marks: correct answer
 
--- Replace this comment line with the actual query
+
+SELECT `county`.`name`, CAST(`precip` * 2.54 AS UNSIGNED) AS `precip_cm`, `population` AS `male_pop`
+FROM `County`
+  JOIN `GenderBreakdown`
+    ON (`County`.`fips` = `GenderBreakdown`.`county`)
+WHERE `County`.`precip` * 2.54 > `GenderBreakdown`.`population`
+  AND `gender` = 'male'
+ORDER BY `county`.`name`;

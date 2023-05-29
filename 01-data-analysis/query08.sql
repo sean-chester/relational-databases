@@ -1,10 +1,21 @@
--- Retrieve the fifteen counties with the largest 2016 vote imbalance,
--- with their vote counts and states, restricted to counties with at least 10000 votes
--- Hint: Use pq to measure variance/imbalance in this question,
--- where p is the probability of voting democrat and q, republican.
--- 1.1 marks: <11 operators
--- 1.0 marks: <12 operators
--- 0.9 marks: <15 operators
+-- Retrieve alphabetically the abbreviations of all states in which
+-- every county has a (relative) difference between
+-- male and female populations strictly within 10%.
+-- 1.1 marks: <9 operators
+-- 1.0 marks: <11 operators
+-- 0.9 marks: <14 operators
 -- 0.8 marks: correct answer
 
--- Replace this comment line with the actual query
+SELECT `State`.`abbr` AS `State`
+FROM `State`
+WHERE `id` NOT IN
+(SELECT `County`.`state`
+FROM `GenderBreakdown` AS `Boys`
+  JOIN `GenderBreakdown` AS `Girls`
+    ON (`Boys`.`county` = `Girls`.`county`
+    AND `Boys`.`gender` = 'male'
+    AND `Girls`.`gender` = 'female')
+  JOIN `County`
+    ON (`Boys`.`county` = `County`.`fips`)
+WHERE ABS(`Boys`.`population` - `Girls`.`population`) / (`Boys`.`population` + `Girls`.`population`) >= .1 )
+ORDER BY `abbr`;
