@@ -1,9 +1,8 @@
-fips	name	state	sq_km	precip	snow	temp	life_expectancy	avg_income
-48301	loving county	4	1732.06	12.6	1.7	66.1	73.85	56730
-32009	esmeralda county	33	9277.05	5.5	6.8	53	75.48	40113
-48269	king county	4	2359.15	24.8	2.2	62.4	78.22	55661
-30069	petroleum county	37	4288.05	13.9	33.2	46.9	79.24	35772
-48033	borden county	4	2324.37	19.1	0.9	64.8	79.62	63756
-15005	kalawao county	45	31.0576	38.6	0	74.5	80.99	49040
-31007	banner county	0	1932.68	16.2	46.4	47.4	81.42	58252
-31117	mcpherson county	0	2224.73	19.9	28.8	47.7	82.41	45530
+County	Total Payroll
+kenedy county	9528000
+arthur county	227000
+blaine county	153000
+kalawao county	0
+petroleum county	0
+king county	0
+loving county	0
