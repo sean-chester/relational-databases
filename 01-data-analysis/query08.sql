@@ -1,7 +1,8 @@
--- TBD
--- 1.1 marks: <7 operators
--- 1.0 marks: <8 operators
--- 0.9 marks: <11 operators
--- 0.8 marks: correct answer
-
--- Query being redesigned due to upload error
+-- Retrieve alphabetically the abbreviations of the states
+-- in which one can find the ten counties that had the
+-- largest (absolute) increase in employed persons
+-- between 2008 and 2016.
+-- 1.02 marks: <11 operators
+-- 1.00 marks: <12 operators
+-- 0.90 marks: <14 operators
+-- 0.80 marks: correct answer
