@@ -1,7 +1,7 @@
--- TBD
--- 1.1 marks: <7 operators
--- 1.0 marks: <8 operators
--- 0.9 marks: <11 operators
--- 0.8 marks: correct answer
+-- Retrieve the five states
+-- that had the largest (relative) increase in
+-- votes for the democrat party from 2016 to 2020
+-- 1.02 marks: <8 operators
+-- 1.00 marks: <10 operators
+-- 0.80 marks: correct answer
 
--- Query being redesigned due to upload error
