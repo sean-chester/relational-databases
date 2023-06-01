@@ -7,7 +7,7 @@
 -- 0.80 marks: correct answer
 
 
-SELECT `State`.`abbr`, COALESCE(CAST( `StateMining` / `NumCounties` AS UNSIGNED), 0) AS `AvgPayroll`
+SELECT `State`.`abbr`, COALESCE(CAST( `StateMining` / `NumCounties` AS SIGNED), 0) AS `AvgPayroll`
 FROM `State`
   LEFT OUTER JOIN (
     SELECT `County`.`state`, SUM(`payroll`) AS `StateMining`
