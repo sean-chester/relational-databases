@@ -61,7 +61,7 @@ CREATE TABLE `County` (
   `avg_income` int DEFAULT NULL,
   PRIMARY KEY (`fips`),
   KEY `state` (`state`),
-  CONSTRAINT `County_ibfk_1` FOREIGN KEY (`state`) REFERENCES `State` (`id`)
+  CONSTRAINT `County_ibfk_1` FOREIGN KEY (`state`) REFERENCES `State` (`id`) ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -89,8 +89,8 @@ CREATE TABLE `CountyIndustries` (
   `employees` int DEFAULT NULL,
   PRIMARY KEY (`county`,`industry`),
   KEY `industry` (`industry`),
-  CONSTRAINT `CountyIndustries_ibfk_1` FOREIGN KEY (`industry`) REFERENCES `Industry` (`id`),
-  CONSTRAINT `CountyIndustries_ibfk_2` FOREIGN KEY (`county`) REFERENCES `County` (`fips`)
+  CONSTRAINT `CountyIndustries_ibfk_1` FOREIGN KEY (`industry`) REFERENCES `Industry` (`id`) ON UPDATE CASCADE,
+  CONSTRAINT `CountyIndustries_ibfk_2` FOREIGN KEY (`county`) REFERENCES `County` (`fips`) ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -120,8 +120,8 @@ CREATE TABLE `CountyLabourStats` (
   `unemployed` int DEFAULT NULL,
   PRIMARY KEY (`county`,`year`),
   KEY `year` (`year`),
-  CONSTRAINT `CountyLabourStats_ibfk_1` FOREIGN KEY (`year`) REFERENCES `LabourSurvey` (`year`),
-  CONSTRAINT `CountyLabourStats_ibfk_2` FOREIGN KEY (`county`) REFERENCES `County` (`fips`)
+  CONSTRAINT `CountyLabourStats_ibfk_1` FOREIGN KEY (`year`) REFERENCES `LabourSurvey` (`year`) ON UPDATE CASCADE,
+  CONSTRAINT `CountyLabourStats_ibfk_2` FOREIGN KEY (`county`) REFERENCES `County` (`fips`) ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -148,8 +148,8 @@ CREATE TABLE `CountyPopulation` (
   `population` int DEFAULT NULL,
   PRIMARY KEY (`county`,`year`),
   KEY `year` (`year`),
-  CONSTRAINT `CountyPopulation_ibfk_1` FOREIGN KEY (`county`) REFERENCES `County` (`fips`),
-  CONSTRAINT `CountyPopulation_ibfk_2` FOREIGN KEY (`year`) REFERENCES `CensusYear` (`year`)
+  CONSTRAINT `CountyPopulation_ibfk_1` FOREIGN KEY (`county`) REFERENCES `County` (`fips`) ON UPDATE CASCADE,
+  CONSTRAINT `CountyPopulation_ibfk_2` FOREIGN KEY (`year`) REFERENCES `CensusYear` (`year`) ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -201,8 +201,8 @@ CREATE TABLE `ElectionResult` (
   `gop` int DEFAULT NULL,
   PRIMARY KEY (`county`,`year`),
   KEY `year` (`year`),
-  CONSTRAINT `ElectionResult_ibfk_1` FOREIGN KEY (`year`) REFERENCES `Election` (`year`),
-  CONSTRAINT `ElectionResult_ibfk_2` FOREIGN KEY (`county`) REFERENCES `County` (`fips`)
+  CONSTRAINT `ElectionResult_ibfk_1` FOREIGN KEY (`year`) REFERENCES `Election` (`year`) ON UPDATE CASCADE,
+  CONSTRAINT `ElectionResult_ibfk_2` FOREIGN KEY (`county`) REFERENCES `County` (`fips`) ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -252,8 +252,8 @@ CREATE TABLE `GenderBreakdown` (
   `population` int DEFAULT NULL,
   PRIMARY KEY (`county`,`gender`),
   KEY `gender` (`gender`),
-  CONSTRAINT `GenderBreakdown_ibfk_1` FOREIGN KEY (`county`) REFERENCES `County` (`fips`),
-  CONSTRAINT `GenderBreakdown_ibfk_2` FOREIGN KEY (`gender`) REFERENCES `Gender` (`name`)
+  CONSTRAINT `GenderBreakdown_ibfk_1` FOREIGN KEY (`county`) REFERENCES `County` (`fips`) ON UPDATE CASCADE,
+  CONSTRAINT `GenderBreakdown_ibfk_2` FOREIGN KEY (`gender`) REFERENCES `Gender` (`name`) ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
