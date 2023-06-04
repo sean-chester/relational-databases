@@ -4,7 +4,7 @@ import difflib
 def compare_outputs(expected_output, actual_output):
     diffs = []
     if(len(actual_output) == 0):
-        return len(expected_output)
+        return expected_output
 
     diffs = [line+'\n' for line in difflib.unified_diff(actual_output, expected_output, fromfile='YourOutput', tofile='ExpectedOutput', lineterm='', n=0)]
     diffs = [line for line in diffs if not line.startswith(('---', '+++', '@@'))]

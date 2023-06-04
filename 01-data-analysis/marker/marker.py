@@ -50,7 +50,7 @@ def load_results_files(query_count, expected_results_path):
 def init_output_csv(query_count, student_grade_file):
     queries = range(1, query_count + 1)
     cols = ["StudentID"]
-    cols.extend([f"query{i:02}" for i in queries])
+    cols.extend([f"diff{i:02}" for i in queries])
     cols.extend([f"tokens{i:02}"for i in queries])
     cols.extend([f"mark{i:02}"for i in queries])
     cols.extend(["Final"])
@@ -61,8 +61,6 @@ def init_output_csv(query_count, student_grade_file):
                                 quotechar='"',
                                 quoting=csv.QUOTE_MINIMAL)
         writer.writeheader()
-        return (writer, csvfile)
-
 
 class GradeRow:
     def __init__(self, student_id):
@@ -76,9 +74,17 @@ class GradeRow:
     def set_final_score(self, final_score):
         self.row["Final"] = final_score
 
-    def flush_row(self, writer, csvfile):
-        writer.writerow(self.row)
-        csvfile.flush()
+    def flush_row(self, student_grade_file):
+        # Ewwww!!! Nasty code duplication and excessive file opening/closing,
+        # but I can't figure out file pointers in python.
+        with open(student_grade_file, 'a', newline='\n') as csvfile:
+            writer = csv.DictWriter(csvfile,
+                                    fieldnames=self.row,
+                                    delimiter=',',
+                                    quotechar='"',
+                                    quoting=csv.QUOTE_MINIMAL)
+            writer.writerow(self.row)
+            csvfile.flush()
 
 
 class SQLGolfMarker:
@@ -87,7 +93,8 @@ class SQLGolfMarker:
         self.query_count = len(self.score_function)
         self.token_counter = TokenCounter(sql_tokens)
         self.expected_results = load_results_files(self.query_count, expected_results_path)
-        self.writer, self.csvfile = init_output_csv(self.query_count, student_grade_file)
+        self.student_grade_file = student_grade_file
+        init_output_csv(self.query_count, self.student_grade_file)
 
     def get_query_count(self):
         return self.query_count
@@ -95,13 +102,13 @@ class SQLGolfMarker:
     def compute_token_count(self, query_submission_filename):
         return self.token_counter.count_tokens(query_submission_filename)
 
-    def compute_diff_and_score(self, query_number, token_count):
+    def compute_diff_and_score(self, query_submission_filename, mysql_runner, query_number, token_count):
         output, errors = mysql_runner.run_query(query_submission_filename)
 
         if errors:
             return (-1, 0)
 
-        diffs = len(compare_outputs(results[i], output))
+        diffs = len(compare_outputs(self.expected_results[query_number], output))
         if(diffs > 0):
             return (diffs, 0)
 
@@ -113,8 +120,9 @@ class SQLGolfMarker:
         assert(0)
 
     def grade_all(self, student_reader, mysql_runner):
-        with tqdm(total=len(submissionFolders)*self.get_query_count()) as progress_bar:
-            for student_id, folder in student_reader.get_folder_map().items():
+        submissions = student_reader.get_folder_map()
+        with tqdm(total=len(submissions)*self.get_query_count()) as progress_bar:
+            for student_id, folder in submissions.items():
                 student_csv_row = GradeRow(student_id)
                 total_grade = 0
 
@@ -122,14 +130,14 @@ class SQLGolfMarker:
                     progress_bar.set_description("Processing %s" % f"{student_id}, Query {i:02}")
                     inputfile = f"{folder}/query{i:02}.sql"
 
-                    token_count = self.get_token_count(inputfile)
-                    diff, score = self.get_diff_and_score(i, token_count)
+                    token_count = self.compute_token_count(inputfile)
+                    diff, score = self.compute_diff_and_score(inputfile, mysql_runner, i, token_count)
                     total_grade = total_grade + score
                     student_csv_row.set_query_score(i, token_count, diff, score)
                     progress_bar.update(1)
 
                 student_csv_row.set_final_score(total_grade)
-                student_csv_row.flush_row(self.writer, self.csvfile)
+                student_csv_row.flush_row(self.student_grade_file)
 
 
                 # write the marks to file 
