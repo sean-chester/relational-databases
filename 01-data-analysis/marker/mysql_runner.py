@@ -12,7 +12,7 @@ class MySQLRunner:
         try:
             with sp.Popen(['mysql', self.database, '-u', self.user], stdout=sp.PIPE, stdin=sp.PIPE, stderr=sp.PIPE) as process:
                 output, errors = process.communicate(f"source {query_file}".encode(), self.timeout)
-                output = output.decode().strip().splitlines()
+                output = [l.strip() for l in output.decode().strip().splitlines()]
                 errors = errors.decode().strip()
                 return (output, errors)
 
