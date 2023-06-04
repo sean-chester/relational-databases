@@ -12,14 +12,17 @@ class MySQLRunner:
         try:
             with sp.Popen(['mysql', self.database, '-u', self.user], stdout=sp.PIPE, stdin=sp.PIPE, stderr=sp.PIPE) as process:
                 output, errors = process.communicate(f"source {query_file}".encode(), self.timeout)
-                output = [l.strip() for l in output.decode().strip().splitlines()]
-                errors = errors.decode().strip()
+                if output:
+                    output = [l.strip() for l in output.decode().strip().splitlines()]
+                if errors:
+                    errors = errors.decode().strip()
+                    errors = errors.replace(folder, '')
                 return (output, errors)
 
         except Exception as err:
             trace_err = traceback.format_exc()
             trace_err = trace_err.replace(folder, '')
-            print(trace_err)
+            return('', trace_err)
 
 if __name__ == '__main__':
     sql_runner = MySQLRunner()
