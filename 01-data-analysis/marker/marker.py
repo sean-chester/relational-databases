@@ -19,13 +19,11 @@ import json
 
 def setup_arg_parser():
     parser = argparse.ArgumentParser(description='Marking SQL assignment for CSC370')
-    parser.add_argument('--path', dest='path', default="./submissions", help='Base path of submissions', required=False)
-    parser.add_argument('--results-path', dest='expected_results', default=".", help='Path to the expected/correct results', required=False)
-    parser.add_argument('--assignment-path', dest='assignment_path', default='..', help="Relative path to root of assignment directory", required=False)
+    parser.add_argument('--submissions-path', dest='submissions_path', default="./submissions", help='Base path of submissions', required=False)
+    parser.add_argument('--results-path', dest='expected_results', default="..", help='Path to the expected/correct results', required=False)
     parser.add_argument('--database', dest='database', default='counties', help="Database Name", required=False)
     parser.add_argument('--db-user', dest='db_user', default='root', help="Database User Name", required=False)
     parser.add_argument('--scoring-file', dest='scoring_file', default='./scoring-function.json', help="JSON-structured map from query+tokens->grade", required=False)
-    parser.add_argument('--blacklist', dest='blacklist', default='./a3/Blacklist-A3.json', help="Students input that breaks the process and needs to blacklisted", required=False)
     parser.add_argument('--marks-output', dest='marks_output', default='./student-grades.csv', help="Output marks in csv format", required=False)
     parser.add_argument('--sql-tokens', dest='sql_tokens', default='./sql-tokens.txt', help="MySQL tokens file", required=False)
 
@@ -43,7 +41,7 @@ def load_scorer(scoring_file):
 def load_results_files(query_count, expected_results_path):
     results = {} 
     for i in range(1, query_count + 1):
-        with open(f"{args.results_path}/query{i:02}-result.tsv") as fl:
+        with open(f"{expected_results_path}/query{i:02}-result.tsv") as fl:
             results[i] = [l.strip() for l in fl.readlines()]
 
     return results
@@ -70,13 +68,10 @@ class GradeRow:
     def __init__(self, student_id):
         self.row = {"StudentID": student_id}
 
-    def set_query_score(self, query_number, token_count, score):
+    def set_query_score(self, query_number, token_count, diffs, score):
         self.row[f"tokens{query_number:02}"] = token_count
-        self.row[f"query{query_number:02}"] = score
-
-        row[f"query{i:02}"] = -1 # Default to error value
-        row[f"tokens{i:02}"] = -1 # Default to error value
-        row[f"mark{i:02}"] = 0
+        self.row[f"diff{query_number:02}"] = diffs
+        self.row[f"mark{query_number:02}"] = score
 
     def set_final_score(self, final_score):
         self.row["Final"] = final_score
@@ -92,7 +87,7 @@ class SQLGolfMarker:
         self.query_count = len(self.score_function)
         self.token_counter = TokenCounter(sql_tokens)
         self.expected_results = load_results_files(self.query_count, expected_results_path)
-        self.writer, self.csvfile = init_output_csv()
+        self.writer, self.csvfile = init_output_csv(self.query_count, student_grade_file)
 
     def get_query_count(self):
         return self.query_count
@@ -130,7 +125,7 @@ class SQLGolfMarker:
                     token_count = self.get_token_count(inputfile)
                     diff, score = self.get_diff_and_score(i, token_count)
                     total_grade = total_grade + score
-                    student_csv_row.write_score(i, token_count, diff, score)
+                    student_csv_row.set_query_score(i, token_count, diff, score)
                     progress_bar.update(1)
 
                 student_csv_row.set_final_score(total_grade)
@@ -149,7 +144,7 @@ if __name__ == '__main__':
         args = parser.parse_args()
         marker = SQLGolfMarker(args.scoring_file, args.sql_tokens, args.expected_results, args.marks_output)
         marker.grade_all( \
-            StudentReader(args.path, args.assignment_path), \
+            StudentReader(args.submissions_path), \
             MySQLRunner(args.database, args.db_user))
 
     except Exception as e:
