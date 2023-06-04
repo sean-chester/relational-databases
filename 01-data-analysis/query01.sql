@@ -1,5 +1,5 @@
 -- Retrieve the name of all counties, ordered alphabetically,
 -- that had a six-figure average income and voted Republican in 2020
--- 1.1 marks: < 8 operators
--- 1.0 marks: < 9 operators
+-- 1.1 marks: < 5 operators
+-- 1.0 marks: < 6 operators
 -- 0.8 marks: correct answer
