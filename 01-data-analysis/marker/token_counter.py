@@ -27,12 +27,9 @@ def query_to_tokens(query_contents):
 
 
 def count_token_matches(haystack, needles):
-    occurrences = 0
-    for hay in haystack:
-        if hay in needles:
-            occurrences = occurrences + 1
+    matched_tokens = [token for token in haystack if token in needles]
     
-    return occurrences
+    return len(matched_tokens)
 
 
 
