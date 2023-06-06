@@ -1,5 +1,6 @@
 
 import subprocess as sp
+import traceback
 
 class MySQLRunner:
     def __init__(self, database = "counties", user = "root", timeout=25):
@@ -16,12 +17,10 @@ class MySQLRunner:
                     output = [l.strip() for l in output.decode().strip().splitlines()]
                 if errors:
                     errors = errors.decode().strip()
-                    errors = errors.replace(folder, '')
                 return (output, errors)
 
         except Exception as err:
             trace_err = traceback.format_exc()
-            trace_err = trace_err.replace(folder, '')
             return('', trace_err)
 
 if __name__ == '__main__':
