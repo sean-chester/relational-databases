@@ -4,9 +4,12 @@ import string
 
 
 def file_to_string(query_filename):
-    with open(query_filename) as f:
-        query_lines = f.readlines()
-    return query_lines
+    try:
+        with open(query_filename) as f:
+            query_lines = f.readlines()
+        return query_lines
+    except Exception as err:
+        return ''
 
 
 def preprocess_string(query_contents):

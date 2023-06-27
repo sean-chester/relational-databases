@@ -50,8 +50,8 @@ def load_results_files(query_count, expected_results_path):
 def init_output_csv(query_count, student_grade_file):
     queries = range(1, query_count + 1)
     cols = ["StudentID"]
-    cols.extend([f"diff{i:02}" for i in queries])
     cols.extend([f"tokens{i:02}"for i in queries])
+    cols.extend([f"diff{i:02}" for i in queries])
     cols.extend([f"mark{i:02}"for i in queries])
     cols.extend(["Final"])
     with open(student_grade_file, 'w', newline='\n') as csvfile:
@@ -61,6 +61,7 @@ def init_output_csv(query_count, student_grade_file):
                                 quotechar='"',
                                 quoting=csv.QUOTE_MINIMAL)
         writer.writeheader()
+        return cols
 
 class GradeRow:
     def __init__(self, student_id):
@@ -74,12 +75,12 @@ class GradeRow:
     def set_final_score(self, final_score):
         self.row["Final"] = final_score
 
-    def flush_row(self, student_grade_file):
+    def flush_row(self, student_grade_file, headers):
         # Ewwww!!! Nasty code duplication and excessive file opening/closing,
         # but I can't figure out file pointers in python.
         with open(student_grade_file, 'a', newline='\n') as csvfile:
             writer = csv.DictWriter(csvfile,
-                                    fieldnames=self.row,
+                                    fieldnames=headers,
                                     delimiter=',',
                                     quotechar='"',
                                     quoting=csv.QUOTE_MINIMAL)
@@ -94,7 +95,7 @@ class SQLGolfMarker:
         self.token_counter = TokenCounter(sql_tokens)
         self.expected_results = load_results_files(self.query_count, expected_results_path)
         self.student_grade_file = student_grade_file
-        init_output_csv(self.query_count, self.student_grade_file)
+        self.headers = init_output_csv(self.query_count, self.student_grade_file)
 
     def get_query_count(self):
         return self.query_count
@@ -137,12 +138,12 @@ class SQLGolfMarker:
                     progress_bar.update(1)
 
                 student_csv_row.set_final_score(total_grade)
-                student_csv_row.flush_row(self.student_grade_file)
+                student_csv_row.flush_row(self.student_grade_file, self.headers)
 
 
                 # write the marks to file 
-                # with open(f"{folder}/feedback-marking-{st_id}.json", 'w') as f_mark:
-                #    f_mark.write( json.dumps(student_csv_row.row, indent=4) )
+                with open(f"{folder}/feedback-marking-{student_id}.json", 'w') as f_mark:
+                  f_mark.write( json.dumps(student_csv_row.row, indent=4) )
 
 
 if __name__ == '__main__':
