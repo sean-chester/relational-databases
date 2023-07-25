@@ -10,6 +10,6 @@ class Attributes:
 class RefIntegrityPolicy:
     def __init__( self, operation, policy ):
     	assert operation == "UPDATE" or operation == "DELETE" or operation == "INSERT", "Invalid operation"
-    	assert policy == "CASCADE" or operation == "REJECT" or operation == "SET NULL", "Invalid policy"
+    	assert policy == "CASCADE" or policy == "REJECT" or policy == "SET NULL", "Invalid policy"
         self.operation = operation
         self.policy = policy
