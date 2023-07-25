@@ -57,16 +57,3 @@ class DataModelChecker:
     def confirmFunctionalDependency( self, referencing_attributes, referenced_attributes ):
         # TODO: Implement me!
         return true
-
-    # Predicate function that connects to the database and confirms
-    # whether or not any tuples in a given table are permitted to violate
-    # a constraint expressed as a SQL snippet.
-    # For example, given `R` and `x >= 0`, this function would return
-    # true if it is not possible to add tuples to `R` with negative `x` values.
-    # @pre sql_predicate must be valid SQL syntax that can be used as is in a WHERE condition
-    # @pre table_name must exist in the database already
-    def confirmArbitraryConstraint( self, table_name, sql_predicate ):
-        # TODO: Implement me!
-        return true
-
-
