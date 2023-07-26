@@ -23,7 +23,7 @@ class TestCase01(unittest.TestCase):
         checker = DataModelChecker('localhost', 'student', 'stud3nt', 'assignment2')
 
         attributes = Attributes('R1', ['f'])
-        expected_output = true
+        expected_output = True
 
         self.assertEqual( expected_output, checker.confirmSuperkey( attributes ) )
 
@@ -37,7 +37,7 @@ class TestCase02(unittest.TestCase):
         checker = DataModelChecker('localhost', 'student', 'stud3nt', 'assignment2')
 
         attributes = Attributes('R2', ['g', 'f'])
-        expected_output = true
+        expected_output = True
 
         self.assertEqual( expected_output, checker.confirmSuperkey( attributes ) )
 
@@ -51,7 +51,7 @@ class TestCase03(unittest.TestCase):
         checker = DataModelChecker('localhost', 'student', 'stud3nt', 'assignment2')
 
         attributes = Attributes('R3', ['g'])
-        expected_output = false
+        expected_output = False
 
         self.assertEqual( expected_output, checker.confirmSuperkey( attributes ) )
 
@@ -66,7 +66,7 @@ class TestCase04(unittest.TestCase):
         checker = DataModelChecker('localhost', 'student', 'stud3nt', 'assignment2')
 
         attributes = Attributes('R4', ['g'])
-        expected_output = true
+        expected_output = True
 
         self.assertEqual( expected_output, checker.confirmSuperkey( attributes ) )
 
@@ -80,7 +80,7 @@ class TestCase05(unittest.TestCase):
         checker = DataModelChecker('localhost', 'student', 'stud3nt', 'assignment2')
 
         attributes = Attributes('', [])
-        expected_output = true
+        expected_output = True
 
         self.assertEqual( expected_output, checker.confirmSuperkey( attributes ) )
 
@@ -96,7 +96,7 @@ class TestCase06(unittest.TestCase):
 
         referenced_attributes = Attributes('R6', ['x'])
         referencing_attributes = Attributes('S6', ['x'])
-        expected_output = true
+        expected_output = True
 
         self.assertEqual( expected_output, checker.confirmForeignKey( referencing_attributes, referenced_attributes ) )
 
@@ -112,7 +112,7 @@ class TestCase07(unittest.TestCase):
 
         referenced_attributes = Attributes('R7', ['x', 'y'])
         referencing_attributes = Attributes('S7', ['b', 'c'])
-        expected_output = true
+        expected_output = True
 
         self.assertEqual( expected_output, checker.confirmForeignKey( referencing_attributes, referenced_attributes ) )
 
@@ -128,7 +128,7 @@ class TestCase08(unittest.TestCase):
 
         referenced_attributes = Attributes('R8', ['x', 'y'])
         referencing_attributes = Attributes('S8', ['b'])
-        expected_output = false
+        expected_output = False
 
         self.assertEqual( expected_output, checker.confirmForeignKey( referencing_attributes, referenced_attributes ) )
 
@@ -144,7 +144,7 @@ class TestCase09(unittest.TestCase):
 
         referenced_attributes = Attributes('R9', ['x', 'y'])
         referencing_attributes = Attributes('S9', ['c', 'b'])
-        expected_output = false
+        expected_output = False
 
         self.assertEqual( expected_output, checker.confirmForeignKey( referencing_attributes, referenced_attributes ) )
 
@@ -159,7 +159,7 @@ class TestCase10(unittest.TestCase):
 
         referenced_attributes = Attributes('' [])
         referencing_attributes = Attributes('', [])
-        expected_output = true
+        expected_output = True
 
         self.assertEqual( expected_output, checker.confirmForeignKey( referencing_attributes, referenced_attributes ) )
 
@@ -175,7 +175,7 @@ class TestCase11(unittest.TestCase):
         referenced_attributes = Attributes('R11', ['x'])
         referencing_attributes = Attributes('S11', ['c'])
         policy = RefIntegrityPolicy('DELETE', 'REJECT')
-        expected_output = true
+        expected_output = True
 
         self.assertEqual( expected_output, checker.confirmReferentialIntegrity( referencing_attributes, referenced_attributes, policy ) )
 
@@ -192,7 +192,7 @@ class TestCase12(unittest.TestCase):
         referenced_attributes = Attributes('R12', ['x'])
         referencing_attributes = Attributes('S12', ['c'])
         policy = RefIntegrityPolicy('DELETE', 'CASCADE')
-        expected_output = true
+        expected_output = True
 
         self.assertEqual( expected_output, checker.confirmReferentialIntegrity( referencing_attributes, referenced_attributes, policy ) )
 
@@ -209,7 +209,7 @@ class TestCase13(unittest.TestCase):
         referenced_attributes = Attributes('R13', ['x'])
         referencing_attributes = Attributes('S13', ['c'])
         policy = RefIntegrityPolicy('UPDATE', 'REJECT')
-        expected_output = true
+        expected_output = True
 
         self.assertEqual( expected_output, checker.confirmReferentialIntegrity( referencing_attributes, referenced_attributes, policy ) )
 
@@ -226,7 +226,7 @@ class TestCase14(unittest.TestCase):
         referenced_attributes = Attributes('R14', ['x'])
         referencing_attributes = Attributes('S14', ['c'])
         policy = RefIntegrityPolicy('UPDATE', 'CASCADE')
-        expected_output = true
+        expected_output = True
 
         self.assertEqual( expected_output, checker.confirmReferentialIntegrity( referencing_attributes, referenced_attributes, policy ) )
 
@@ -244,7 +244,7 @@ class TestCase15(unittest.TestCase):
         referenced_attributes = Attributes('R15', ['x'])
         referencing_attributes = Attributes('S15', ['c'])
         policy = RefIntegrityPolicy('DELETE', 'SET NULL')
-        expected_output = true
+        expected_output = True
 
         self.assertEqual( expected_output, checker.confirmReferentialIntegrity( referencing_attributes, referenced_attributes, policy ) )
 
@@ -258,7 +258,7 @@ class TestCase16(unittest.TestCase):
 
         determined_attributes = Attributes('R16', ['z'])
         determining_attributes = Attributes('R16', ['x'])
-        expected_output = true
+        expected_output = True
 
         self.assertEqual( expected_output, checker.confirmFunctionalDependency( determining_attributes, determined_attributes ) )
 
@@ -273,7 +273,7 @@ class TestCase17(unittest.TestCase):
 
         determined_attributes = Attributes('', [])
         determining_attributes = Attributes('', [])
-        expected_output = true
+        expected_output = True
 
         self.assertEqual( expected_output, checker.confirmFunctionalDependency( determining_attributes, determined_attributes ) )
 
@@ -289,7 +289,7 @@ class TestCase18(unittest.TestCase):
 
         determined_attributes = Attributes('R18', ['z'])
         determining_attributes = Attributes('S18', ['a'])
-        expected_output = true
+        expected_output = True
 
         self.assertEqual( expected_output, checker.confirmFunctionalDependency( determining_attributes, determined_attributes ) )
 
@@ -304,7 +304,7 @@ class TestCase19(unittest.TestCase):
 
         determined_attributes = Attributes('', [])
         determining_attributes = Attributes('', [])
-        expected_output = true
+        expected_output = True
 
         self.assertEqual( expected_output, checker.confirmFunctionalDependency( determining_attributes, determined_attributes ) )
 
@@ -319,7 +319,7 @@ class TestCase20(unittest.TestCase):
 
         determined_attributes = Attributes('', [])
         determining_attributes = Attributes('', [])
-        expected_output = true
+        expected_output = True
 
         self.assertEqual( expected_output, checker.confirmFunctionalDependency( determining_attributes, determined_attributes ) )
 
