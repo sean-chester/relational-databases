@@ -8,6 +8,10 @@ class DataModelChecker:
 
     # Ctor sets the connection details for this model checker
     def __init__( self, host, username, password, database ):
+        self.host = host
+        self.username = username
+        self.password = password
+        self.database = database
         # TODO: Implement me!
 
     # Predicate function that connects to the database and confirms
