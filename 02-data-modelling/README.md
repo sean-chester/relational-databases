@@ -40,23 +40,43 @@ Your functions will be evaluated with a series of unit tests and your score on t
 
 For example, a test of `confirmSuperkey()` might pass as input a table for which no primary key was ever defined in the database and ask if a particular set of attributes is an enforced superkey or not, i.e., allows insertions that violate the supposed key constraint. If the function returns false, the test passes; otherwise it fails. Approximately twenty such test cases will be defined and tested.
 
-Note that we will modify our testing dataset to avoid hard-coded solutions, such as by changing constraints between the pre-test and test database. You should not make assumptions that a hard-coded solution that passes pre-testing will also pass in the final evaluation. Moreover, if you create temporary files, you are responsible for monitoring their existence: there is no guarantee that we will run test cases in a deterministic order.
+Note that we will modify our testing dataset to avoid hard-coded solutions, such as by changing constraints between the pre-test and test database. You should not make assumptions that a hard-coded solution that passes pre-testing will also pass in the final evaluation. In particular, the actual result (true or false) for each test case will be quasi-randomly chosen in the final test database by adding or removing particular constraints. Moreover, if you create temporary files, you are responsible for monitoring their existence: there is no guarantee that we will run test cases in a deterministic order.
 
-A subset of the test cases will be provided after the first pre-marking; however, these are only _structurally_ correct. The underlying database and therefore also the correct answer will change with 50% probability between what is provided and the final grading. You will need to also identify some important boundary cases to test that have not been released in advance.
+A subset of the test cases will be provided; however, these are only _structurally_ correct. The underlying database and therefore also the correct answer will change with 50% probability between what is provided and the final grading. You will need to also identify some important boundary cases to test that have not been released in advance. The pre-released cases are available in `tests.py`, some of which can be tested by yourself using `build_test_database.sql`; the SQL script, in particular, shows the permissions that the test user will have, which you can use to gauge which approaches to the assignment are permitted. Marking will take place by running:
+
+```bash
+mysql -uroot < build_test_database.sql
+python3 tests.py
+```
+
+You can safely make the following assumptions:
+  * All tables and attributes exist
+  * All attributes will be of INT type
+  * All primary keys will contain one AUTO_INCREMENT attribute, namely the first one
+  * Attributes that are not part of the function argument list be NULLABLE and will have default values
+  * All tables will be empty before your code is marked, though they will not be cleared between unit tests
+  * Each test case will use an independent set of tables that are not related to those in other test cases
+  * Tests will be run using `mysql  Ver 8.0.33 for macos10.15 on x86_64 (Homebrew)` and `Python 3.11.3` on Mac OS Catalina 10.15.7.
 
 Pre-marking will occur at an arbitrary point in the morning on the following dates. You should submit prior to midnight the night before to be certain to receive a pre-grading update:
 
-  * Monday, 10 July 2023
-  * Monday, 17 July 2023
+  * Thursday, 27 July 2023
+  * Friday, 28 July 2023
+  * Saturday, 29 July 2023
+  * Sunday, 30 July 2023
+  * Monday, 31 July 2023
+  * Tuesday, 1 August 2023
+
+The instructor reserves the right to award a score of 0 to functions that have not been implemented at all (e.g., simply return True or return False with no dependence on the input parameters).
 
 ## Dataset
 
-For this assignment, we will use random data to test your code. It will be engineered to test particular boundary cases in the lessons. Functional dependencies may cross multiple tables, though these will share common attributes that facilitate NATURAL JOIN.
+For this assignment, we will use random data to test your code, as exemplified in `build_test_database.sql`. It will be engineered to test particular boundary cases in the lessons. Functional dependencies may cross multiple tables, though these will share common attributes that facilitate NATURAL JOIN.
 
 
 ## Sources and Academic Integrity
 
-_This assignment is equivalent to an in-person, solo, written exam_. As such, it must be completed independently, even the development of general ideas or pseudocode. Submissions may be subjected to plagiarism detection software and evidence of collaboration will be reported as an Academic Integrity infringement. You are welcome to prepare for the assignment with peers in the class by working through the in-class problems together or studying the practice quizzes, which are designed to prepare you well for this assignment.
+_This assignment is equivalent to an in-person, solo, written exam_. As such, it must be completed independently, even the development of general ideas or pseudocode. Submissions will be subjected to plagiarism detection software and evidence of collaboration will be reported as an Academic Integrity infringement. You are welcome to prepare for the assignment with peers in the class by working through the in-class problems together or studying the practice quizzes, which are designed to prepare you well for this assignment.
 
 You are permitted to use sources that you find on the Internet, so long as the source is clearly dated with a last edit prior to 1-January-2023 and you provide a citation in your source code. For example, GitHub and StackOverflow content is permitted, so long as it is clearly dated prior to this year. The use of Generative AI tools must also be cited. (Clearly, it has a last edit of whenever you used it). If you do not include a citation as a comment in your source code, your work will be considered plagiarism.
 
@@ -68,3 +88,7 @@ Submissions will be accepted until the _end date_ of the assignment listed in Br
 ## Summary
 
 I hope that this assignment is a fun way to learn and/or practice data modelling, the SQL query language, and connecting to MySQL databases from a high-level, application-layer code base. Good luck!
+
+## Revision Log
+
+**Thu 27 July 2023 12.28**: Expand specs, especially permitted assumptions; modify pre-marking dates in accordance with deadline extension; add sample test cases and database build script.
