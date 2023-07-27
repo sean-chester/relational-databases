@@ -17,7 +17,7 @@ from DataTypes import *
 # confirmSuperkey() simple case: check the primary key
 class TestCase01(unittest.TestCase):
     @timeout_decorator.timeout(15)
-    def test_insertion(self):
+    def test_superkey(self):
 
         # with R(e,f,g,h) and f as primary key
         checker = DataModelChecker('localhost', 'student', 'stud3nt', 'assignment2')
@@ -31,7 +31,7 @@ class TestCase01(unittest.TestCase):
 # confirmSuperkey() sort of easy case: check a proper superset of the primary key
 class TestCase02(unittest.TestCase):
     @timeout_decorator.timeout(15)
-    def test_insertion(self):
+    def test_superkey(self):
 
         # with R(e,f,g,h) and f as primary key
         checker = DataModelChecker('localhost', 'student', 'stud3nt', 'assignment2')
@@ -45,7 +45,7 @@ class TestCase02(unittest.TestCase):
 # confirmSuperkey() simple case: check a proper subset of the primary key
 class TestCase03(unittest.TestCase):
     @timeout_decorator.timeout(15)
-    def test_insertion(self):
+    def test_superkey(self):
 
         # with R(e,f,g,h) and {f,g} as primary key
         checker = DataModelChecker('localhost', 'student', 'stud3nt', 'assignment2')
@@ -60,7 +60,7 @@ class TestCase03(unittest.TestCase):
 # confirmSuperkey() tougher case: check non-primary key unique attribute
 class TestCase04(unittest.TestCase):
     @timeout_decorator.timeout(15)
-    def test_insertion(self):
+    def test_superkey(self):
 
         # with R(e,f,g,h) and f as primary key and g as unique
         checker = DataModelChecker('localhost', 'student', 'stud3nt', 'assignment2')
@@ -71,15 +71,15 @@ class TestCase04(unittest.TestCase):
         self.assertEqual( expected_output, checker.confirmSuperkey( attributes ) )
 
 
-# confirmSuperkey() tougher case
-# Not provided in advance
+# confirmSuperkey() tougher case: check proper superset of non-primary key unique attribute
 class TestCase05(unittest.TestCase):
     @timeout_decorator.timeout(15)
-    def test_insertion(self):
+    def test_superkey(self):
 
+        # with R(e,f,g,h) and f as primary key and g as unique
         checker = DataModelChecker('localhost', 'student', 'stud3nt', 'assignment2')
 
-        attributes = Attributes('', [])
+        attributes = Attributes('R5', ['g', 'h'])
         expected_output = True
 
         self.assertEqual( expected_output, checker.confirmSuperkey( attributes ) )
@@ -88,7 +88,7 @@ class TestCase05(unittest.TestCase):
 # confirmForeignKey() simple case: check single attribute referencing single other attribute
 class TestCase06(unittest.TestCase):
     @timeout_decorator.timeout(15)
-    def test_insertion(self):
+    def test_foreignkey(self):
 
         # with R(x,y,z) and x as primary key
         # with S(v,w,x) and v as primary key and x as foreign key
@@ -104,7 +104,7 @@ class TestCase06(unittest.TestCase):
 # confirmForeignKey() moderate case: check dual attribute referencing dual other attribute as weak entity set
 class TestCase07(unittest.TestCase):
     @timeout_decorator.timeout(15)
-    def test_insertion(self):
+    def test_foreignkey(self):
 
         # with R(x,y,z) and {x,y} as primary key
         # with S(a,b,c) and {a,b,c} as primary key and {b,c} as foreign key
@@ -120,7 +120,7 @@ class TestCase07(unittest.TestCase):
 # confirmForeignKey() simple case: size mismatch
 class TestCase08(unittest.TestCase):
     @timeout_decorator.timeout(15)
-    def test_insertion(self):
+    def test_foreignkey(self):
 
         # with R(x,y,z) and {x,y} as primary key
         # with S(a,b,c) and a as primary key and b as foreign key
@@ -136,7 +136,7 @@ class TestCase08(unittest.TestCase):
 # confirmForeignKey() moderate case: order mismatch on multi-attribute
 class TestCase09(unittest.TestCase):
     @timeout_decorator.timeout(15)
-    def test_insertion(self):
+    def test_foreignkey(self):
 
         # with R(x,y,z) and {x,y} as primary key
         # with S(a,b,c) and a as primary key and {b,c} as foreign key
@@ -149,16 +149,17 @@ class TestCase09(unittest.TestCase):
         self.assertEqual( expected_output, checker.confirmForeignKey( referencing_attributes, referenced_attributes ) )
 
 
-# confirmForeignKey() tough case
-# Not provided in advance
+# confirmForeignKey() tough case: attribute referencing unique but not PK attribute
 class TestCase10(unittest.TestCase):
     @timeout_decorator.timeout(15)
-    def test_insertion(self):
+    def test_foreignkey(self):
 
+        # with R(x,y,z) and x as primary key and y as unique
+        # with S(a,b,c) and a as primary key and b as foreign key
         checker = DataModelChecker('localhost', 'student', 'stud3nt', 'assignment2')
 
-        referenced_attributes = Attributes('' [])
-        referencing_attributes = Attributes('', [])
+        referenced_attributes = Attributes('R10', ['y'])
+        referencing_attributes = Attributes('S10', ['b'])
         expected_output = True
 
         self.assertEqual( expected_output, checker.confirmForeignKey( referencing_attributes, referenced_attributes ) )
@@ -166,7 +167,7 @@ class TestCase10(unittest.TestCase):
 # confirmReferentialIntegrity(): reject case on delete
 class TestCase11(unittest.TestCase):
     @timeout_decorator.timeout(15)
-    def test_insertion(self):
+    def test_refintegrity(self):
 
         # with R(x,y,z) and x as primary key
         # with S(a,b,c) and a as primary key and c as foreign key
@@ -183,7 +184,7 @@ class TestCase11(unittest.TestCase):
 # confirmReferentialIntegrity(): cascade case on delete
 class TestCase12(unittest.TestCase):
     @timeout_decorator.timeout(15)
-    def test_insertion(self):
+    def test_refintegrity(self):
 
         # with R(x,y,z) and x as primary key
         # with S(a,b,c) and a as primary key and c as foreign key
@@ -200,7 +201,7 @@ class TestCase12(unittest.TestCase):
 # confirmReferentialIntegrity(): reject case on update
 class TestCase13(unittest.TestCase):
     @timeout_decorator.timeout(15)
-    def test_insertion(self):
+    def test_refintegrity(self):
 
         # with R(x,y,z) and x as primary key
         # with S(a,b,c) and a as primary key and c as foreign key
@@ -217,7 +218,7 @@ class TestCase13(unittest.TestCase):
 # confirmReferentialIntegrity(): cascade case on update
 class TestCase14(unittest.TestCase):
     @timeout_decorator.timeout(15)
-    def test_insertion(self):
+    def test_refintegrity(self):
 
         # with R(x,y,z) and x as primary key
         # with S(a,b,c) and a as primary key and c as foreign key
@@ -235,7 +236,7 @@ class TestCase14(unittest.TestCase):
 # confirmReferentialIntegrity(): set null case on delete
 class TestCase15(unittest.TestCase):
     @timeout_decorator.timeout(15)
-    def test_insertion(self):
+    def test_refintegrity(self):
 
         # with R(x,y,z) and x as primary key
         # with S(a,b,c) and a as primary key and c as foreign key
@@ -251,7 +252,7 @@ class TestCase15(unittest.TestCase):
 # confirmFunctionalDependency(): easy case, PK and other attribute in same table
 class TestCase16(unittest.TestCase):
     @timeout_decorator.timeout(15)
-    def test_insertion(self):
+    def test_funcdependency(self):
 
         # with R(x,y,z) and x as primary key
         checker = DataModelChecker('localhost', 'student', 'stud3nt', 'assignment2')
@@ -263,16 +264,16 @@ class TestCase16(unittest.TestCase):
         self.assertEqual( expected_output, checker.confirmFunctionalDependency( determining_attributes, determined_attributes ) )
 
 
-# confirmFunctionalDependency(): easy case
-# Not provided in advance
+# confirmFunctionalDependency(): easy case, PK and itself
 class TestCase17(unittest.TestCase):
     @timeout_decorator.timeout(15)
-    def test_insertion(self):
+    def test_funcdependency(self):
 
+        # with R(x,y,z) and x as primary key
         checker = DataModelChecker('localhost', 'student', 'stud3nt', 'assignment2')
 
-        determined_attributes = Attributes('', [])
-        determining_attributes = Attributes('', [])
+        determined_attributes = Attributes('R17', ['x'])
+        determining_attributes = Attributes('R17', ['x'])
         expected_output = True
 
         self.assertEqual( expected_output, checker.confirmFunctionalDependency( determining_attributes, determined_attributes ) )
@@ -281,7 +282,7 @@ class TestCase17(unittest.TestCase):
 # confirmFunctionalDependency(): moderate case, PK and attribute in other relation with FK relationship
 class TestCase18(unittest.TestCase):
     @timeout_decorator.timeout(15)
-    def test_insertion(self):
+    def test_funcdependency(self):
 
         # with R(x,y,z) and x as primary key
         # with S(a,b,c) and a as primary key and c as foreign key
@@ -294,31 +295,34 @@ class TestCase18(unittest.TestCase):
         self.assertEqual( expected_output, checker.confirmFunctionalDependency( determining_attributes, determined_attributes ) )
 
 
-# confirmFunctionalDependency(): difficult case
-# Not provided in advance
+# confirmFunctionalDependency(): difficult case, unique attribute and attribute in other relation with FK relationship
 class TestCase19(unittest.TestCase):
     @timeout_decorator.timeout(15)
-    def test_insertion(self):
+    def test_funcdependency(self):
 
+        # with R(x,y,z) and x as primary key
+        # with S(a,b,c) and a as primary key, b as unique, and c as foreign key
         checker = DataModelChecker('localhost', 'student', 'stud3nt', 'assignment2')
 
-        determined_attributes = Attributes('', [])
-        determining_attributes = Attributes('', [])
+        determined_attributes = Attributes('R18', ['z'])
+        determining_attributes = Attributes('S18', ['b'])
         expected_output = True
 
         self.assertEqual( expected_output, checker.confirmFunctionalDependency( determining_attributes, determined_attributes ) )
 
 
-# confirmFunctionalDependency(): very difficult case
-# Not provided in advance
+# confirmFunctionalDependency(): very difficult case, unique attribute is also foreign key to create one-to-one
+# relationship; FD goes *other direction*!
 class TestCase20(unittest.TestCase):
     @timeout_decorator.timeout(15)
-    def test_insertion(self):
+    def test_funcdependency(self):
 
+        # with R(x,y,z) and x as primary key
+        # with S(a,b,c) and a as primary key, b as unique and as foreign key
         checker = DataModelChecker('localhost', 'student', 'stud3nt', 'assignment2')
 
-        determined_attributes = Attributes('', [])
-        determining_attributes = Attributes('', [])
+        determined_attributes = Attributes('R18', ['c'])
+        determining_attributes = Attributes('S18', ['x'])
         expected_output = True
 
         self.assertEqual( expected_output, checker.confirmFunctionalDependency( determining_attributes, determined_attributes ) )
