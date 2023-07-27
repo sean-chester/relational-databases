@@ -22,7 +22,7 @@ class DataModelChecker:
     # @pre the tables and attributes in attributes must already exist
     def confirmSuperkey( self, attributes ):
         # TODO: Implement me!
-        return true
+        return True
 
     # Predicate function that connects to the database and confirms
     # whether or not `referencing_attributes` is set up as a foreign
@@ -35,7 +35,7 @@ class DataModelChecker:
     # @pre the tables and attributes in referencing_attributes and referenced_attributes must already exist
     def confirmForeignKey( self, referencing_attributes, referenced_attributes ):
         # TODO: Implement me!
-        return true
+        return True
 
     # Predicate function that connects to the database and confirms
     # whether or not `referencing_attributes` is set up as a foreign key
@@ -48,7 +48,7 @@ class DataModelChecker:
     # @pre policy must be a valid Util.RefIntegrityPolicy
     def confirmReferentialIntegrity( self, referencing_attributes, referenced_attributes, policy ):
         # TODO: Implement me!
-        return true
+        return True
 
     # Predicate function that connects to the database and confirms
     # whether or not `referencing_attributes` is set up in such as way as to
@@ -60,4 +60,4 @@ class DataModelChecker:
     # @pre the tables and attributes in referencing_attributes and referenced_attributes must already exist
     def confirmFunctionalDependency( self, referencing_attributes, referenced_attributes ):
         # TODO: Implement me!
-        return true
+        return True
