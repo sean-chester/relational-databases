@@ -304,8 +304,8 @@ class TestCase19(unittest.TestCase):
         # with S(a,b,c) and a as primary key, b as unique, and c as foreign key
         checker = DataModelChecker('localhost', 'student', 'stud3nt', 'assignment2')
 
-        determined_attributes = Attributes('R18', ['z'])
-        determining_attributes = Attributes('S18', ['b'])
+        determined_attributes = Attributes('R19', ['z'])
+        determining_attributes = Attributes('S19', ['b'])
         expected_output = True
 
         self.assertEqual( expected_output, checker.confirmFunctionalDependency( determining_attributes, determined_attributes ) )
@@ -321,8 +321,8 @@ class TestCase20(unittest.TestCase):
         # with S(a,b,c) and a as primary key, b as unique and as foreign key
         checker = DataModelChecker('localhost', 'student', 'stud3nt', 'assignment2')
 
-        determined_attributes = Attributes('R18', ['c'])
-        determining_attributes = Attributes('S18', ['x'])
+        determined_attributes = Attributes('R20', ['c'])
+        determining_attributes = Attributes('S20', ['x'])
         expected_output = True
 
         self.assertEqual( expected_output, checker.confirmFunctionalDependency( determining_attributes, determined_attributes ) )
@@ -389,15 +389,15 @@ class TestCase04Negated(unittest.TestCase):
         self.assertEqual( expected_output, checker.confirmSuperkey( attributes ) )
 
 
-# confirmSuperkey() tougher case
-# Not provided in advance
+# confirmSuperkey() tougher case: check proper superset of non-primary key unique attribute
 class TestCase05Negated(unittest.TestCase):
     @timeout_decorator.timeout(15)
-    def test_insertion(self):
+    def test_superkey(self):
 
+        # with R(e,f,g,h) and {f,g} as primary key and {g,h} as unique
         checker = DataModelChecker('localhost', 'student', 'stud3nt', 'assignment2')
 
-        attributes = Attributes('', [])
+        attributes = Attributes('R5N', ['f', 'h'])
         expected_output = False
 
         self.assertEqual( expected_output, checker.confirmSuperkey( attributes ) )
@@ -467,20 +467,20 @@ class TestCase09Negated(unittest.TestCase):
         self.assertEqual( expected_output, checker.confirmForeignKey( referencing_attributes, referenced_attributes ) )
 
 
-# confirmForeignKey() tough case
-# Not provided in advance
+# confirmForeignKey() tough case: attribute referencing unique but not PK attribute
 class TestCase10Negated(unittest.TestCase):
     @timeout_decorator.timeout(15)
-    def test_insertion(self):
+    def test_foreignkey(self):
 
+        # with R(x,y,z) and x as primary key and y as unique
+        # with S(a,b,c) and a as primary key and b as foreign key
         checker = DataModelChecker('localhost', 'student', 'stud3nt', 'assignment2')
 
-        referenced_attributes = Attributes('' [])
-        referencing_attributes = Attributes('', [])
+        referenced_attributes = Attributes('R10N', ['y'])
+        referencing_attributes = Attributes('S10N', ['b'])
         expected_output = False
 
         self.assertEqual( expected_output, checker.confirmForeignKey( referencing_attributes, referenced_attributes ) )
-
 
 # confirmReferentialIntegrity(): reject case on delete
 class TestCase11Negated(unittest.TestCase):
@@ -582,16 +582,16 @@ class TestCase16Negated(unittest.TestCase):
         self.assertEqual( expected_output, checker.confirmFunctionalDependency( determining_attributes, determined_attributes ) )
 
 
-# confirmFunctionalDependency(): easy case
-# Not provided in advance
+# confirmFunctionalDependency(): easy case, PK and itself
 class TestCase17Negated(unittest.TestCase):
     @timeout_decorator.timeout(15)
-    def test_insertion(self):
+    def test_funcdependency(self):
 
+        # with R(x,y,z) and x not set as primary key
         checker = DataModelChecker('localhost', 'student', 'stud3nt', 'assignment2')
 
-        determined_attributes = Attributes('', [])
-        determining_attributes = Attributes('', [])
+        determined_attributes = Attributes('R17N', ['x'])
+        determining_attributes = Attributes('R17N', ['x'])
         expected_output = False
 
         self.assertEqual( expected_output, checker.confirmFunctionalDependency( determining_attributes, determined_attributes ) )
@@ -613,31 +613,34 @@ class TestCase18Negated(unittest.TestCase):
         self.assertEqual( expected_output, checker.confirmFunctionalDependency( determining_attributes, determined_attributes ) )
 
 
-# confirmFunctionalDependency(): difficult case
-# Not provided in advance
+# confirmFunctionalDependency(): difficult case, unique attribute and attribute in other relation with FK relationship
 class TestCase19Negated(unittest.TestCase):
     @timeout_decorator.timeout(15)
-    def test_insertion(self):
+    def test_funcdependency(self):
 
+        # with R(x,y,z) and x as primary key
+        # with S(a,b,c) and a as primary key, b as unique, and c as foreign key
         checker = DataModelChecker('localhost', 'student', 'stud3nt', 'assignment2')
 
-        determined_attributes = Attributes('', [])
-        determining_attributes = Attributes('', [])
+        determined_attributes = Attributes('R19N', ['b'])
+        determining_attributes = Attributes('S19N', ['z'])
         expected_output = False
 
         self.assertEqual( expected_output, checker.confirmFunctionalDependency( determining_attributes, determined_attributes ) )
 
 
-# confirmFunctionalDependency(): very difficult case
-# Not provided in advance
+# confirmFunctionalDependency(): very difficult case, unique attribute is also foreign key to create one-to-one
+# relationship; FD goes *other direction*!
 class TestCase20Negated(unittest.TestCase):
     @timeout_decorator.timeout(15)
-    def test_insertion(self):
+    def test_funcdependency(self):
 
+        # with R(x,y,z) and x as primary key
+        # with S(a,b,c) and a as primary key, b as unique and as foreign key
         checker = DataModelChecker('localhost', 'student', 'stud3nt', 'assignment2')
 
-        determined_attributes = Attributes('', [])
-        determining_attributes = Attributes('', [])
+        determined_attributes = Attributes('R20N', ['c'])
+        determining_attributes = Attributes('S20N', ['y'])
         expected_output = False
 
         self.assertEqual( expected_output, checker.confirmFunctionalDependency( determining_attributes, determined_attributes ) )
