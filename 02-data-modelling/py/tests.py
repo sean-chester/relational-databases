@@ -446,7 +446,7 @@ class TestCase08Negated(unittest.TestCase):
 
         referenced_attributes = Attributes('R8N', ['x'])
         referencing_attributes = Attributes('S8N', ['b'])
-        expected_output = True
+        expected_output = False
 
         self.assertEqual( expected_output, checker.confirmForeignKey( referencing_attributes, referenced_attributes ) )
 
