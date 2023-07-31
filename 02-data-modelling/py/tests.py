@@ -606,8 +606,8 @@ class TestCase18Negated(unittest.TestCase):
         # with S(a,b,c) and a as primary key and c as foreign key
         checker = DataModelChecker('localhost', 'student', 'stud3nt', 'assignment2')
 
-        determined_attributes = Attributes('R18N', ['a'])
-        determining_attributes = Attributes('S18N', ['x'])
+        determined_attributes = Attributes('R18N', ['y'])
+        determining_attributes = Attributes('S18N', ['b'])
         expected_output = False
 
         self.assertEqual( expected_output, checker.confirmFunctionalDependency( determining_attributes, determined_attributes ) )
