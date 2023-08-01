@@ -1,4 +1,4 @@
-# CSC 370 - B+-Tree Reconstruction from Logs
+# CSC 370 - Transaction Concurrency
 
 ## Assignment Goals
 
