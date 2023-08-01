@@ -592,7 +592,7 @@ class TestCase17Negated(unittest.TestCase):
 
         determined_attributes = Attributes('R17N', ['x'])
         determining_attributes = Attributes('R17N', ['x'])
-        expected_output = False
+        expected_output = True
 
         self.assertEqual( expected_output, checker.confirmFunctionalDependency( determining_attributes, determined_attributes ) )
 
