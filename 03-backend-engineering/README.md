@@ -4,47 +4,53 @@
 
 In this assignment you will:
 
-  * demonstrate knowledge of some query optimisation concepts, particularly how B+-tree indexes work:
-    + implement a B+-tree that handles insertions
-    + implement efficient lookup and range queries on the B+-tree 
-  * demonstrate knowledge of some data recovery concepts, particularly how to parse a REDO log file:
+  * demonstrate knowledge of some query database concurrency and transaction management concepts, particularly how transaction schedules can be reordered:
+    + implement a function that determines whether a transaction schedule is serialisable
+    + determine which serial schedules are conflict-equivalent to a concurrent schedule
 
 ## Task
 
-The horror! 😱
+You should implement part of what could be a simple transaction manager. It will take as input part of a concurrent schedule and confirm that it conforms to a serialisable isolation level. More specifically, it should report the serial schedule to which it is equivalent, or *None* if there is no such serial schedule.
 
-Your relational database has crashed! Fortunately, you have a log file from which to recover it. Unfortunately, you cannot be confident that your index structures are consistent with the database state at the time of failure. Thus, in this assignment, you will rebuild your B+-tree index from a log file.
+You should complete the implementation of the one empty function in `SerialisabilityTester.py`:
+  * `to_serial( schedule )` returns the smallest serial transaction schedule that is conflict-equivalent to the schedule that is provided as input or *None* if the schedule is not serialisable.
 
-In particular, you need to implement a B+-tree index that can support efficient lookup and range queries. It should be constructed from a REDO log file. You are provided with a class definition for a ternary B+-tree and for a log file. You are also provided with an empty ImplementMe class that contains the three unimplemented static methods that provide functionality for the B+-tree. You can assume that the B+-tree is on a primary key attribute.
+A schedule consists of a list of three-tuples that represent database I/O operations on atomic elements. For example, consider the schedule below:
 
-You should complete the implementation of the three empty static functions:
-  * `lookup( key )` returns a list of keys that are visited to check if the input key is in the tree
-  * `range( lower, upper )` returns a list of keys that are visited to find all keys in the range [lower, upper]
-  * `from_log( log )` returns a B+-tree constructed by parsing the log to replay all the insertions that are committed to the index
+[(1, "READ", "A")
+,(2, "READ", "A")
+,(1, "WRITE", "A")
+,(2, "WRITE", "A")]
 
-As you parse the REDO log file, you should assume that all entries refer to the same attribute and, if they have the same value, correspond to the same tuple. For example, in the log below the final tree should have two values, 6 and 7, since transaction 2 changes the value for tuple A:
+This schedule operates only on element A. First transaction 1 reads it, then transaction 2 reads it. Next transaction 1 writes it and then transaction 2 writes it. You should be able to confirm that this schedule is *not* serialisable. The output should be *None*.
 
-[START T1]
-[T1, A, 5]
-[T2, B, 6]
-[COMMIT T1]
-[T2, A, 7]
-[COMMIT T2]
+Consider instead the following schedule:
 
-The implementations of these must be computationally efficient in order to obtain marks; otherwise, the lists returned by your `lookup()` and `range()` functions will have an incorrect length. The B+-tree also must conform to the specifications shown in Garcia-Molina, which is a disk-based adaptation of (2,4)- and B-trees as presented in Goodrich & Tamassia.
+[(2 , "READ", "A")
+,(10, "READ", "A")]
 
-Finally, note that inserting 5, inserting 6, and then modifying 5 to 7 does not necesssarily produce the same tree as simply inserting 6 and then inserting 7. You should handle insertions as a deletion followed by an insertion. You should handle all underflows by merging with a sibling and if, combined, they exceed the maximum capacity of four, then re-splitting.
+This schedule is serialisable and there are two possible serial schedules that are equivalent to it: [2, 10] and [10, 2]. You should return the one that sorts (as integers) the transaction ids in ascending order, i.e., the "smallest sequence." In other words, the output should be [2, 10]. (Both *None* and [10, 2] are incorrect for this input.)
 
 
 ## Submission
 
-You should implement the ImplementMe class in `implement_me.py` and submit only that one file. For evaluation, we will use our own copy of `index.py`, `node.py`, and `tests.py`. 
+You should implement the `to_serial()` function in `SerialisabilityTseter.py` and submit only that one file _without renaming it_. For evaluation, we will use our own copy of `Schedule.py` and `tests.py`. 
 
 ## Evaluation
 
-Your grade on the assignment will be the number of test cases passed by running `python3 tests.py`, for a maximum score of 20/20. All test cases are disclosed, but not all of them have been written.
+Your functions will be evaluated with a series of unit tests and your score on the assignment will be the number of unit tests that you pass for a maximum score of 10/10. For example, a test of `to_serial()` might pass as input either of the examples above and check that the output matches the expected output.
 
-You should be aware that we will change the actual data, including potentially the shapes of the trees, in our final version of `tests.py`. Marks will not be awarded for implementations that are detected to have sub-optimal complexity, such as a linear cost lookup function. 
+A subset of the test cases will be provided. You will need to also identify some important boundary cases to test that have not been released in advance. The pre-released cases will be available in `tests.py`. Marking will take place by running:
+
+```bash
+python3 tests.py
+```
+
+Pre-marking will occur at an arbitrary point in the morning on the following date. You should submit prior to midnight the night before to be certain to receive a pre-grading update:
+
+  * Saturday, 12 August 2023
+
+The instructor reserves the right to award a score of 0 to functions that have not been implemented at all (e.g., simply return None with no dependence on the input parameters).
 
 ## Sources and Academic Integrity
 
@@ -58,4 +64,4 @@ Submissions will be accepted until the _end date_ of the assignment listed in Br
 
 ## Closing
 
-I hope that this assignment is an enjoyable way to learn about data recovery and query efficiency. Good luck!
+I hope that this assignment is an enjoyable way to learn about database concurrency and back-end engineering. Good luck!
