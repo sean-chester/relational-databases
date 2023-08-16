@@ -130,40 +130,60 @@ class TestCase07(unittest.TestCase):
 
 
 # blended schedule with writes, serialisable as T3 T1 T2
-# not provided
 class TestCase08(unittest.TestCase):
     @timeout_decorator.timeout(15)
     def test_foreignkey(self):
 
-        schedule = Schedule()
+        operation1 = IOOperation(2, "READ", "A")
+        operation2 = IOOperation(1, "READ", "B")
+        operation3 = IOOperation(3, "READ", "B")
+        operation4 = IOOperation(3, "READ", "C")
+        operation5 = IOOperation(3, "WRITE", "C")
+        operation6 = IOOperation(1, "WRITE", "B")
+        operation7 = IOOperation(2, "WRITE", "B")
+        schedule = Schedule([operation1, operation2, operation3, operation4, operation5, operation6, operation7])
 
-        expected_simple_schedule = SimpleSchedule()
+        expected_simple_schedule = SimpleSchedule([3,1,2])
 
         self.assertEqual( expected_simple_schedule, to_serial( schedule ) )
 
 
 # blended schedule with writes, not serialisable
-# not provided
 class TestCase09(unittest.TestCase):
     @timeout_decorator.timeout(15)
     def test_foreignkey(self):
 
-        schedule = Schedule()
+        operation1 = IOOperation(3, "READ", "A")
+        operation2 = IOOperation(2, "READ", "A")
+        operation3 = IOOperation(1, "READ", "A")
+        operation4 = IOOperation(3, "READ", "B")
+        operation5 = IOOperation(2, "READ", "B")
+        operation6 = IOOperation(1, "READ", "B")
+        operation7 = IOOperation(2, "WRITE", "A")
+        operation8 = IOOperation(1, "WRITE", "B")
+        operation9 = IOOperation(3, "WRITE", "B")
+        schedule = Schedule([operation1, operation2, operation3, operation4, operation5, operation6, operation7, operation8, operation9])
 
-        expected_simple_schedule = SimpleSchedule()
+        expected_simple_schedule = None
 
         self.assertEqual( expected_simple_schedule, to_serial( schedule ) )
 
 
 # blended schedule with writes, multiple serialisable schedules
-# not provided
 class TestCase10(unittest.TestCase):
     @timeout_decorator.timeout(15)
     def test_foreignkey(self):
 
-        schedule = Schedule()
+        operation1 = IOOperation(2, "READ", "A")
+        operation2 = IOOperation(1, "READ", "B")
+        operation3 = IOOperation(3, "READ", "B")
+        operation4 = IOOperation(3, "READ", "C")
+        operation5 = IOOperation(3, "WRITE", "B")
+        operation6 = IOOperation(1, "READ", "A")
+        operation7 = IOOperation(2, "WRITE", "B")
+        schedule = Schedule([operation1, operation2, operation3, operation4, operation5, operation6, operation7])
 
-        expected_simple_schedule = SimpleSchedule()
+        expected_simple_schedule = SimpleSchedule([1,3,2])
 
         self.assertEqual( expected_simple_schedule, to_serial( schedule ) )
 
