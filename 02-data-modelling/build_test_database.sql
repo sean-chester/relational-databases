@@ -32,6 +32,13 @@ CREATE TABLE R4( `e` INT
 	           , PRIMARY KEY(`f`)
 	           );
 
+CREATE TABLE R5( `e` INT
+	           , `f` INT AUTO_INCREMENT
+	           , `g` INT UNIQUE DEFAULT 5
+	           , `h` INT
+	           , PRIMARY KEY(`f`)
+	           );
+
 CREATE TABLE R1N( `a` INT AUTO_INCREMENT
 	            , `b` INT
 	            , `c` INT
@@ -58,6 +65,14 @@ CREATE TABLE R4N( `e` INT AUTO_INCREMENT
 	            , `g` INT
 	            , `h` INT
 	            , PRIMARY KEY(`e`)
+	            );
+
+CREATE TABLE R5N( `e` INT
+	            , `f` INT AUTO_INCREMENT
+	            , `g` INT DEFAULT 5
+	            , `h` INT DEFAULT 6
+	            , PRIMARY KEY(`f`,`g`)
+	            , UNIQUE(`g`, `h`)
 	            );
 
 -- Tables for confirmForeignKey()
@@ -114,6 +129,20 @@ CREATE TABLE S9( `a` INT AUTO_INCREMENT
 	               REFERENCES `R9`(`x`, `y`)
 	           );
 
+CREATE TABLE R10( `x` INT AUTO_INCREMENT
+	            , `y` INT
+	            , `z` INT
+	            , PRIMARY KEY(`x`)
+	            , UNIQUE(`y`)
+	            );
+CREATE TABLE S10( `a` INT AUTO_INCREMENT
+	            , `b` INT
+	            , `c` INT
+	            , PRIMARY KEY(`a`)
+	            , FOREIGN KEY(`b`)
+	                REFERENCES `R10`(`y`)
+	            );
+
 CREATE TABLE R6N( `x` INT AUTO_INCREMENT
 	            , `y` INT
 	            , `z` INT
@@ -166,6 +195,17 @@ CREATE TABLE S9N( `a` INT AUTO_INCREMENT
 	                REFERENCES `R9N`(`x`, `y`)
 	            );
 
+CREATE TABLE R10N( `x` INT AUTO_INCREMENT
+	             , `y` INT
+	             , `z` INT
+	             , PRIMARY KEY(`x`)
+	             , UNIQUE(`y`)
+	             );
+CREATE TABLE S10N( `a` INT AUTO_INCREMENT
+	             , `b` INT
+	             , `c` INT
+	             , PRIMARY KEY(`a`)
+	             );
 
 -- Tables for confirmReferentialIntegrity()
 
@@ -183,6 +223,66 @@ CREATE TABLE S11( `a` INT AUTO_INCREMENT
 	                ON DELETE RESTRICT
 	            );
 
+CREATE TABLE R12( `x` INT AUTO_INCREMENT
+	            , `y` INT
+	            , `z` INT
+	            , PRIMARY KEY(`x`)
+	            );
+CREATE TABLE S12( `a` INT AUTO_INCREMENT
+	            , `b` INT
+	            , `c` INT
+	            , PRIMARY KEY(`a`)
+	            , FOREIGN KEY(`c`)
+	                REFERENCES `R12`(`x`)
+	                ON DELETE CASCADE
+	            );
+
+CREATE TABLE R13( `x` INT AUTO_INCREMENT
+	            , `y` INT
+	            , `z` INT
+	            , PRIMARY KEY(`x`)
+	            );
+CREATE TABLE S13( `a` INT AUTO_INCREMENT
+	            , `b` INT
+	            , `c` INT
+	            , PRIMARY KEY(`a`)
+	            , FOREIGN KEY(`c`)
+	                REFERENCES `R13`(`x`)
+	            , FOREIGN KEY(`b`)
+	                REFERENCES `R13`(`x`)
+	                ON UPDATE CASCADE
+	            );
+
+CREATE TABLE R14( `x` INT AUTO_INCREMENT
+	            , `y` INT
+	            , `z` INT
+	            , PRIMARY KEY(`x`)
+	            );
+CREATE TABLE S14( `a` INT AUTO_INCREMENT
+	            , `b` INT
+	            , `c` INT
+	            , PRIMARY KEY(`a`)
+	            , FOREIGN KEY(`c`)
+	                REFERENCES `R14`(`x`)
+	                ON DELETE SET NULL
+	                ON UPDATE CASCADE
+	            );
+
+CREATE TABLE R15( `x` INT AUTO_INCREMENT
+	            , `y` INT
+	            , `z` INT
+	            , PRIMARY KEY(`x`)
+	            );
+CREATE TABLE S15( `a` INT AUTO_INCREMENT
+	            , `b` INT
+	            , `c` INT
+	            , PRIMARY KEY(`a`)
+	            , FOREIGN KEY(`c`)
+	                REFERENCES `R15`(`x`)
+	                ON UPDATE CASCADE
+	                ON DELETE SET NULL
+	            );
+
 CREATE TABLE R11N( `x` INT AUTO_INCREMENT
 	             , `y` INT
 	             , `z` INT
@@ -196,10 +296,76 @@ CREATE TABLE S11N( `a` INT AUTO_INCREMENT
 	                 REFERENCES `R11N`(`x`)
 	             );
 
+CREATE TABLE R12N( `x` INT AUTO_INCREMENT
+	             , `y` INT
+	             , `z` INT
+	             , PRIMARY KEY(`x`)
+	             );
+CREATE TABLE S12N( `a` INT AUTO_INCREMENT
+	             , `b` INT
+	             , `c` INT
+	             , PRIMARY KEY(`a`)
+	             , FOREIGN KEY(`c`)
+	                 REFERENCES `R12N`(`x`)
+	             , FOREIGN KEY(`b`)
+	                 REFERENCES `R12N`(`x`)
+	                 ON DELETE CASCADE
+	             );
+
+CREATE TABLE R13N( `x` INT AUTO_INCREMENT
+	             , `y` INT
+	             , `z` INT
+	             , PRIMARY KEY(`x`)
+	             );
+CREATE TABLE S13N( `a` INT AUTO_INCREMENT
+	             , `b` INT
+	             , `c` INT
+	             , PRIMARY KEY(`a`)
+	             , FOREIGN KEY(`c`)
+	                 REFERENCES `R13N`(`x`)
+	                 ON DELETE RESTRICT
+	                 ON UPDATE CASCADE
+	             );
+
+CREATE TABLE R14N( `x` INT AUTO_INCREMENT
+	             , `y` INT
+	             , `z` INT
+	             , PRIMARY KEY(`x`)
+	             );
+CREATE TABLE S14N( `a` INT AUTO_INCREMENT
+	             , `b` INT
+	             , `c` INT
+	             , PRIMARY KEY(`a`)
+	             , FOREIGN KEY(`c`)
+	                 REFERENCES `R14N`(`x`)
+	                 ON DELETE SET NULL
+	                 ON UPDATE SET NULL
+	             );
+
+CREATE TABLE R15N( `x` INT AUTO_INCREMENT
+	             , `y` INT
+	             , `z` INT
+	             , PRIMARY KEY(`x`)
+	             );
+CREATE TABLE S15N( `a` INT AUTO_INCREMENT
+	             , `b` INT
+	             , `c` INT
+	             , PRIMARY KEY(`a`)
+	             , FOREIGN KEY(`c`)
+	                 REFERENCES `R15N`(`x`)
+	                 ON DELETE CASCADE
+	                 ON UPDATE SET NULL
+	             );
 
 -- Tables for confirmFunctionalDependency()
 
 CREATE TABLE R16( `x` INT AUTO_INCREMENT
+	            , `y` INT
+	            , `z` INT
+	            , PRIMARY KEY(`x`)
+	            );
+
+CREATE TABLE R17( `x` INT AUTO_INCREMENT
 	            , `y` INT
 	            , `z` INT
 	            , PRIMARY KEY(`x`)
@@ -218,10 +384,43 @@ CREATE TABLE S18( `a` INT AUTO_INCREMENT
 	                REFERENCES `R18`(`x`)
 	            );
 
+CREATE TABLE R19( `x` INT AUTO_INCREMENT
+	            , `y` INT
+	            , `z` INT
+	            , PRIMARY KEY(`x`)
+	            );
+CREATE TABLE S19( `a` INT AUTO_INCREMENT
+	            , `b` INT DEFAULT 19
+	            , `c` INT
+	            , PRIMARY KEY(`a`)
+	            , UNIQUE(`b`)
+	            , FOREIGN KEY(`c`)
+	                REFERENCES `R19`(`x`)
+	            );
+
+CREATE TABLE R20( `x` INT AUTO_INCREMENT
+	            , `y` INT
+	            , `z` INT
+	            , PRIMARY KEY(`x`)
+	            );
+CREATE TABLE S20( `a` INT AUTO_INCREMENT
+	            , `b` INT DEFAULT 20
+	            , `c` INT
+	            , PRIMARY KEY(`a`)
+	            , UNIQUE(`b`)
+	            , FOREIGN KEY(`b`)
+	                REFERENCES `R20`(`x`)
+	            );
+
 CREATE TABLE R16N( `x` INT
 	             , `y` INT
 	             , `z` INT AUTO_INCREMENT
 	             , PRIMARY KEY(`z`)
+	             );
+
+CREATE TABLE R17N( `x` INT
+	             , `y` INT
+	             , `z` INT
 	             );
 
 CREATE TABLE R18N( `x` INT AUTO_INCREMENT
@@ -235,6 +434,34 @@ CREATE TABLE S18N( `a` INT AUTO_INCREMENT
 	             , PRIMARY KEY(`a`)
 	             , FOREIGN KEY(`c`)
 	                 REFERENCES `R18N`(`x`)
+	             );
+
+CREATE TABLE R19N( `x` INT AUTO_INCREMENT
+	             , `y` INT
+	             , `z` INT
+	             , PRIMARY KEY(`x`)
+	             );
+CREATE TABLE S19N( `a` INT AUTO_INCREMENT
+	             , `b` INT DEFAULT 19
+	             , `c` INT
+	             , PRIMARY KEY(`a`)
+	             , UNIQUE(`b`)
+	             , FOREIGN KEY(`c`)
+	                 REFERENCES `R19N`(`x`)
+	             );
+
+CREATE TABLE R20N( `x` INT AUTO_INCREMENT
+	             , `y` INT
+	             , `z` INT
+	             , PRIMARY KEY(`x`)
+	             );
+CREATE TABLE S20N( `a` INT AUTO_INCREMENT
+	             , `b` INT DEFAULT 20
+	             , `c` INT
+	             , PRIMARY KEY(`a`)
+	             , UNIQUE(`b`)
+	             , FOREIGN KEY(`b`)
+	                 REFERENCES `R20N`(`x`)
 	             );
 
 DROP USER IF EXISTS 'student'@'localhost';
