@@ -106,7 +106,7 @@ class TestCase06(unittest.TestCase):
         operation6 = IOOperation(2, "WRITE", "A")
         schedule = Schedule([operation1, operation2, operation3, operation4, operation5, operation6])
 
-        expected_simple_schedule = SimpleSchedule([3,1,2])
+        expected_simple_schedule = SimpleSchedule([1,2,3])
 
         self.assertEqual( expected_simple_schedule, to_serial( schedule ) )
 
