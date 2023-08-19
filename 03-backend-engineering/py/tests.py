@@ -112,14 +112,19 @@ class TestCase06(unittest.TestCase):
 
 
 # blended schedule with writes, non-serialisable
-# not provided
 class TestCase07(unittest.TestCase):
     @timeout_decorator.timeout(15)
     def test_foreignkey(self):
 
-        schedule = Schedule()
+        operation1 = IOOperation(2, "READ", "B")
+        operation2 = IOOperation(1, "READ", "B")
+        operation3 = IOOperation(3, "READ", "C")
+        operation4 = IOOperation(3, "WRITE", "C")
+        operation5 = IOOperation(1, "WRITE", "B")
+        operation6 = IOOperation(2, "WRITE", "B")
+        schedule = Schedule([operation1, operation2, operation3, operation4, operation5, operation6])
 
-        expected_simple_schedule = SimpleSchedule()
+        expected_simple_schedule = None
 
         self.assertEqual( expected_simple_schedule, to_serial( schedule ) )
 
