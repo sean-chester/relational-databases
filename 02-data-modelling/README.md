@@ -38,14 +38,14 @@ You should submit `DataModelChecker.py` _without renaming it_, after implementin
 
 Your functions will be evaluated with a series of unit tests and your score on the assignment will be the number of unit tests that you pass. Each test will run your function with a boundary case input against a localhost MySQL database.
 
-For example, a test of `confirmSuperkey()` might pass as input a table for which no primary key was ever defined in the database and ask if a particular set of attributes is an enforced superkey or not, i.e., allows insertions that violate the supposed key constraint. If the function returns false, the test passes; otherwise it fails. Approximately twenty such test cases will be defined and tested.
+For example, a test of `confirmSuperkey()` might pass as input a table for which no primary key was ever defined in the database and ask if a particular set of attributes is an enforced superkey or not, i.e., allows insertions that violate the supposed key constraint. If the function returns false, the test passes; otherwise, it fails. Approximately twenty such test cases will be defined and tested.
 
 Note that we will modify our testing dataset to avoid hard-coded solutions, such as by changing constraints between the pre-test and test database. You should not make assumptions that a hard-coded solution that passes pre-testing will also pass in the final evaluation. In particular, the actual result (true or false) for each test case will be quasi-randomly chosen in the final test database by adding or removing particular constraints. Moreover, if you create temporary files, you are responsible for monitoring their existence: there is no guarantee that we will run test cases in a deterministic order.
 
 A subset of the test cases will be provided; however, these are only _structurally_ correct. The underlying database and therefore also the correct answer will change with 50% probability between what is provided and the final grading. You will need to also identify some important boundary cases to test that have not been released in advance. The pre-released cases are available in `tests.py`, some of which can be tested by yourself using `build_test_database.sql`; the SQL script, in particular, shows the permissions that the test user will have, which you can use to gauge which approaches to the assignment are permitted. Marking will take place by running:
 
 ```bash
-mysql -uroot < build_test_database.sql
+mysql -uroot -p < build_test_database.sql
 python3 tests.py
 ```
 
